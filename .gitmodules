@@ -1,0 +1,6 @@
+[submodule "apps/fishi-tracking-app"]
+	path = apps/fishi-tracking-app
+	url = https://github.com/mikepattyn/fish-tracking-app
+[submodule "apps/kapsalon"]
+	path = apps/kapsalon
+	url = https://github.com/mikepattyn/kapsalon

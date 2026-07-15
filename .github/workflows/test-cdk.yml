@@ -1,0 +1,36 @@
+name: Test CDK
+
+on:
+  push:
+    paths:
+      - 'infra/cdk/**'
+      - 'scripts/test-cdk.sh'
+      - 'Makefile'
+  pull_request:
+    paths:
+      - 'infra/cdk/**'
+
+jobs:
+  test-cdk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Copy deployment config
+        run: cp infra/cdk/Mikepattyn.CDK.Constructs/Constants.Deployment.cs.example infra/cdk/Mikepattyn.CDK.Constructs/Constants.Deployment.cs
+
+      - name: Create placeholder lambda zip
+        run: |
+          mkdir -p infra/cdk/Mikepattyn.CDK/lambda
+          echo placeholder > infra/cdk/Mikepattyn.CDK/lambda/placeholder.txt
+          cd infra/cdk/Mikepattyn.CDK/lambda && zip -q kapsalon.zip placeholder.txt
+
+      - name: Run CDK construct tests
+        run: dotnet test infra/cdk/Mikepattyn.CDK.Constructs.Tests/Mikepattyn.CDK.Constructs.Tests.csproj --configuration Release
