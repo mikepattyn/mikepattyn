@@ -25,11 +25,16 @@ jobs:
       - name: Copy deployment config
         run: cp infra/cdk/Mikepattyn.CDK.Constructs/Constants.Deployment.cs.example infra/cdk/Mikepattyn.CDK.Constructs/Constants.Deployment.cs
 
-      - name: Create placeholder lambda zip
+      - name: Create placeholder lambda zips
         run: |
           mkdir -p infra/cdk/Mikepattyn.CDK/lambda
           echo placeholder > infra/cdk/Mikepattyn.CDK/lambda/placeholder.txt
           cd infra/cdk/Mikepattyn.CDK/lambda && zip -q kapsalon.zip placeholder.txt
+          echo placeholder > infra/cdk/Mikepattyn.CDK/lambda/placeholder-fish.txt
+          cd infra/cdk/Mikepattyn.CDK/lambda && zip -q fish.zip placeholder-fish.txt
 
       - name: Run CDK construct tests
         run: dotnet test infra/cdk/Mikepattyn.CDK.Constructs.Tests/Mikepattyn.CDK.Constructs.Tests.csproj --configuration Release
+
+      - name: Run CDK synth e2e tests
+        run: dotnet test infra/cdk/Mikepattyn.CDK.E2E.Tests/Mikepattyn.CDK.E2E.Tests.csproj --configuration Release

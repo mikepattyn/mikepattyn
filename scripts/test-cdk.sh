@@ -27,6 +27,9 @@ dotnet test "$ROOT/infra/cdk/Mikepattyn.CDK.Constructs.Tests/Mikepattyn.CDK.Cons
   --results-directory "$RESULTS_DIR" \
   -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover
 
+dotnet test "$ROOT/infra/cdk/Mikepattyn.CDK.E2E.Tests/Mikepattyn.CDK.E2E.Tests.csproj" \
+  --configuration Release
+
 if command -v reportgenerator >/dev/null 2>&1; then
   reportgenerator \
     "-reports:$RESULTS_DIR/**/coverage.cobertura.xml" \

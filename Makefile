@@ -4,6 +4,7 @@ FISH_DIR := apps/fishi-tracking-app
 DEPLOYMENT_CONFIG := infra/cdk/Mikepattyn.CDK.Constructs/Constants.Deployment.cs
 CDK ?= cdk
 CDK_APPROVAL ?= broadening
+PWSH ?= powershell
 
 AWS_ACCOUNT := $(shell grep 'AccountId' $(DEPLOYMENT_CONFIG) 2>/dev/null | sed 's/.*= "\(.*\)".*/\1/')
 AWS_REGION := $(shell grep 'Region' $(DEPLOYMENT_CONFIG) 2>/dev/null | sed 's/.*= "\(.*\)".*/\1/')
@@ -44,7 +45,7 @@ help:
 	@echo "  make cdk-build              Build the CDK .NET solution"
 	@echo "  make cdk-synth              Synthesize CloudFormation templates"
 	@echo "  make cdk-diff               Diff all stacks"
-	@echo "  make test-cdk               Run CDK construct unit tests"
+	@echo "  make test-cdk               Run CDK construct and synth e2e tests"
 	@echo ""
 	@echo "Deploy platform:"
 	@echo "  make cdk-deploy-shared      Deploy Domain + Auth"
@@ -127,4 +128,4 @@ fish-web-build:
 	./scripts/build-fish-web.sh
 
 test-cdk:
-	./scripts/test-cdk.sh
+	$(PWSH) -NoProfile -ExecutionPolicy Bypass -File ./scripts/test-cdk.ps1
