@@ -13,8 +13,12 @@ One apex brand domain whose Route53 zone and ACM certificate are imported into C
 _Avoid_: treating app hostnames as platform domains
 
 **Application**:
-A deployable product submodule under `apps/` (Kapsalon, Fish).
+A deployable product under `apps/` — product submodules (Kapsalon, Fish) or the owned portfolio (`apps/mikepattyn`).
 _Avoid_: service (too generic)
+
+**AlienButNice**:
+Separate brand platform domain (`alienbutnice.nl`) for creative/personal brand hosting, not product hostnames under mikepattyn.nl.
+_Avoid_: treating AlienButNice as an Application slug like kapsalon/fish
 
 **InfrastructureConstruct**:
 Reusable CDK building block (web hosting, API gateway, ECS service, etc.).
@@ -40,5 +44,6 @@ _Avoid_: service stack
 |-----|-------------|---------|------------|
 | Kapsalon | kapsalon-dev.mikepattyn.nl | kapsalon-acc.mikepattyn.nl | kapsalon.mikepattyn.nl |
 | Fish | fish-dev.mikepattyn.nl | fish-acc.mikepattyn.nl | fish.mikepattyn.nl |
+| Portfolio | — | — | (not hosted yet; `apps/mikepattyn`) |
 
 Platform domains (apex): `mikepattyn.nl`, `alienbutnice.nl`.

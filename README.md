@@ -6,6 +6,7 @@ Platform umbrella repository for personal applications and shared AWS CDK infras
 
 | App | Path | Hostnames |
 |-----|------|-----------|
+| Portfolio | `apps/mikepattyn` | (local for now — not a submodule) |
 | Kapsalon | `apps/kapsalon` | kapsalon-dev / kapsalon-acc / kapsalon.mikepattyn.nl |
 | Fish tracking | `apps/fishi-tracking-app` | fish-dev / fish-acc / fish.mikepattyn.nl |
 

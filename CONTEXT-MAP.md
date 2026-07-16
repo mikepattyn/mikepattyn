@@ -20,12 +20,13 @@ Navigation index for the mikepattyn platform repository.
 | [infra/cdk/Mikepattyn.CDK/CONTEXT.md](infra/cdk/Mikepattyn.CDK/CONTEXT.md) | Deploy app / stack composition |
 | [infra/cdk/Mikepattyn.CDK.Constructs/CONTEXT.md](infra/cdk/Mikepattyn.CDK.Constructs/CONTEXT.md) | Shared constructs library |
 
-## Applications (submodules)
+## Applications
 
-| Path | Remote |
-|------|--------|
-| [apps/kapsalon/](apps/kapsalon/) | github.com/mikepattyn/kapsalon |
-| [apps/fishi-tracking-app/](apps/fishi-tracking-app/) | github.com/mikepattyn/fish-tracking-app |
+| Path | Role |
+|------|------|
+| [apps/mikepattyn/](apps/mikepattyn/) | Personal portfolio (owned by this repo) — [CONTEXT.md](apps/mikepattyn/CONTEXT.md) |
+| [apps/kapsalon/](apps/kapsalon/) | Submodule — github.com/mikepattyn/kapsalon |
+| [apps/fishi-tracking-app/](apps/fishi-tracking-app/) | Submodule — github.com/mikepattyn/fish-tracking-app |
 
 ## Research
 

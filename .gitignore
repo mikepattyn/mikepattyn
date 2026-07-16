@@ -57,6 +57,10 @@ Thumbs.db
 Desktop.ini
 ehthumbs.db
 
+# Node (portfolio and other JS apps under apps/)
+**/node_modules/
+apps/mikepattyn/dist/
+
 # Misc
 *.log
 *.tmp

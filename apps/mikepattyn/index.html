@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Mike Pattyn — personal platform for shipping small products. Home of Kapsalon, Fish, and AlienButNice."
+    />
+    <title>Mike Pattyn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#apps">Skip to apps</a>
+
+    <header class="site-nav">
+      <a class="site-nav__brand" href="#top" aria-label="Mike Pattyn home">Mike Pattyn</a>
+      <nav class="site-nav__links" aria-label="Primary">
+        <a href="#apps">Apps</a>
+        <a href="#alienbutnice">AlienButNice</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-brand">
+        <div class="hero__atmosphere" aria-hidden="true">
+          <div class="hero__orb hero__orb--a"></div>
+          <div class="hero__orb hero__orb--b"></div>
+          <div class="hero__grid"></div>
+          <div class="hero__noise"></div>
+        </div>
+
+        <div class="hero__content">
+          <p class="hero__brand" id="hero-brand">Mike Pattyn</p>
+          <h1 class="hero__headline">
+            Small platforms.<br />
+            Shipped end to end.
+          </h1>
+          <p class="hero__lede">
+            Product-minded fullstack engineer. I own the path from UI to API to
+            cloud — and keep a second brand warm for the weird ideas.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#apps">See the apps</a>
+            <a class="btn btn--ghost" href="#alienbutnice">Meet AlienButNice</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--apps" id="apps" aria-labelledby="apps-title">
+        <div class="section__inner">
+          <header class="section__header">
+            <p class="section__eyebrow">On mikepattyn.nl</p>
+            <h2 id="apps-title">Applications</h2>
+            <p class="section__lede">
+              Live products under the mikepattyn platform — each with its own
+              submodule, stack, and hostnames.
+            </p>
+          </header>
+
+          <ul class="app-list">
+            <li class="app-item reveal">
+              <div class="app-item__meta">
+                <span class="app-item__host">kapsalon.mikepattyn.nl</span>
+                <h3>Kapsalon</h3>
+              </div>
+              <p>
+                Multi-tenant barber booking for the Netherlands. Staff dashboard
+                and customer booking portal — Angular frontend, .NET Lambdas,
+                DynamoDB, Authress.
+              </p>
+              <p class="app-item__stack">Angular · .NET · AWS CDK · DynamoDB</p>
+            </li>
+
+            <li class="app-item reveal">
+              <div class="app-item__meta">
+                <span class="app-item__host">fish.mikepattyn.nl</span>
+                <h3>Fish</h3>
+              </div>
+              <p>
+                A Pokémon GO-style fishing exploration app. Walk to real spots,
+                check in, log catches, earn XP, and peel back a personal Fog of
+                Water map — starting in the Schiedam region.
+              </p>
+              <p class="app-item__stack">Flutter · ASP.NET · PostGIS · Mapbox</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section
+        class="section section--abn"
+        id="alienbutnice"
+        aria-labelledby="abn-title"
+      >
+        <div class="section__inner section__inner--split">
+          <header class="section__header">
+            <p class="section__eyebrow">Second platform domain</p>
+            <h2 id="abn-title">AlienButNice</h2>
+            <p class="section__lede">
+              A separate brand apex — <strong>alienbutnice.nl</strong> — with its
+              own DNS zone and certificate. Not a product under mikepattyn
+              hostnames; a home for creative and personal brand surfaces that
+              should not share the product domain.
+            </p>
+          </header>
+
+          <div class="abn-panel reveal" aria-hidden="false">
+            <p class="abn-panel__mark">ABN</p>
+            <p class="abn-panel__tagline">
+              Alien enough to stand out.<br />
+              Nice enough to ship.
+            </p>
+            <ul class="abn-panel__facts">
+              <li>Own Route53 zone + ACM cert</li>
+              <li>Independent of kapsalon / fish hostnames</li>
+              <li>Ready for future brand hosting</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--about" aria-labelledby="about-title">
+        <div class="section__inner">
+          <header class="section__header">
+            <p class="section__eyebrow">About</p>
+            <h2 id="about-title">How I work</h2>
+            <p class="section__lede">
+              Ownership over the whole chain — UI, API, infra, and the AI pieces
+              that need evals and cost control. I cut scope to a vertical slice
+              that learns, then automate quality so tempo stays honest.
+            </p>
+          </header>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        <span class="site-footer__brand">Mike Pattyn</span>
+        <span class="site-footer__sep" aria-hidden="true">·</span>
+        Platform umbrella at
+        <a href="https://github.com/mikepattyn/mikepattyn">github.com/mikepattyn/mikepattyn</a>
+      </p>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
