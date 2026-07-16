@@ -49,7 +49,10 @@ public class FishEdgeStack : BaseStack<FishEdgeStackProps>
             new S3BucketOriginWithOACProps { OriginAccessControl = originAccessControl }
         );
 
-        var apiOrigin = new HttpOrigin(props.LoadBalancerDnsName);
+        var apiOrigin = new HttpOrigin(props.ApiGatewayDomainName, new HttpOriginProps
+        {
+            OriginPath = $"/{props.DeploymentEnvironment.Name}",
+        });
 
         Distribution = new Distribution(
             this,
@@ -67,14 +70,6 @@ public class FishEdgeStack : BaseStack<FishEdgeStackProps>
                 AdditionalBehaviors = new Dictionary<string, IBehaviorOptions>
                 {
                     ["/api/*"] = new BehaviorOptions
-                    {
-                        Origin = apiOrigin,
-                        ViewerProtocolPolicy = ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-                        AllowedMethods = AllowedMethods.ALLOW_ALL,
-                        CachePolicy = CachePolicy.CACHING_DISABLED,
-                        OriginRequestPolicy = OriginRequestPolicy.ALL_VIEWER,
-                    },
-                    ["/hubs/*"] = new BehaviorOptions
                     {
                         Origin = apiOrigin,
                         ViewerProtocolPolicy = ViewerProtocolPolicy.REDIRECT_TO_HTTPS,

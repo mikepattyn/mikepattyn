@@ -14,7 +14,7 @@ public class DynamoDbConstruct : Construct
             new KeyProps
             {
                 Description =
-                    $"Customer-managed KMS key for Kapsalon DynamoDB table ({props.DeploymentEnvironment.Name})",
+                    $"Customer-managed KMS key for {props.AppName} DynamoDB table ({props.DeploymentEnvironment.Name})",
                 EnableKeyRotation = true,
                 RemovalPolicy = RemovalPolicy.DESTROY,
             }

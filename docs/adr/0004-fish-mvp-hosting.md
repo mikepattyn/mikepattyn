@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Superseded by [0005-fish-serverless-hosting.md](./0005-fish-serverless-hosting.md)
 
 ## Context
 

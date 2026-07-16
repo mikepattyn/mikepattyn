@@ -67,32 +67,22 @@ sealed class Program
             );
         }
 
-        var fishDataStacks = new List<FishDataStack>();
-        var fishApiStacks = new List<FishApiStack>();
+        var fishBackendStacks = new List<FishBackendStack>();
         var fishEdgeStacks = new List<FishEdgeStack>();
 
         foreach (var deploymentEnvironment in deploymentEnvironments)
         {
-            var fishData = new FishDataStack(
+            var fishBackend = new FishBackendStack(
                 app,
-                new FishDataStackProps
+                new FishBackendStackProps
                 {
                     DeploymentEnvironment = deploymentEnvironment,
                     StackEnvironment = stackEnvironment,
+                    AuthressApiBasePath = Constants.Deployment.AuthressApiBasePath,
+                    AuthressResourceGroupId = Constants.Deployment.AuthressResourceGroupId,
                 }
             );
-            fishDataStacks.Add(fishData);
-
-            var fishApi = new FishApiStack(
-                app,
-                new FishApiStackProps
-                {
-                    DeploymentEnvironment = deploymentEnvironment,
-                    StackEnvironment = stackEnvironment,
-                    Vpc = fishData.Vpc,
-                }
-            );
-            fishApiStacks.Add(fishApi);
+            fishBackendStacks.Add(fishBackend);
 
             fishEdgeStacks.Add(
                 new FishEdgeStack(
@@ -105,7 +95,7 @@ sealed class Program
                         StackEnvironment = stackEnvironment,
                         HostedZone = domainResources.HostedZone,
                         Certificate = domainResources.Certificate,
-                        LoadBalancerDnsName = fishApi.LoadBalancerDnsName,
+                        ApiGatewayDomainName = fishBackend.ApiGatewayHostName,
                     }
                 )
             );
@@ -123,9 +113,13 @@ sealed class Program
                     )
             )
             .Concat(
-                deploymentEnvironments.Select(
+                deploymentEnvironments.SelectMany(
                     deploymentEnvironment =>
-                        $"arn:aws:ssm:{Constants.Deployment.Region}:{Constants.Deployment.AccountId}:parameter/{Constants.Apps.Kapsalon}/{deploymentEnvironment.Name}/Backend/ApiUrl"
+                        new[]
+                        {
+                            $"arn:aws:ssm:{Constants.Deployment.Region}:{Constants.Deployment.AccountId}:parameter/{Constants.Apps.Kapsalon}/{deploymentEnvironment.Name}/Backend/ApiUrl",
+                            $"arn:aws:ssm:{Constants.Deployment.Region}:{Constants.Deployment.AccountId}:parameter/{Constants.Apps.Fish}/{deploymentEnvironment.Name}/Backend/ApiUrl",
+                        }
                 )
             )
             .ToArray();

@@ -74,7 +74,7 @@ internal static class CdkTestHelpers
             DeploymentEnvironment = DeploymentEnvironment.Development,
             StackEnvironment = TestEnv,
             PlatformDomainName = "mikepattyn.nl",
-            LoadBalancerDnsName = "fish-alb.example.com",
+            ApiGatewayDomainName = "abc123.execute-api.eu-central-1.amazonaws.com",
             HostedZone = HostedZone.FromHostedZoneAttributes(
                 stack,
                 "FishImportedHostedZone",

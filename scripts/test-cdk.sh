@@ -9,10 +9,16 @@ rm -rf "$RESULTS_DIR"
 mkdir -p "$RESULTS_DIR"
 
 LAMBDA_ZIP="$ROOT/infra/cdk/Mikepattyn.CDK/lambda/kapsalon.zip"
+FISH_LAMBDA_ZIP="$ROOT/infra/cdk/Mikepattyn.CDK/lambda/fish.zip"
 if [ ! -f "$LAMBDA_ZIP" ]; then
   mkdir -p "$(dirname "$LAMBDA_ZIP")"
   echo placeholder > "$(dirname "$LAMBDA_ZIP")/placeholder.txt"
   (cd "$(dirname "$LAMBDA_ZIP")" && zip -q kapsalon.zip placeholder.txt)
+fi
+if [ ! -f "$FISH_LAMBDA_ZIP" ]; then
+  mkdir -p "$(dirname "$FISH_LAMBDA_ZIP")"
+  echo placeholder > "$(dirname "$FISH_LAMBDA_ZIP")/placeholder-fish.txt"
+  (cd "$(dirname "$FISH_LAMBDA_ZIP")" && zip -q fish.zip placeholder-fish.txt)
 fi
 
 dotnet test "$ROOT/infra/cdk/Mikepattyn.CDK.Constructs.Tests/Mikepattyn.CDK.Constructs.Tests.csproj" \

@@ -31,8 +31,7 @@ public static partial class Constants
 
         public static readonly string KapsalonFrontend = GetAppStack(Apps.Kapsalon, "Frontend");
         public static readonly string KapsalonBackend = GetAppStack(Apps.Kapsalon, "Backend");
+        public static readonly string FishBackend = GetAppStack(Apps.Fish, "Backend");
         public static readonly string FishFrontend = GetAppStack(Apps.Fish, "Frontend");
-        public static readonly string FishApi = GetAppStack(Apps.Fish, "Api");
-        public static readonly string FishData = GetAppStack(Apps.Fish, "Data");
     }
 }

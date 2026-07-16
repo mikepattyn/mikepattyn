@@ -13,7 +13,7 @@ public class AuthorizersConstruct : Construct
             new RequestAuthorizerProps
             {
                 AuthorizerName =
-                    $"KapsalonRestApiAuthorizer{props.DeploymentEnvironment.Name}".Replace(" ", ""),
+                    $"{props.AppName}RestApiAuthorizer{props.DeploymentEnvironment.Name}".Replace(" ", ""),
                 Handler = props.AuthorizerFunction,
                 IdentitySources = [IdentitySource.Header("Authorization")],
             }

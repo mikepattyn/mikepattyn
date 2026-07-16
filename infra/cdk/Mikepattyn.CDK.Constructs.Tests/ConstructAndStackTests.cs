@@ -253,7 +253,6 @@ public class StackTests
                             new object[]
                             {
                                 Match.ObjectLike(new Dictionary<string, object> { ["PathPattern"] = "/api/*" }),
-                                Match.ObjectLike(new Dictionary<string, object> { ["PathPattern"] = "/hubs/*" }),
                             }
                         ),
                     }
