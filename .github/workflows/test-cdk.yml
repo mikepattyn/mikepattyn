@@ -16,9 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-        with:
-          submodules: recursive
-          token: ${{ secrets.MY_PAT }}
+
+      - name: Checkout private submodules
+        env:
+          MY_PAT: ${{ secrets.MY_PAT }}
+        run: |
+          git config --global url."https://x-access-token:${MY_PAT}@github.com/".insteadOf "https://github.com/"
+          git submodule sync --recursive
+          git submodule update --init --recursive --depth 1
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
