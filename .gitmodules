@@ -4,3 +4,6 @@
 [submodule "apps/kapsalon"]
 	path = apps/kapsalon
 	url = https://github.com/mikepattyn/kapsalon
+[submodule "apps/alienbutnice"]
+	path = apps/alienbutnice
+	url = https://github.com/mikepattyn/alienbutnice.git
