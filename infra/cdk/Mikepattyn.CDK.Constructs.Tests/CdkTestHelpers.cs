@@ -37,10 +37,25 @@ internal static class CdkTestHelpers
         {
             DeploymentEnvironment = DeploymentEnvironment.None,
             StackEnvironment = TestEnv,
-            DomainName = "mikepattyn.nl",
+            PlatformStackName = Constants.Stacks.Domain,
             HostedZoneId = "Z1234567890ABC",
             CertificateArn =
                 "arn:aws:acm:us-east-1:123456789012:certificate/00000000-0000-0000-0000-000000000000",
+            CreatePlatformDomain = static (scope, id, props) =>
+                new MikepattynPlatformDomainConstruct(scope, id, props),
+        };
+
+    internal static DomainStackProps CreateAlienButNiceDomainStackProps() =>
+        new()
+        {
+            DeploymentEnvironment = DeploymentEnvironment.None,
+            StackEnvironment = TestEnv,
+            PlatformStackName = Constants.Stacks.AlienButNiceDomain,
+            HostedZoneId = "Z0987654321ABC",
+            CertificateArn =
+                "arn:aws:acm:us-east-1:123456789012:certificate/11111111-1111-1111-1111-111111111111",
+            CreatePlatformDomain = static (scope, id, props) =>
+                new AlienButNicePlatformDomainConstruct(scope, id, props),
         };
 
     internal static FrontendStackProps CreateFrontendStackProps(Stack stack) =>

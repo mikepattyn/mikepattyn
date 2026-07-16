@@ -6,11 +6,14 @@ public static partial class Constants
     {
         public const string AccountId = "123456789012";
         public const string Region = "eu-west-1";
-        public const string DomainName = "mikepattyn.nl";
+        public const string DomainName = Domains.Mikepattyn;
         public const string GithubRepository = "mikepattyn/mikepattyn";
         public const string Route53HostedZoneId = "Z1234567890EXAMPLE";
         public const string CertificateArn =
             "arn:aws:acm:us-east-1:123456789012:certificate/00000000-0000-0000-0000-000000000000";
+        public const string AlienButNiceRoute53HostedZoneId = "Z0987654321EXAMPLE";
+        public const string AlienButNiceCertificateArn =
+            "arn:aws:acm:us-east-1:123456789012:certificate/11111111-1111-1111-1111-111111111111";
         public const string AuthressApiBasePath = "https://api.authress.io";
         public const string AuthressResourceGroupId = "your-resource-group-id";
     }

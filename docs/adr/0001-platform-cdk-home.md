@@ -21,4 +21,4 @@ Application submodules retain business code only; IaC lives in the platform repo
 
 - Single `make` entrypoint at repo root for CDK operations
 - Submodule repos must drop local CDK and point deploy docs here
-- Greenfield stacks on `mikepattyn.nl`; old kapsalon domain migration is a separate effort
+- Greenfield stacks on platform domains (`mikepattyn.nl`, `alienbutnice.nl`); old kapsalon domain migration is a separate effort

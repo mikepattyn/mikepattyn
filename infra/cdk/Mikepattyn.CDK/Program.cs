@@ -33,10 +33,26 @@ sealed class Program
             new DomainStackProps
             {
                 DeploymentEnvironment = DeploymentEnvironment.None,
-                DomainName = platformDomain,
+                PlatformStackName = Constants.Stacks.Domain,
                 HostedZoneId = Constants.Deployment.Route53HostedZoneId,
                 CertificateArn = Constants.Deployment.CertificateArn,
                 StackEnvironment = stackEnvironment,
+                CreatePlatformDomain = static (scope, id, props) =>
+                    new MikepattynPlatformDomainConstruct(scope, id, props),
+            }
+        );
+
+        _ = new DomainStack(
+            app,
+            new DomainStackProps
+            {
+                DeploymentEnvironment = DeploymentEnvironment.None,
+                PlatformStackName = Constants.Stacks.AlienButNiceDomain,
+                HostedZoneId = Constants.Deployment.AlienButNiceRoute53HostedZoneId,
+                CertificateArn = Constants.Deployment.AlienButNiceCertificateArn,
+                StackEnvironment = stackEnvironment,
+                CreatePlatformDomain = static (scope, id, props) =>
+                    new AlienButNicePlatformDomainConstruct(scope, id, props),
             }
         );
 

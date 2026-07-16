@@ -215,6 +215,23 @@ public class StackTests
         var app = new App();
         var stack = new DomainStack(app, CdkTestHelpers.CreateDomainStackProps());
 
+        Assert.Equal(Constants.Domains.Mikepattyn, stack.DomainName);
+        Assert.IsType<MikepattynPlatformDomainConstruct>(stack.PlatformDomain);
+
+        var template = Template.FromStack(stack);
+        Assert.DoesNotContain("AWS::Route53::HostedZone", template.ToJSON());
+        Assert.DoesNotContain("AWS::CertificateManager::Certificate", template.ToJSON());
+    }
+
+    [Fact]
+    public void DomainStack_AlienButNice_ImportsHostedZoneAndCertificate()
+    {
+        var app = new App();
+        var stack = new DomainStack(app, CdkTestHelpers.CreateAlienButNiceDomainStackProps());
+
+        Assert.Equal(Constants.Domains.AlienButNice, stack.DomainName);
+        Assert.IsType<AlienButNicePlatformDomainConstruct>(stack.PlatformDomain);
+
         var template = Template.FromStack(stack);
         Assert.DoesNotContain("AWS::Route53::HostedZone", template.ToJSON());
         Assert.DoesNotContain("AWS::CertificateManager::Certificate", template.ToJSON());

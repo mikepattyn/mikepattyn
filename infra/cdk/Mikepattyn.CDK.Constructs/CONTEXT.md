@@ -8,6 +8,11 @@ Reusable AWS CDK construct library for platform and application infrastructure.
 A reusable CDK construct encapsulating one capability (API Gateway, DynamoDB, web hosting, ECS service).
 _Avoid_: deploy app orchestration here.
 
+**PlatformDomain**:
+Imported Route53 hosted zone and ACM certificate for one apex brand domain (`IPlatformDomain`).
+Implementations: `MikepattynPlatformDomainConstruct` (`mikepattyn.nl`), `AlienButNicePlatformDomainConstruct` (`alienbutnice.nl`).
+_Avoid_: creating hosted zones or certificates in CDK; hardcoding a single platform domain.
+
 **PlatformStack**:
 Shared stack for Domain imports or GitHub OIDC.
 _Avoid_: application-specific backend logic in platform stacks.

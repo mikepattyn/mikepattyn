@@ -15,9 +15,14 @@ _Avoid_: scattering stack creation across construct library files.
 - Owns CDK app startup and stack instantiation order only.
 - Uses constructs from `Mikepattyn.CDK.Constructs`; it should not define reusable constructs.
 - Does not own API handler behavior; application backends own request semantics.
+- Creates one `DomainStack` per `IPlatformDomain` (Mikepattyn, AlienButNice).
 
 ## Example dialogue
 
 > **Newcomer:** Where do I add a new Fish environment stack?
 >
-> **Expert:** In `Mikepattyn.CDK/Program.cs`, following the existing Fish Data → Api → Edge loop.
+> **Expert:** In `Mikepattyn.CDK/Program.cs`, following the existing Fish Backend → Edge loop.
+
+> **Newcomer:** Where does `alienbutnice.nl` get imported?
+>
+> **Expert:** `Program.cs` creates a second `DomainStack` with `AlienButNicePlatformDomainConstruct`.

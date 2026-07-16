@@ -5,13 +5,21 @@ public static partial class Constants
 {
     public const string PlatformName = "Mikepattyn";
 
+    public static class Domains
+    {
+        public const string Mikepattyn = "mikepattyn.nl";
+        public const string AlienButNice = "alienbutnice.nl";
+    }
+
     public static class Apps
     {
         public const string Kapsalon = "Kapsalon";
         public const string Fish = "Fish";
+        public const string AlienButNice = "AlienButNice";
 
         public const string KapsalonSlug = "kapsalon";
         public const string FishSlug = "fish";
+        public const string AlienButNiceSlug = "alienbutnice";
     }
 
     public static class Stacks
@@ -27,6 +35,7 @@ public static partial class Constants
             GetAppStack(appName, stackName);
 
         public static readonly string Domain = GetPlatformStack("Domain");
+        public static readonly string AlienButNiceDomain = GetAppStack(Apps.AlienButNice, "Domain");
         public static readonly string Auth = GetPlatformStack("Auth");
 
         public static readonly string KapsalonFrontend = GetAppStack(Apps.Kapsalon, "Frontend");

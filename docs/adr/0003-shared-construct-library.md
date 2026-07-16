@@ -12,11 +12,11 @@ Kapsalon CDK used a Flyingdarts-style split: construct library + thin deploy app
 
 One construct library (`Mikepattyn.CDK.Constructs`) containing:
 
-- **Shared**: `DomainStack`, `GithubActionsOIDCConstruct`, `WebApplicationHostingConstruct`, `AppHostnames`, base classes
+- **Shared**: `IPlatformDomain` / `DomainStack`, `GithubActionsOIDCConstruct`, `WebApplicationHostingConstruct`, `AppHostnames`, base classes
 - **Kapsalon**: `FrontendStack`, `BackendStack` (Lambda, API Gateway, DynamoDB)
-- **Fish**: `FishDataStack`, `FishApiStack`, `FishEdgeStack`
+- **Fish**: `FishBackendStack`, `FishEdgeStack`
 
-One deploy app (`Mikepattyn.CDK/Program.cs`) wires platform Domain once, then all application stacks.
+One deploy app (`Mikepattyn.CDK/Program.cs`) wires one `DomainStack` per platform domain (`mikepattyn.nl`, `alienbutnice.nl`), then all application stacks.
 
 Naming: platform stacks `Mikepattyn-{Resource}-Stack`; app stacks `{App}-{Resource}-Stack-{Environment}`.
 
