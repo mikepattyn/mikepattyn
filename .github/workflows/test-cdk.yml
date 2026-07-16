@@ -1,6 +1,7 @@
 name: Test CDK
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'infra/cdk/**'
