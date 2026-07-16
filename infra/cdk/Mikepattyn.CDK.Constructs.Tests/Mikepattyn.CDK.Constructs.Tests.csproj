@@ -29,12 +29,6 @@
 
   <ItemGroup>
     <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\Mikepattyn.CDK\lambda\kapsalon.zip" Link="Mikepattyn.CDK/lambda/kapsalon.zip" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\Mikepattyn.CDK\lambda\fish.zip" Link="Mikepattyn.CDK/lambda/fish.zip" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
-
-  <Target Name="EnsureLambdaAssetOutputDir" BeforeTargets="CopyFilesToOutputDirectory">
-    <MakeDir Directories="$(OutputPath)Mikepattyn.CDK/lambda" />
-  </Target>
 
 </Project>
