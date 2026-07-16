@@ -165,8 +165,11 @@ public class WebApplicationHostingConstructTests
             new WebApplicationHostingConstructProps
             {
                 AppName = Constants.Apps.Kapsalon,
-                AppSlug = Constants.Apps.KapsalonSlug,
-                PlatformDomainName = "mikepattyn.nl",
+                DomainNames = AppHostnames.GetDomainNames(
+                    Constants.Apps.KapsalonSlug,
+                    DeploymentEnvironment.Development,
+                    "mikepattyn.nl"
+                ),
                 DeploymentEnvironment = DeploymentEnvironment.Development,
                 Certificate = Certificate.FromCertificateArn(
                     stack,
@@ -179,6 +182,18 @@ public class WebApplicationHostingConstructTests
         var template = Template.FromStack(stack);
         template.ResourceCountIs("AWS::S3::Bucket", 1);
         template.ResourceCountIs("AWS::CloudFront::Distribution", 1);
+        template.HasResourceProperties(
+            "AWS::CloudFront::Distribution",
+            new Dictionary<string, object>
+            {
+                ["DistributionConfig"] = Match.ObjectLike(
+                    new Dictionary<string, object>
+                    {
+                        ["Aliases"] = Match.ArrayWith(new object[] { "kapsalon-dev.mikepattyn.nl" }),
+                    }
+                ),
+            }
+        );
     }
 }
 
@@ -274,6 +289,57 @@ public class StackTests
                         ),
                     }
                 ),
+            }
+        );
+    }
+
+    [Theory]
+    [InlineData(Constants.Apps.Mikepattyn, Constants.Domains.Mikepattyn)]
+    [InlineData(Constants.Apps.AlienButNice, Constants.Domains.AlienButNice)]
+    public void BrandFrontendStack_SynthesizesApexAndWwwAliasRecords(
+        string appName,
+        string platformDomain
+    )
+    {
+        var app = new App();
+        var importHost = new Stack(app, "BrandImportHost", new StackProps { Env = CdkTestHelpers.TestEnv });
+        var stack = new BrandFrontendStack(
+            app,
+            CdkTestHelpers.CreateBrandFrontendStackProps(importHost, appName, platformDomain)
+        );
+
+        var template = Template.FromStack(stack);
+        template.ResourceCountIs("AWS::S3::Bucket", 1);
+        template.ResourceCountIs("AWS::CloudFront::Distribution", 1);
+        template.ResourceCountIs("AWS::Route53::RecordSet", 4);
+        template.HasResourceProperties(
+            "AWS::CloudFront::Distribution",
+            new Dictionary<string, object>
+            {
+                ["DistributionConfig"] = Match.ObjectLike(
+                    new Dictionary<string, object>
+                    {
+                        ["Aliases"] = Match.ArrayWith(
+                            new object[] { platformDomain, $"www.{platformDomain}" }
+                        ),
+                    }
+                ),
+            }
+        );
+        template.HasResourceProperties(
+            "AWS::Route53::RecordSet",
+            new Dictionary<string, object>
+            {
+                ["Type"] = "A",
+                ["AliasTarget"] = Match.ObjectLike(new Dictionary<string, object>()),
+            }
+        );
+        template.HasResourceProperties(
+            "AWS::Route53::RecordSet",
+            new Dictionary<string, object>
+            {
+                ["Type"] = "AAAA",
+                ["Name"] = $"www.{platformDomain}.",
             }
         );
     }

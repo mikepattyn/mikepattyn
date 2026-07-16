@@ -41,11 +41,7 @@ public class WebApplicationHostingConstruct : Construct
 
     private Distribution CreateDistribution(WebApplicationHostingConstructProps props)
     {
-        var hostname = AppHostnames.For(
-            props.AppSlug,
-            props.DeploymentEnvironment,
-            props.PlatformDomainName
-        );
+        var hostnames = string.Join(", ", props.DomainNames);
 
         return new Distribution(
             this,
@@ -82,9 +78,9 @@ public class WebApplicationHostingConstruct : Construct
                     },
                 ],
                 Comment =
-                    $"CloudFront distribution for serving {hostname} in {props.DeploymentEnvironment.Name} environment",
+                    $"CloudFront distribution for serving {hostnames} ({props.AppName}, {props.DeploymentEnvironment.Name})",
                 PriceClass = PriceClass.PRICE_CLASS_100,
-                DomainNames = [hostname],
+                DomainNames = props.DomainNames,
                 Certificate = props.Certificate,
             }
         );

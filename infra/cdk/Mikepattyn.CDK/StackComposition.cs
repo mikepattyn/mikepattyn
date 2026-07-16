@@ -21,18 +21,24 @@ public sealed class StackComposition
     public DomainStack AlienButNiceDomainStack { get; }
     public IReadOnlyList<FrontendStack> KapsalonFrontendStacks { get; }
     public IReadOnlyList<FishEdgeStack> FishEdgeStacks { get; }
+    public BrandFrontendStack MikepattynBrandFrontendStack { get; }
+    public BrandFrontendStack AlienButNiceBrandFrontendStack { get; }
 
     private StackComposition(
         DomainStack mikepattynDomainStack,
         DomainStack alienButNiceDomainStack,
         IReadOnlyList<FrontendStack> kapsalonFrontendStacks,
-        IReadOnlyList<FishEdgeStack> fishEdgeStacks
+        IReadOnlyList<FishEdgeStack> fishEdgeStacks,
+        BrandFrontendStack mikepattynBrandFrontendStack,
+        BrandFrontendStack alienButNiceBrandFrontendStack
     )
     {
         MikepattynDomainStack = mikepattynDomainStack;
         AlienButNiceDomainStack = alienButNiceDomainStack;
         KapsalonFrontendStacks = kapsalonFrontendStacks;
         FishEdgeStacks = fishEdgeStacks;
+        MikepattynBrandFrontendStack = mikepattynBrandFrontendStack;
+        AlienButNiceBrandFrontendStack = alienButNiceBrandFrontendStack;
     }
 
     public static StackComposition Build(App app)
@@ -132,6 +138,34 @@ public sealed class StackComposition
             );
         }
 
+        var mikepattynBrandFrontendStack = new BrandFrontendStack(
+            app,
+            new BrandFrontendStackProps
+            {
+                AppName = Constants.Apps.Mikepattyn,
+                DeploymentEnvironment = DeploymentEnvironment.Production,
+                PlatformDomainName = Constants.Domains.Mikepattyn,
+                StackEnvironment = stackEnvironment,
+                HostedZone = mikepattynDomainStack.HostedZone,
+                Certificate = mikepattynDomainStack.Certificate,
+            }
+        );
+
+        var alienButNiceBrandFrontendStack = new BrandFrontendStack(
+            app,
+            new BrandFrontendStackProps
+            {
+                AppName = Constants.Apps.AlienButNice,
+                DeploymentEnvironment = DeploymentEnvironment.Production,
+                PlatformDomainName = Constants.Domains.AlienButNice,
+                StackEnvironment = stackEnvironment,
+                HostedZone = alienButNiceDomainStack.HostedZone,
+                Certificate = alienButNiceDomainStack.Certificate,
+            }
+        );
+
+        var brandAppNames = new[] { Constants.Apps.Mikepattyn, Constants.Apps.AlienButNice };
+
         var ssmParameterArns = deploymentEnvironments
             .SelectMany(
                 deploymentEnvironment =>
@@ -142,6 +176,15 @@ public sealed class StackComposition
                                     $"arn:aws:ssm:{Constants.Deployment.Region}:{Constants.Deployment.AccountId}:parameter/{appName}/{deploymentEnvironment.Name}/Frontend/{parameterName}"
                             )
                     )
+            )
+            .Concat(
+                brandAppNames.SelectMany(
+                    appName =>
+                        FrontendSsmParameterNames.Select(
+                            parameterName =>
+                                $"arn:aws:ssm:{Constants.Deployment.Region}:{Constants.Deployment.AccountId}:parameter/{appName}/{DeploymentEnvironment.Production.Name}/Frontend/{parameterName}"
+                        )
+                )
             )
             .Concat(
                 deploymentEnvironments.SelectMany(
@@ -165,10 +208,22 @@ public sealed class StackComposition
                 S3BucketArns = kapsalonFrontendStacks
                     .Select(stack => stack.BucketArn)
                     .Concat(fishEdgeStacks.Select(stack => stack.WebBucket.BucketArn))
+                    .Concat(
+                        [
+                            mikepattynBrandFrontendStack.BucketArn,
+                            alienButNiceBrandFrontendStack.BucketArn,
+                        ]
+                    )
                     .ToArray(),
                 CloudFrontDistributionArns = kapsalonFrontendStacks
                     .Select(stack => stack.DistributionArn)
                     .Concat(fishEdgeStacks.Select(stack => stack.Distribution.DistributionArn))
+                    .Concat(
+                        [
+                            mikepattynBrandFrontendStack.DistributionArn,
+                            alienButNiceBrandFrontendStack.DistributionArn,
+                        ]
+                    )
                     .ToArray(),
                 SsmParameterArns = ssmParameterArns,
             }
@@ -192,7 +247,9 @@ public sealed class StackComposition
             mikepattynDomainStack,
             alienButNiceDomainStack,
             kapsalonFrontendStacks,
-            fishEdgeStacks
+            fishEdgeStacks,
+            mikepattynBrandFrontendStack,
+            alienButNiceBrandFrontendStack
         );
     }
 }

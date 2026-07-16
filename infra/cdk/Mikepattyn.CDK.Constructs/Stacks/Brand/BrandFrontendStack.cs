@@ -2,7 +2,7 @@ using Amazon.CDK.AWS.Route53.Targets;
 
 namespace Mikepattyn.CDK.Constructs;
 
-public class FrontendStack : BaseStack<FrontendStackProps>
+public class BrandFrontendStack : BaseStack<BrandFrontendStackProps>
 {
     private WebApplicationHostingConstruct WebApp { get; }
 
@@ -12,14 +12,11 @@ public class FrontendStack : BaseStack<FrontendStackProps>
     public string DistributionArn => WebApp.Distribution.DistributionArn;
     public string DomainName { get; }
 
-    public FrontendStack(Construct scope, FrontendStackProps props)
+    public BrandFrontendStack(Construct scope, BrandFrontendStackProps props)
         : base(scope, props)
     {
-        DomainName = AppHostnames.For(
-            props.AppSlug,
-            props.DeploymentEnvironment,
-            props.PlatformDomainName
-        );
+        DomainName = BrandHostnames.Primary(props.PlatformDomainName);
+        var domainNames = BrandHostnames.GetDomainNames(props.PlatformDomainName);
 
         WebApp = new WebApplicationHostingConstruct(
             this,
@@ -27,29 +24,43 @@ public class FrontendStack : BaseStack<FrontendStackProps>
             new WebApplicationHostingConstructProps
             {
                 AppName = props.AppName,
-                DomainNames = AppHostnames.GetDomainNames(
-                    props.AppSlug,
-                    props.DeploymentEnvironment,
-                    props.PlatformDomainName
-                ),
+                DomainNames = domainNames,
                 Certificate = props.Certificate,
                 DeploymentEnvironment = props.DeploymentEnvironment,
             }
         );
 
-        new CnameRecord(
+        var cloudFrontTarget = new CloudFrontTarget(WebApp.Distribution);
+
+        CreateAliasRecord(
             this,
-            props.GetUniqueResourceId(nameof(CnameRecord)),
-            new CnameRecordProps
-            {
-                Zone = props.HostedZone,
-                RecordName = AppHostnames.GetRecordName(
-                    props.AppSlug,
-                    props.DeploymentEnvironment
-                ),
-                DomainName = WebApp.Distribution.DomainName,
-                Ttl = Duration.Seconds(300),
-            }
+            props,
+            props.GetUniqueResourceId("ApexA"),
+            recordName: string.Empty,
+            cloudFrontTarget
+        );
+        CreateAliasRecord(
+            this,
+            props,
+            props.GetUniqueResourceId("ApexAAAA"),
+            recordName: string.Empty,
+            cloudFrontTarget,
+            ipv6: true
+        );
+        CreateAliasRecord(
+            this,
+            props,
+            props.GetUniqueResourceId("WwwA"),
+            recordName: "www",
+            cloudFrontTarget
+        );
+        CreateAliasRecord(
+            this,
+            props,
+            props.GetUniqueResourceId("WwwAAAA"),
+            recordName: "www",
+            cloudFrontTarget,
+            ipv6: true
         );
 
         PublishOutput(props, nameof(BucketName), BucketName);
@@ -76,7 +87,45 @@ public class FrontendStack : BaseStack<FrontendStackProps>
         AmazonAspect.Of(this).Add(new Amazon.CDK.Tag("App", props.AppName));
     }
 
-    private void PublishOutput(FrontendStackProps props, string name, string value)
+    private static void CreateAliasRecord(
+        Construct scope,
+        BrandFrontendStackProps props,
+        string id,
+        string recordName,
+        CloudFrontTarget target,
+        bool ipv6 = false
+    )
+    {
+        var aliasTarget = RecordTarget.FromAlias(target);
+
+        if (ipv6)
+        {
+            new AaaaRecord(
+                scope,
+                id,
+                new AaaaRecordProps
+                {
+                    Zone = props.HostedZone,
+                    RecordName = recordName,
+                    Target = aliasTarget,
+                }
+            );
+            return;
+        }
+
+        new ARecord(
+            scope,
+            id,
+            new ARecordProps
+            {
+                Zone = props.HostedZone,
+                RecordName = recordName,
+                Target = aliasTarget,
+            }
+        );
+    }
+
+    private void PublishOutput(BrandFrontendStackProps props, string name, string value)
     {
         new CfnOutput(
             this,
@@ -89,7 +138,7 @@ public class FrontendStack : BaseStack<FrontendStackProps>
         );
     }
 
-    private void PublishSsmParameter(FrontendStackProps props, string name, string value)
+    private void PublishSsmParameter(BrandFrontendStackProps props, string name, string value)
     {
         new StringParameter(
             this,

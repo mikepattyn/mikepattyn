@@ -21,7 +21,7 @@ _Avoid_: live DNS/HTTP checks in this suite.
 - Does not own API handler behavior; application backends own request semantics.
 - Creates one `DomainStack` per `IPlatformDomain` (Mikepattyn, AlienButNice).
 
-Synth e2e validates **PlatformDomain** apexes via `DomainStack.DomainName` and **AppHostname** FQDNs via CloudFront aliases plus Route53 CNAME records in frontend/edge stacks.
+Synth e2e validates **PlatformDomain** apexes via `DomainStack.DomainName`, **AppHostname** FQDNs via CloudFront aliases plus Route53 CNAME records in frontend/edge stacks, and **BrandHostname** apex + `www` via `BrandFrontendStack` Alias records.
 
 ## Example dialogue
 

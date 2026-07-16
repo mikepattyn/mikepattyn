@@ -30,8 +30,11 @@ STACK_FISH_FRONTEND_DEV := Fish-Frontend-Stack-Development
 STACK_FISH_FRONTEND_STAGING := Fish-Frontend-Stack-Staging
 STACK_FISH_FRONTEND_PROD := Fish-Frontend-Stack-Production
 
+STACK_MIKEPATTYN_BRAND_FRONTEND_PROD := Mikepattyn-BrandFrontend-Stack-Production
+STACK_ALIENBUTNICE_BRAND_FRONTEND_PROD := AlienButNice-BrandFrontend-Stack-Production
+
 .PHONY: help bootstrap cdk-check-config cdk-build cdk-synth cdk-diff cdk-deploy \
-	cdk-deploy-shared cdk-deploy-domain cdk-deploy-auth \
+	cdk-deploy-shared cdk-deploy-domain cdk-deploy-auth cdk-deploy-brand \
 	cdk-deploy-kapsalon-dev cdk-deploy-kapsalon-staging cdk-deploy-kapsalon-prod \
 	cdk-deploy-fish-dev cdk-deploy-fish-staging cdk-deploy-fish-prod \
 	lambda-build test-cdk fish-web-build
@@ -51,6 +54,7 @@ help:
 	@echo "  make cdk-deploy-shared      Deploy Domain + Auth"
 	@echo "  make cdk-deploy-domain      Deploy Domain only"
 	@echo "  make cdk-deploy-auth        Deploy Auth only"
+	@echo "  make cdk-deploy-brand       Deploy Mikepattyn + AlienButNice brand frontends"
 	@echo ""
 	@echo "Deploy kapsalon (per environment):"
 	@echo "  make cdk-deploy-kapsalon-dev"
@@ -93,6 +97,10 @@ cdk-deploy-domain: cdk-check-config cdk-build
 
 cdk-deploy-auth: cdk-check-config cdk-build
 	cd $(CDK_DIR) && $(CDK) deploy $(STACK_AUTH) --require-approval $(CDK_APPROVAL)
+
+cdk-deploy-brand: cdk-check-config cdk-build
+	cd $(CDK_DIR) && $(CDK) deploy $(STACK_MIKEPATTYN_BRAND_FRONTEND_PROD) --require-approval $(CDK_APPROVAL)
+	cd $(CDK_DIR) && $(CDK) deploy $(STACK_ALIENBUTNICE_BRAND_FRONTEND_PROD) --require-approval $(CDK_APPROVAL)
 
 cdk-deploy-kapsalon-dev: cdk-check-config cdk-build lambda-build
 	cd $(CDK_DIR) && $(CDK) deploy $(STACK_KAPSALON_FRONTEND_DEV) --require-approval $(CDK_APPROVAL)

@@ -22,7 +22,9 @@ Use single-level host labels:
 
 Implemented in `AppHostnames.For(appSlug, environment, platformDomain)`.
 
-Route53 records are CNAME to CloudFront for all environments (no apex alias on `mikepattyn.nl` itself).
+Product applications use Route53 **CNAME** records to CloudFront.
+
+Brand/portfolio sites (`Mikepattyn`, `AlienButNice`) use Production-only `BrandFrontendStack` with **Alias A/AAAA** records for apex and `www` on each platform domain.
 
 ## Consequences
 

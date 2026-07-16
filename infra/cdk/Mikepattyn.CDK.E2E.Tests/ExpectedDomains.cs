@@ -24,4 +24,12 @@ public static class ExpectedDomains
         new("fish-acc.mikepattyn.nl", "fish"),
         new("fish.mikepattyn.nl", "fish"),
     ];
+
+    public sealed record BrandHostnameExpectation(string PlatformDomain, string StackId);
+
+    internal static readonly BrandHostnameExpectation[] BrandHostnames =
+    [
+        new("mikepattyn.nl", "Mikepattyn-BrandFrontend-Stack-Production"),
+        new("alienbutnice.nl", "AlienButNice-BrandFrontend-Stack-Production"),
+    ];
 }

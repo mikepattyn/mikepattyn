@@ -66,6 +66,59 @@ public class StackCompositionDomainTests
     public static IEnumerable<object[]> AppHostnameCases() =>
         ExpectedDomains.AppHostnames.Select(expected => new object[] { expected });
 
+    [Theory]
+    [MemberData(nameof(BrandHostnameCases))]
+    public void Build_PublishesBrandApexAndWwwOnCloudFrontAndRoute53(
+        ExpectedDomains.BrandHostnameExpectation expected
+    )
+    {
+        using var cwd = CdkE2ETestHelpers.UseCdkWorkingDirectory();
+        var app = new App();
+        var composition = StackComposition.Build(app);
+
+        var stack = GetBrandStack(composition, expected.PlatformDomain);
+        Assert.Equal(expected.StackId, stack.Node.Id);
+
+        var template = Template.FromStack(stack);
+        template.HasResourceProperties(
+            "AWS::CloudFront::Distribution",
+            new Dictionary<string, object>
+            {
+                ["DistributionConfig"] = Match.ObjectLike(
+                    new Dictionary<string, object>
+                    {
+                        ["Aliases"] = Match.ArrayWith(
+                            new object[] { expected.PlatformDomain, $"www.{expected.PlatformDomain}" }
+                        ),
+                    }
+                ),
+            }
+        );
+        template.ResourceCountIs("AWS::Route53::RecordSet", 4);
+        template.HasResourceProperties(
+            "AWS::Route53::RecordSet",
+            new Dictionary<string, object>
+            {
+                ["Type"] = "A",
+                ["AliasTarget"] = Match.ObjectLike(new Dictionary<string, object>()),
+            }
+        );
+    }
+
+    public static IEnumerable<object[]> BrandHostnameCases() =>
+        ExpectedDomains.BrandHostnames.Select(expected => new object[] { expected });
+
+    private static BrandFrontendStack GetBrandStack(
+        StackComposition composition,
+        string platformDomain
+    ) =>
+        platformDomain switch
+        {
+            Constants.Domains.Mikepattyn => composition.MikepattynBrandFrontendStack,
+            Constants.Domains.AlienButNice => composition.AlienButNiceBrandFrontendStack,
+            _ => throw new ArgumentOutOfRangeException(nameof(platformDomain), platformDomain, null),
+        };
+
     private static DomainStack GetPlatformDomainStack(
         StackComposition composition,
         string domainName

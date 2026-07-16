@@ -44,6 +44,7 @@ _Avoid_: service stack
 |-----|-------------|---------|------------|
 | Kapsalon | kapsalon-dev.mikepattyn.nl | kapsalon-acc.mikepattyn.nl | kapsalon.mikepattyn.nl |
 | Fish | fish-dev.mikepattyn.nl | fish-acc.mikepattyn.nl | fish.mikepattyn.nl |
-| Portfolio | — | — | (not hosted yet; `apps/mikepattyn`) |
+| Portfolio | — | — | mikepattyn.nl (+ www) |
+| AlienButNice | — | — | alienbutnice.nl (+ www) |
 
 Platform domains (apex): `mikepattyn.nl`, `alienbutnice.nl`.

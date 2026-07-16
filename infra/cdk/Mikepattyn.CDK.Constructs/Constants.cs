@@ -15,10 +15,12 @@ public static partial class Constants
     {
         public const string Kapsalon = "Kapsalon";
         public const string Fish = "Fish";
+        public const string Mikepattyn = "Mikepattyn";
         public const string AlienButNice = "AlienButNice";
 
         public const string KapsalonSlug = "kapsalon";
         public const string FishSlug = "fish";
+        public const string MikepattynSlug = "mikepattyn";
         public const string AlienButNiceSlug = "alienbutnice";
     }
 
@@ -42,5 +44,7 @@ public static partial class Constants
         public static readonly string KapsalonBackend = GetAppStack(Apps.Kapsalon, "Backend");
         public static readonly string FishBackend = GetAppStack(Apps.Fish, "Backend");
         public static readonly string FishFrontend = GetAppStack(Apps.Fish, "Frontend");
+        public static readonly string MikepattynBrandFrontend = GetAppStack(Apps.Mikepattyn, "BrandFrontend");
+        public static readonly string AlienButNiceBrandFrontend = GetAppStack(Apps.AlienButNice, "BrandFrontend");
     }
 }

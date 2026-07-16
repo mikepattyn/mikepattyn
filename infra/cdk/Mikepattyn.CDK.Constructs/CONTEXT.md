@@ -25,6 +25,14 @@ _Avoid_: mixing two apps in one stack class.
 FQDN from `AppHostnames.For(slug, environment, mikepattyn.nl)`.
 _Avoid_: hardcoding `dev.` prefix on platform domain.
 
+**BrandHostname**:
+Apex + `www` FQDNs from `BrandHostnames.GetDomainNames(platformDomain)` for Production brand sites.
+_Avoid_: using `AppHostnames` for apex portfolio/brand domains.
+
+**BrandFrontendStack**:
+Production-only static site stack for platform apex domains (`mikepattyn.nl`, `alienbutnice.nl`) with Alias A/AAAA DNS.
+_Avoid_: reusing product `FrontendStack` CNAME pattern for apex records.
+
 ## Boundaries
 
 - Owns constructs, stack props, aspects, naming conventions.

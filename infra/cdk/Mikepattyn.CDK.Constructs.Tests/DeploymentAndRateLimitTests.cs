@@ -50,6 +50,20 @@ public class AppHostnamesTests
     }
 }
 
+public class BrandHostnamesTests
+{
+    [Theory]
+    [InlineData("mikepattyn.nl")]
+    [InlineData("alienbutnice.nl")]
+    public void GetDomainNames_IncludesApexAndWww(string platformDomain)
+    {
+        Assert.Equal(
+            [platformDomain, $"www.{platformDomain}"],
+            BrandHostnames.GetDomainNames(platformDomain)
+        );
+    }
+}
+
 public class DeploymentEnvironmentTests
 {
     [Fact]

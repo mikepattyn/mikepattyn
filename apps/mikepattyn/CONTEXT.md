@@ -16,7 +16,7 @@ _Avoid_: listing AlienButNice as an Application next to Kapsalon/Fish
 
 - Owns marketing copy and static frontend only.
 - Does not own app business logic (submodules under `apps/` do).
-- Does not yet own CDK hosting; deploy wiring is future work.
+- CDK hosting via `Mikepattyn-BrandFrontend-Stack-Production` (`apps/mikepattyn` → `mikepattyn.nl` + `www`).
 
 ## Stack
 
