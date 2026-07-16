@@ -29,9 +29,9 @@ jobs:
         run: |
           mkdir -p infra/cdk/Mikepattyn.CDK/lambda
           echo placeholder > infra/cdk/Mikepattyn.CDK/lambda/placeholder.txt
-          cd infra/cdk/Mikepattyn.CDK/lambda && zip -q kapsalon.zip placeholder.txt
+          (cd infra/cdk/Mikepattyn.CDK/lambda && zip -q kapsalon.zip placeholder.txt)
           echo placeholder > infra/cdk/Mikepattyn.CDK/lambda/placeholder-fish.txt
-          cd infra/cdk/Mikepattyn.CDK/lambda && zip -q fish.zip placeholder-fish.txt
+          (cd infra/cdk/Mikepattyn.CDK/lambda && zip -q fish.zip placeholder-fish.txt)
 
       - name: Run CDK construct tests
         run: dotnet test infra/cdk/Mikepattyn.CDK.Constructs.Tests/Mikepattyn.CDK.Constructs.Tests.csproj --configuration Release
