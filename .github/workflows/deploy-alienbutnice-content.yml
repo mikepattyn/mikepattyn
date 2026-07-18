@@ -1,0 +1,46 @@
+name: Deploy AlienButNice content
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/alienbutnice/**'
+      - 'scripts/sync-brand-frontend.sh'
+      - 'scripts/sync-static-site.sh'
+      - 'Makefile'
+      - '.github/workflows/deploy-alienbutnice-content.yml'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'eu-central-1' }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync brand site
+        run: |
+          chmod +x scripts/*.sh
+          make sync-alienbutnice

@@ -1,0 +1,71 @@
+name: Deploy CDK
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: CDK deploy target
+        required: true
+        type: choice
+        options:
+          - cdk-deploy-all
+          - cdk-deploy-shared
+          - cdk-deploy-domain
+          - cdk-deploy-auth
+          - cdk-deploy-brand
+          - cdk-deploy-mikepattyn
+          - cdk-deploy-alienbutnice
+          - cdk-deploy-kapsalon-dev
+          - cdk-deploy-kapsalon-staging
+          - cdk-deploy-kapsalon-prod
+          - cdk-deploy-fish-dev
+          - cdk-deploy-fish-staging
+          - cdk-deploy-fish-prod
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'eu-central-1' }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+
+      - name: Setup CDK CLI
+        run: npm install -g aws-cdk@2
+
+      - name: Verify deployment config
+        run: |
+          if [ ! -f infra/cdk/Mikepattyn.CDK.Constructs/Constants.Deployment.cs ]; then
+            echo "Constants.Deployment.cs is required for CDK deploy."
+            echo "Copy Constants.Deployment.cs.example and configure account, zones, and certs."
+            exit 1
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Deploy CDK stacks
+        run: |
+          chmod +x scripts/*.sh
+          make ${{ inputs.target }}

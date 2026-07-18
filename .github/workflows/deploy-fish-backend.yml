@@ -1,0 +1,85 @@
+name: Deploy Fish backend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/fishi-tracking-app/backend/**'
+      - 'scripts/build-fish-lambda.sh'
+      - 'scripts/sync-fish-backend.sh'
+      - 'Makefile'
+      - '.github/workflows/deploy-fish-backend.yml'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Deployment environment
+        required: true
+        default: Development
+        type: choice
+        options:
+          - Development
+          - Staging
+          - Production
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'eu-central-1' }}
+
+jobs:
+  resolve-targets:
+    runs-on: ubuntu-latest
+    outputs:
+      environments: ${{ steps.resolve.outputs.environments }}
+    steps:
+      - name: Resolve deployment environments
+        id: resolve
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ENVIRONMENTS='["${{ inputs.environment }}"]'
+          elif [ "${{ vars.DEPLOY_FISH_BACKEND_ALL_ENVS }}" = "true" ]; then
+            ENVIRONMENTS='["Development","Staging","Production"]'
+          else
+            ENVIRONMENTS='["Development"]'
+          fi
+          echo "environments=${ENVIRONMENTS}" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: resolve-targets
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: ${{ fromJson(needs.resolve-targets.outputs.environments) }}
+    environment: ${{ matrix.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync backend
+        env:
+          DEPLOY_ENV: ${{ matrix.environment }}
+        run: |
+          chmod +x scripts/*.sh
+          case "$DEPLOY_ENV" in
+            Development) make sync-fish-backend-dev ;;
+            Staging) make sync-fish-backend-staging ;;
+            Production) make sync-fish-backend-prod ;;
+            *) echo "Unknown environment: $DEPLOY_ENV" && exit 1 ;;
+          esac
