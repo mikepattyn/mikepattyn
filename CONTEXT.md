@@ -47,4 +47,6 @@ _Avoid_: service stack
 | Portfolio | — | — | mikepattyn.nl (+ www) |
 | AlienButNice | — | — | alienbutnice.nl (+ www) |
 
+Product applications expose their API as same-origin `/api/*` on the **AppHostname** (CloudFront → API Gateway). There are no dedicated `*-api` hostnames.
+
 Platform domains (apex): `mikepattyn.nl`, `alienbutnice.nl`.

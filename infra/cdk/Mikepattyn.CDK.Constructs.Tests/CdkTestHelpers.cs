@@ -82,6 +82,7 @@ internal static class CdkTestHelpers
                 "ImportedCertificate",
                 "arn:aws:acm:us-east-1:123456789012:certificate/00000000-0000-0000-0000-000000000000"
             ),
+            ApiGatewayDomainName = "abc123.execute-api.eu-central-1.amazonaws.com",
         };
 
     internal static FishEdgeStackProps CreateFishEdgeStackProps(Stack stack) =>

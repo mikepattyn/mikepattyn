@@ -43,6 +43,27 @@ public class WebApplicationHostingConstruct : Construct
     {
         var hostnames = string.Join(", ", props.DomainNames);
 
+        var additionalBehaviors = new Dictionary<string, IBehaviorOptions>();
+        if (!string.IsNullOrEmpty(props.ApiGatewayDomainName))
+        {
+            var apiOrigin = new HttpOrigin(
+                props.ApiGatewayDomainName,
+                new HttpOriginProps
+                {
+                    OriginPath = $"/{props.DeploymentEnvironment.Name}",
+                }
+            );
+
+            additionalBehaviors["/api/*"] = new BehaviorOptions
+            {
+                Origin = apiOrigin,
+                ViewerProtocolPolicy = ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+                AllowedMethods = AllowedMethods.ALLOW_ALL,
+                CachePolicy = CachePolicy.CACHING_DISABLED,
+                OriginRequestPolicy = OriginRequestPolicy.ALL_VIEWER,
+            };
+        }
+
         return new Distribution(
             this,
             props.GetResourceIdentifier(nameof(Distribution)),
@@ -59,6 +80,7 @@ public class WebApplicationHostingConstruct : Construct
                     AllowedMethods = AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
                     CachedMethods = CachedMethods.CACHE_GET_HEAD_OPTIONS,
                 },
+                AdditionalBehaviors = additionalBehaviors.Count > 0 ? additionalBehaviors : null,
                 DefaultRootObject = "index.html",
                 ErrorResponses =
                 [

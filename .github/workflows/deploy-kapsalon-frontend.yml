@@ -83,10 +83,7 @@ jobs:
           BUILD_CONFIGURATION=$(echo "$DEPLOY_ENV" | tr '[:upper:]' '[:lower:]')
           npm ci
           npm run test:ci
-          API_URL=$(aws ssm get-parameter --name "/Kapsalon/${DEPLOY_ENV}/Backend/ApiUrl" --query 'Parameter.Value' --output text)
-          API_URL="${API_URL%/}"
-          sed -e "s|__API_BASE_URL__|${API_URL}|g" \
-              -e "s|__TENANT_ID__|sabunandsteel|g" \
+          sed -e "s|__TENANT_ID__|sabunandsteel|g" \
               -e "s|__ENABLE_DEMO_SHORTCUTS__|false|g" \
             src/environments/environment.template.ts \
             > "src/environments/environment.${BUILD_CONFIGURATION}.ts"

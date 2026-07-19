@@ -8,7 +8,7 @@ Sources: [`infra/cdk/Mikepattyn.CDK/StackComposition.cs`](../../infra/cdk/Mikepa
 
 | App | Path | CDK stacks (per env unless noted) | Prerequisite stacks |
 |-----|------|-----------------------------------|---------------------|
-| Kapsalon | `apps/kapsalon` | `Kapsalon-Frontend-Stack-{Env}`, `Kapsalon-Backend-Stack-{Env}` | `Mikepattyn-Domain-Stack` (frontend DNS/TLS) |
+| Kapsalon | `apps/kapsalon` | `Kapsalon-Backend-Stack-{Env}`, `Kapsalon-Frontend-Stack-{Env}` | `Mikepattyn-Domain-Stack`; frontend stack needs backend API hostname |
 | Fish | `apps/fishi-tracking-app` | `Fish-Backend-Stack-{Env}`, `Fish-Frontend-Stack-{Env}` | `Mikepattyn-Domain-Stack`; edge stack needs backend API hostname |
 | Mikepattyn portfolio | `apps/mikepattyn` | `Mikepattyn-BrandFrontend-Stack-Production` | `Mikepattyn-Domain-Stack` |
 | AlienButNice | `apps/alienbutnice` | `AlienButNice-BrandFrontend-Stack-Production` | `AlienButNice-Domain-Stack` |
@@ -27,7 +27,7 @@ CDK publishes deployment targets to SSM. Content sync scripts read these, then `
 | Mikepattyn brand | `/Mikepattyn/Production/Frontend/BucketName` | `/Mikepattyn/Production/Frontend/DistributionId` |
 | AlienButNice brand | `/AlienButNice/Production/Frontend/BucketName` | `/AlienButNice/Production/Frontend/DistributionId` |
 
-Kapsalon frontend build also reads `/Kapsalon/{Env}/Backend/ApiUrl` for environment config.
+Kapsalon SPA uses relative `apiBaseUrl: '/api'` on the app hostname. SSM `/Kapsalon/{Env}/Backend/ApiUrl` is ops-only (execute-api base including `/api`).
 
 ## Lambda function naming
 

@@ -7,7 +7,8 @@ public class BackendStack : BaseStack<BackendStackProps>
     private ApiGatewayConstruct ApiGatewayConstruct { get; }
     private AuthorizersConstruct AuthorizersConstruct { get; }
 
-    private string ApiUrl => ApiGatewayConstruct.ApiUrl;
+    public string ApiUrl { get; }
+    public string ApiGatewayHostName { get; }
     private string ApplicationTableName => DynamoDbConstruct.Application.TableName;
 
     public BackendStack(Construct scope, BackendStackProps props)
@@ -59,6 +60,11 @@ public class BackendStack : BaseStack<BackendStackProps>
                 ),
             }
         );
+
+        var stack = Stack.Of(this);
+        ApiGatewayHostName =
+            $"{ApiGatewayConstruct.Api.RestApiId}.execute-api.{stack.Region}.{stack.UrlSuffix}";
+        ApiUrl = $"{ApiGatewayConstruct.ApiUrl.TrimEnd('/')}/api";
 
         new CfnOutput(
             this,

@@ -25,6 +25,10 @@ _Avoid_: mixing two apps in one stack class.
 FQDN from `AppHostnames.For(slug, environment, mikepattyn.nl)`.
 _Avoid_: hardcoding `dev.` prefix on platform domain.
 
+**AppApiPath**:
+Same-origin API prefix on an **AppHostname** (`/api/*` via CloudFront → API Gateway).
+_Avoid_: dedicated `*-api` hostnames; baking execute-api URLs into SPA builds
+
 **BrandHostname**:
 Apex + `www` FQDNs from `BrandHostnames.GetDomainNames(platformDomain)` for Production brand sites.
 _Avoid_: using `AppHostnames` for apex portfolio/brand domains.

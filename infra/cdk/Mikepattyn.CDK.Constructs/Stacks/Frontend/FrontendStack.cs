@@ -34,6 +34,7 @@ public class FrontendStack : BaseStack<FrontendStackProps>
                 ),
                 Certificate = props.Certificate,
                 DeploymentEnvironment = props.DeploymentEnvironment,
+                ApiGatewayDomainName = props.ApiGatewayDomainName,
             }
         );
 

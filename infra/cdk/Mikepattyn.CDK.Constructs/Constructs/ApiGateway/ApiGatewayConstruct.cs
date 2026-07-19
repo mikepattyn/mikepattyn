@@ -93,11 +93,13 @@ public class ApiGatewayConstruct : Construct
             Authorizer = props.AuthorizersConstruct.RestApiAuthorizer,
         };
 
-        var me = Api.Root.AddResource("me", new ResourceOptions { DefaultMethodOptions = authorizedMethodOptions });
+        var api = Api.Root.AddResource("api");
+
+        var me = api.AddResource("me", new ResourceOptions { DefaultMethodOptions = authorizedMethodOptions });
         var myAppointments = me.AddResource("appointments");
         myAppointments.AddMethod("GET", new LambdaIntegration(props.LambdaConstruct.Scheduling));
 
-        var tenants = Api.Root.AddResource("tenants");
+        var tenants = api.AddResource("tenants");
         var tenant = tenants.AddResource("{tenantId}");
 
         var tenantIdentity = tenant.AddResource(
@@ -131,7 +133,7 @@ public class ApiGatewayConstruct : Construct
         var walkIns = scheduling.AddResource("walk-ins");
         walkIns.AddMethod("POST", new LambdaIntegration(props.LambdaConstruct.Scheduling));
 
-        var identity = Api.Root.AddResource("identity");
+        var identity = api.AddResource("identity");
         var login = identity.AddResource("login");
         login.AddMethod("POST", new LambdaIntegration(props.LambdaConstruct.Identity));
 

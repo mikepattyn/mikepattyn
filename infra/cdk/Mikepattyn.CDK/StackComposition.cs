@@ -89,6 +89,17 @@ public sealed class StackComposition
         var kapsalonFrontendStacks = new List<FrontendStack>();
         foreach (var deploymentEnvironment in deploymentEnvironments)
         {
+            var kapsalonBackend = new BackendStack(
+                app,
+                new BackendStackProps
+                {
+                    DeploymentEnvironment = deploymentEnvironment,
+                    StackEnvironment = stackEnvironment,
+                    AuthressApiBasePath = Constants.Deployment.AuthressApiBasePath,
+                    AuthressResourceGroupId = Constants.Deployment.AuthressResourceGroupId,
+                }
+            );
+
             kapsalonFrontendStacks.Add(
                 new FrontendStack(
                     app,
@@ -101,6 +112,7 @@ public sealed class StackComposition
                         StackEnvironment = stackEnvironment,
                         HostedZone = mikepattynDomainStack.HostedZone,
                         Certificate = mikepattynDomainStack.Certificate,
+                        ApiGatewayDomainName = kapsalonBackend.ApiGatewayHostName,
                     }
                 )
             );
@@ -229,20 +241,6 @@ public sealed class StackComposition
                 SsmParameterArns = ssmParameterArns,
             }
         );
-
-        foreach (var deploymentEnvironment in deploymentEnvironments)
-        {
-            _ = new BackendStack(
-                app,
-                new BackendStackProps
-                {
-                    DeploymentEnvironment = deploymentEnvironment,
-                    StackEnvironment = stackEnvironment,
-                    AuthressApiBasePath = Constants.Deployment.AuthressApiBasePath,
-                    AuthressResourceGroupId = Constants.Deployment.AuthressResourceGroupId,
-                }
-            );
-        }
 
         return new StackComposition(
             mikepattynDomainStack,

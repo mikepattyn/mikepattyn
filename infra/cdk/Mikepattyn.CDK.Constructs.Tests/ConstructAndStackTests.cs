@@ -195,6 +195,52 @@ public class WebApplicationHostingConstructTests
             }
         );
     }
+
+    [Fact]
+    public void WebApplicationHostingConstruct_WithApiGateway_AddsApiPathBehavior()
+    {
+        var app = new App();
+        var stack = new Stack(app, "TestStack", new StackProps { Env = CdkTestHelpers.TestEnv });
+        _ = new WebApplicationHostingConstruct(
+            stack,
+            "WebAppWithApi",
+            new WebApplicationHostingConstructProps
+            {
+                AppName = Constants.Apps.Kapsalon,
+                DomainNames = AppHostnames.GetDomainNames(
+                    Constants.Apps.KapsalonSlug,
+                    DeploymentEnvironment.Development,
+                    "mikepattyn.nl"
+                ),
+                DeploymentEnvironment = DeploymentEnvironment.Development,
+                Certificate = Certificate.FromCertificateArn(
+                    stack,
+                    "WebAppApiCertificate",
+                    "arn:aws:acm:us-east-1:123456789012:certificate/00000000-0000-0000-0000-000000000000"
+                ),
+                ApiGatewayDomainName = "abc123.execute-api.eu-central-1.amazonaws.com",
+            }
+        );
+
+        var template = Template.FromStack(stack);
+        template.HasResourceProperties(
+            "AWS::CloudFront::Distribution",
+            new Dictionary<string, object>
+            {
+                ["DistributionConfig"] = Match.ObjectLike(
+                    new Dictionary<string, object>
+                    {
+                        ["CacheBehaviors"] = Match.ArrayWith(
+                            new object[]
+                            {
+                                Match.ObjectLike(new Dictionary<string, object> { ["PathPattern"] = "/api/*" }),
+                            }
+                        ),
+                    }
+                ),
+            }
+        );
+    }
 }
 
 public class StackTests
@@ -266,6 +312,40 @@ public class StackTests
         var template = Template.FromStack(stack);
         template.ResourceCountIs("AWS::S3::Bucket", 1);
         template.ResourceCountIs("AWS::CloudFront::Distribution", 1);
+        template.HasResourceProperties(
+            "AWS::CloudFront::Distribution",
+            new Dictionary<string, object>
+            {
+                ["DistributionConfig"] = Match.ObjectLike(
+                    new Dictionary<string, object>
+                    {
+                        ["CacheBehaviors"] = Match.ArrayWith(
+                            new object[]
+                            {
+                                Match.ObjectLike(new Dictionary<string, object> { ["PathPattern"] = "/api/*" }),
+                            }
+                        ),
+                    }
+                ),
+            }
+        );
+    }
+
+    [Fact]
+    public void BackendStack_PublishesApiUrlWithApiPrefix()
+    {
+        using var cwd = CdkTestHelpers.UseCdkWorkingDirectory();
+        var app = new App();
+        var stack = new BackendStack(app, CdkTestHelpers.CreateBackendStackProps());
+
+        Assert.EndsWith("/api", stack.ApiUrl);
+        Assert.Contains("execute-api", stack.ApiGatewayHostName);
+
+        var template = Template.FromStack(stack);
+        template.HasResourceProperties(
+            "AWS::SSM::Parameter",
+            new Dictionary<string, object> { ["Name"] = "/Kapsalon/Development/Backend/ApiUrl" }
+        );
     }
 
     [Fact]
