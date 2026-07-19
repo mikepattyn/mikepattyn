@@ -12,6 +12,7 @@ public sealed class StackComposition
     private static readonly string[] FrontendSsmParameterNames =
     [
         "BucketName",
+        "WebBucket",
         "DistributionId",
         "CloudFrontDistributionDomain",
         "DomainName",
