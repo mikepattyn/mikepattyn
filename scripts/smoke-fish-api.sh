@@ -7,7 +7,7 @@ TABLE_NAME="${FISH_TABLE_NAME:-Fish-Application-Table-Development}"
 TOKEN="${AUTHRESS_DEV_TOKEN:-}"
 
 if [ -z "$API_URL" ]; then
-  echo "Set FISH_API_URL (e.g. https://fish.mikepattyn.nl/api or API Gateway stage URL + /api)"
+  echo "Set FISH_API_URL (e.g. https://gofish.mikepattyn.nl/api or API Gateway stage URL + /api)"
   exit 1
 fi
 
