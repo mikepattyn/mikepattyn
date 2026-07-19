@@ -6,7 +6,6 @@ on:
     paths:
       - 'infra/cdk/**'
       - 'scripts/test-cdk.sh'
-      - 'Makefile'
   pull_request:
     paths:
       - 'infra/cdk/**'

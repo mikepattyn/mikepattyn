@@ -65,7 +65,122 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Deploy CDK stacks
+      - name: Build CDK solution
+        working-directory: infra/cdk
+        run: dotnet build
+
+      - name: Build Kapsalon lambda package
+        if: >-
+          inputs.target == 'cdk-deploy-all' ||
+          inputs.target == 'cdk-deploy-kapsalon-dev' ||
+          inputs.target == 'cdk-deploy-kapsalon-staging' ||
+          inputs.target == 'cdk-deploy-kapsalon-prod'
         run: |
-          chmod +x scripts/*.sh
-          make ${{ inputs.target }}
+          OUTPUT="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/publish"
+          ZIP="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/kapsalon.zip"
+          KAPSALON="$GITHUB_WORKSPACE/apps/kapsalon"
+          rm -rf "$OUTPUT"
+          mkdir -p "$OUTPUT" "$(dirname "$ZIP")"
+          for project in \
+            "$KAPSALON/backend/Kapsalon.Shared/Kapsalon.Shared.csproj" \
+            "$KAPSALON/backend/Kapsalon.Auth/Kapsalon.Auth.csproj" \
+            "$KAPSALON/backend/Kapsalon.Identity.Api/Kapsalon.Identity.Api.csproj" \
+            "$KAPSALON/backend/Kapsalon.Scheduling.Api/Kapsalon.Scheduling.Api.csproj" \
+            "$KAPSALON/backend/Kapsalon.Tenant.Api/Kapsalon.Tenant.Api.csproj"
+          do
+            dotnet publish "$project" -c Release -o "$OUTPUT" /p:UseAppHost=false /p:GenerateRuntimeConfigurationFiles=true
+          done
+          rm -f "$ZIP"
+          (cd "$OUTPUT" && zip -r "$ZIP" .)
+          echo "Created $ZIP"
+
+      - name: Build Fish lambda package
+        if: >-
+          inputs.target == 'cdk-deploy-all' ||
+          inputs.target == 'cdk-deploy-fish-dev' ||
+          inputs.target == 'cdk-deploy-fish-staging' ||
+          inputs.target == 'cdk-deploy-fish-prod'
+        run: |
+          OUTPUT="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/publish-fish"
+          ZIP="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/fish.zip"
+          FISH="$GITHUB_WORKSPACE/apps/fishi-tracking-app"
+          rm -rf "$OUTPUT"
+          mkdir -p "$OUTPUT" "$(dirname "$ZIP")"
+          for project in \
+            "$FISH/backend/src/Fish.Shared/Fish.Shared.csproj" \
+            "$FISH/backend/src/Fish.Auth/Fish.Auth.csproj" \
+            "$FISH/backend/src/Fish.Spots.Api/Fish.Spots.Api.csproj" \
+            "$FISH/backend/src/Fish.Catches.Api/Fish.Catches.Api.csproj" \
+            "$FISH/backend/src/Fish.Profile.Api/Fish.Profile.Api.csproj" \
+            "$FISH/backend/src/Fish.Community.Api/Fish.Community.Api.csproj"
+          do
+            dotnet publish "$project" -c Release -o "$OUTPUT" /p:UseAppHost=false /p:GenerateRuntimeConfigurationFiles=true
+          done
+          rm -f "$ZIP"
+          (cd "$OUTPUT" && zip -r "$ZIP" .)
+          echo "Created $ZIP"
+
+      - name: Deploy CDK stacks
+        working-directory: infra/cdk
+        env:
+          TARGET: ${{ inputs.target }}
+        run: |
+          deploy() {
+            cdk deploy "$@" --require-approval broadening
+          }
+
+          case "$TARGET" in
+            cdk-deploy-all)
+              deploy --all
+              ;;
+            cdk-deploy-shared)
+              deploy Mikepattyn-Domain-Stack
+              deploy AlienButNice-Domain-Stack
+              deploy Mikepattyn-Auth-Stack
+              ;;
+            cdk-deploy-domain)
+              deploy Mikepattyn-Domain-Stack
+              deploy AlienButNice-Domain-Stack
+              ;;
+            cdk-deploy-auth)
+              deploy Mikepattyn-Auth-Stack
+              ;;
+            cdk-deploy-brand)
+              deploy Mikepattyn-BrandFrontend-Stack-Production
+              deploy AlienButNice-BrandFrontend-Stack-Production
+              ;;
+            cdk-deploy-mikepattyn)
+              deploy Mikepattyn-BrandFrontend-Stack-Production
+              ;;
+            cdk-deploy-alienbutnice)
+              deploy AlienButNice-BrandFrontend-Stack-Production
+              ;;
+            cdk-deploy-kapsalon-dev)
+              deploy Kapsalon-Frontend-Stack-Development
+              deploy Kapsalon-Backend-Stack-Development
+              ;;
+            cdk-deploy-kapsalon-staging)
+              deploy Kapsalon-Frontend-Stack-Staging
+              deploy Kapsalon-Backend-Stack-Staging
+              ;;
+            cdk-deploy-kapsalon-prod)
+              deploy Kapsalon-Frontend-Stack-Production
+              deploy Kapsalon-Backend-Stack-Production
+              ;;
+            cdk-deploy-fish-dev)
+              deploy Fish-Backend-Stack-Development
+              deploy Fish-Frontend-Stack-Development
+              ;;
+            cdk-deploy-fish-staging)
+              deploy Fish-Backend-Stack-Staging
+              deploy Fish-Frontend-Stack-Staging
+              ;;
+            cdk-deploy-fish-prod)
+              deploy Fish-Backend-Stack-Production
+              deploy Fish-Frontend-Stack-Production
+              ;;
+            *)
+              echo "Unknown target: $TARGET" >&2
+              exit 1
+              ;;
+          esac

@@ -6,9 +6,6 @@ on:
       - main
     paths:
       - 'apps/fishi-tracking-app/backend/**'
-      - 'scripts/build-fish-lambda.sh'
-      - 'scripts/sync-fish-backend.sh'
-      - 'Makefile'
       - '.github/workflows/deploy-fish-backend.yml'
   workflow_dispatch:
     inputs:
@@ -72,14 +69,37 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Sync backend
+      - name: Build lambda package
+        run: |
+          OUTPUT="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/publish-fish"
+          ZIP="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/fish.zip"
+          FISH="$GITHUB_WORKSPACE/apps/fishi-tracking-app"
+          rm -rf "$OUTPUT"
+          mkdir -p "$OUTPUT" "$(dirname "$ZIP")"
+          for project in \
+            "$FISH/backend/src/Fish.Shared/Fish.Shared.csproj" \
+            "$FISH/backend/src/Fish.Auth/Fish.Auth.csproj" \
+            "$FISH/backend/src/Fish.Spots.Api/Fish.Spots.Api.csproj" \
+            "$FISH/backend/src/Fish.Catches.Api/Fish.Catches.Api.csproj" \
+            "$FISH/backend/src/Fish.Profile.Api/Fish.Profile.Api.csproj" \
+            "$FISH/backend/src/Fish.Community.Api/Fish.Community.Api.csproj"
+          do
+            dotnet publish "$project" -c Release -o "$OUTPUT" /p:UseAppHost=false /p:GenerateRuntimeConfigurationFiles=true
+          done
+          rm -f "$ZIP"
+          (cd "$OUTPUT" && zip -r "$ZIP" .)
+          echo "Created $ZIP"
+
+      - name: Update Lambda functions
         env:
           DEPLOY_ENV: ${{ matrix.environment }}
         run: |
-          chmod +x scripts/*.sh
-          case "$DEPLOY_ENV" in
-            Development) make sync-fish-backend-dev ;;
-            Staging) make sync-fish-backend-staging ;;
-            Production) make sync-fish-backend-prod ;;
-            *) echo "Unknown environment: $DEPLOY_ENV" && exit 1 ;;
-          esac
+          ZIP="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/fish.zip"
+          for function_suffix in Authorizer Spots-Api Catches-Api Profile-Api Community-Api; do
+            FUNCTION_NAME="Fish-${function_suffix}-${DEPLOY_ENV}"
+            echo "Updating ${FUNCTION_NAME}..."
+            aws lambda update-function-code \
+              --function-name "${FUNCTION_NAME}" \
+              --zip-file "fileb://${ZIP}"
+          done
+          echo "Done: Fish backend ${DEPLOY_ENV}"

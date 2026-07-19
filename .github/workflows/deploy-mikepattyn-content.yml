@@ -6,9 +6,6 @@ on:
       - main
     paths:
       - 'apps/mikepattyn/**'
-      - 'scripts/sync-brand-frontend.sh'
-      - 'scripts/sync-static-site.sh'
-      - 'Makefile'
       - '.github/workflows/deploy-mikepattyn-content.yml'
   workflow_dispatch:
 
@@ -23,6 +20,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: Production
+    defaults:
+      run:
+        working-directory: apps/mikepattyn
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,7 +40,21 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Sync brand site
+      - name: Build site
         run: |
-          chmod +x scripts/*.sh
-          make sync-mikepattyn
+          npm ci
+          npm run build
+
+      - name: Publish to S3 and invalidate CloudFront
+        run: |
+          SOURCE="$GITHUB_WORKSPACE/apps/mikepattyn/dist"
+          PREFIX="/Mikepattyn/Production/Frontend"
+          BUCKET=$(aws ssm get-parameter --name "${PREFIX}/BucketName" --query 'Parameter.Value' --output text)
+          DISTRIBUTION_ID=$(aws ssm get-parameter --name "${PREFIX}/DistributionId" --query 'Parameter.Value' --output text)
+          echo "Syncing ${SOURCE} → s3://${BUCKET}/"
+          aws s3 sync "$SOURCE" "s3://${BUCKET}/" --delete
+          echo "Invalidating CloudFront distribution ${DISTRIBUTION_ID}"
+          aws cloudfront create-invalidation \
+            --distribution-id "$DISTRIBUTION_ID" \
+            --paths "/*"
+          echo "Done: Mikepattyn Production"

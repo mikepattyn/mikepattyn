@@ -26,7 +26,7 @@ See [CONTEXT-MAP.md](CONTEXT-MAP.md), [docs/research/individual-app-deploy.md](d
 
 ## Deploy individual apps
 
-Make is the source of truth for local and CI deploys. Three target families:
+Make is the source of truth for **local** deploys. Three target families:
 
 | Family | Purpose | Examples |
 |--------|---------|----------|
@@ -57,7 +57,7 @@ make deploy-alienbutnice
 
 ### CI
 
-Root workflows under [`.github/workflows/`](.github/workflows/) deploy content on path-filtered pushes to `main`:
+Root workflows under [`.github/workflows/`](.github/workflows/) run build and deploy commands inline (no Make or shell scripts). They deploy content on path-filtered pushes to `main`:
 
 - **Brands** (`apps/mikepattyn`, `apps/alienbutnice`) → Production
 - **Kapsalon / Fish** → Development (staging/prod via workflow dispatch)

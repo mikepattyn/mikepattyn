@@ -6,10 +6,6 @@ on:
       - main
     paths:
       - 'apps/fishi-tracking-app/mobile/**'
-      - 'scripts/build-fish-web.sh'
-      - 'scripts/sync-fish-frontend.sh'
-      - 'scripts/sync-static-site.sh'
-      - 'Makefile'
       - '.github/workflows/deploy-fish-frontend.yml'
   workflow_dispatch:
     inputs:
@@ -75,14 +71,22 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Sync frontend
+      - name: Build Flutter web
+        working-directory: apps/fishi-tracking-app/mobile
+        run: flutter build web --release
+
+      - name: Publish to S3 and invalidate CloudFront
         env:
           DEPLOY_ENV: ${{ matrix.environment }}
         run: |
-          chmod +x scripts/*.sh
-          case "$DEPLOY_ENV" in
-            Development) make sync-fish-frontend-dev ;;
-            Staging) make sync-fish-frontend-staging ;;
-            Production) make sync-fish-frontend-prod ;;
-            *) echo "Unknown environment: $DEPLOY_ENV" && exit 1 ;;
-          esac
+          SOURCE="$GITHUB_WORKSPACE/apps/fishi-tracking-app/mobile/build/web"
+          PREFIX="/Fish/${DEPLOY_ENV}/Frontend"
+          BUCKET=$(aws ssm get-parameter --name "${PREFIX}/WebBucket" --query 'Parameter.Value' --output text)
+          DISTRIBUTION_ID=$(aws ssm get-parameter --name "${PREFIX}/DistributionId" --query 'Parameter.Value' --output text)
+          echo "Syncing ${SOURCE} → s3://${BUCKET}/"
+          aws s3 sync "$SOURCE" "s3://${BUCKET}/" --delete
+          echo "Invalidating CloudFront distribution ${DISTRIBUTION_ID}"
+          aws cloudfront create-invalidation \
+            --distribution-id "$DISTRIBUTION_ID" \
+            --paths "/*"
+          echo "Done: Fish frontend ${DEPLOY_ENV}"

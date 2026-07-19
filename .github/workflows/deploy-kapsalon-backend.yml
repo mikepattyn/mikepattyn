@@ -6,9 +6,6 @@ on:
       - main
     paths:
       - 'apps/kapsalon/backend/**'
-      - 'scripts/build-lambda.sh'
-      - 'scripts/sync-kapsalon-backend.sh'
-      - 'Makefile'
       - '.github/workflows/deploy-kapsalon-backend.yml'
   workflow_dispatch:
     inputs:
@@ -72,14 +69,36 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Sync backend
+      - name: Build lambda package
+        run: |
+          OUTPUT="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/publish"
+          ZIP="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/kapsalon.zip"
+          KAPSALON="$GITHUB_WORKSPACE/apps/kapsalon"
+          rm -rf "$OUTPUT"
+          mkdir -p "$OUTPUT" "$(dirname "$ZIP")"
+          for project in \
+            "$KAPSALON/backend/Kapsalon.Shared/Kapsalon.Shared.csproj" \
+            "$KAPSALON/backend/Kapsalon.Auth/Kapsalon.Auth.csproj" \
+            "$KAPSALON/backend/Kapsalon.Identity.Api/Kapsalon.Identity.Api.csproj" \
+            "$KAPSALON/backend/Kapsalon.Scheduling.Api/Kapsalon.Scheduling.Api.csproj" \
+            "$KAPSALON/backend/Kapsalon.Tenant.Api/Kapsalon.Tenant.Api.csproj"
+          do
+            dotnet publish "$project" -c Release -o "$OUTPUT" /p:UseAppHost=false /p:GenerateRuntimeConfigurationFiles=true
+          done
+          rm -f "$ZIP"
+          (cd "$OUTPUT" && zip -r "$ZIP" .)
+          echo "Created $ZIP"
+
+      - name: Update Lambda functions
         env:
           DEPLOY_ENV: ${{ matrix.environment }}
         run: |
-          chmod +x scripts/*.sh
-          case "$DEPLOY_ENV" in
-            Development) make sync-kapsalon-backend-dev ;;
-            Staging) make sync-kapsalon-backend-staging ;;
-            Production) make sync-kapsalon-backend-prod ;;
-            *) echo "Unknown environment: $DEPLOY_ENV" && exit 1 ;;
-          esac
+          ZIP="$GITHUB_WORKSPACE/infra/cdk/Mikepattyn.CDK/lambda/kapsalon.zip"
+          for function_suffix in Authorizer Scheduling-Api Identity-Api Tenant-Api; do
+            FUNCTION_NAME="Kapsalon-${function_suffix}-${DEPLOY_ENV}"
+            echo "Updating ${FUNCTION_NAME}..."
+            aws lambda update-function-code \
+              --function-name "${FUNCTION_NAME}" \
+              --zip-file "fileb://${ZIP}"
+          done
+          echo "Done: Kapsalon backend ${DEPLOY_ENV}"

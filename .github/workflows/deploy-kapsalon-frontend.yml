@@ -6,9 +6,6 @@ on:
       - main
     paths:
       - 'apps/kapsalon/apps/web/**'
-      - 'scripts/sync-kapsalon-frontend.sh'
-      - 'scripts/sync-static-site.sh'
-      - 'Makefile'
       - '.github/workflows/deploy-kapsalon-frontend.yml'
   workflow_dispatch:
     inputs:
@@ -55,6 +52,9 @@ jobs:
       matrix:
         environment: ${{ fromJson(needs.resolve-targets.outputs.environments) }}
     environment: ${{ matrix.environment }}
+    defaults:
+      run:
+        working-directory: apps/kapsalon/apps/web
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -74,14 +74,33 @@ jobs:
           role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Sync frontend
+      - name: Build frontend
         env:
           DEPLOY_ENV: ${{ matrix.environment }}
         run: |
-          chmod +x scripts/*.sh
-          case "$DEPLOY_ENV" in
-            Development) make sync-kapsalon-frontend-dev ;;
-            Staging) make sync-kapsalon-frontend-staging ;;
-            Production) make sync-kapsalon-frontend-prod ;;
-            *) echo "Unknown environment: $DEPLOY_ENV" && exit 1 ;;
-          esac
+          BUILD_CONFIGURATION=$(echo "$DEPLOY_ENV" | tr '[:upper:]' '[:lower:]')
+          API_URL=$(aws ssm get-parameter --name "/Kapsalon/${DEPLOY_ENV}/Backend/ApiUrl" --query 'Parameter.Value' --output text)
+          API_URL="${API_URL%/}"
+          sed -e "s|__API_BASE_URL__|${API_URL}|g" \
+              -e "s|__TENANT_ID__|sabunandsteel|g" \
+              -e "s|__ENABLE_DEMO_SHORTCUTS__|false|g" \
+            src/environments/environment.template.ts \
+            > "src/environments/environment.${BUILD_CONFIGURATION}.ts"
+          npm ci
+          npm run test:ci
+          npm run build -- --configuration "$BUILD_CONFIGURATION"
+
+      - name: Publish to S3 and invalidate CloudFront
+        env:
+          DEPLOY_ENV: ${{ matrix.environment }}
+        run: |
+          SOURCE="$GITHUB_WORKSPACE/apps/kapsalon/apps/web/dist/web/browser"
+          PREFIX="/Kapsalon/${DEPLOY_ENV}/Frontend"
+          BUCKET=$(aws ssm get-parameter --name "${PREFIX}/BucketName" --query 'Parameter.Value' --output text)
+          DISTRIBUTION_ID=$(aws ssm get-parameter --name "${PREFIX}/DistributionId" --query 'Parameter.Value' --output text)
+          echo "Syncing ${SOURCE} → s3://${BUCKET}/"
+          aws s3 sync "$SOURCE" "s3://${BUCKET}/" --delete
+          echo "Invalidating CloudFront distribution ${DISTRIBUTION_ID}"
+          aws cloudfront create-invalidation \
+            --distribution-id "$DISTRIBUTION_ID" \
+            --paths "/*"
