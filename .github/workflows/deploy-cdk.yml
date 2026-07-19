@@ -33,10 +33,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository and private submodules
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.SUBMODULE_TOKEN }}
           submodules: recursive
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4

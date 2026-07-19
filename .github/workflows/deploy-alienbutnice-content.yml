@@ -24,10 +24,12 @@ jobs:
       run:
         working-directory: apps/alienbutnice
     steps:
-      - name: Checkout
+      - name: Checkout repository and private submodules
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.SUBMODULE_TOKEN }}
           submodules: recursive
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
