@@ -33,6 +33,6 @@ Synth e2e validates **PlatformDomain** apexes via `DomainStack.DomainName`, **Ap
 >
 > **Expert:** `StackComposition.Build` creates a second `DomainStack` with `AlienButNicePlatformDomainConstruct`.
 
-> **Newcomer:** How do we know kapsalon-dev.mikepattyn.nl is wired correctly?
+> **Newcomer:** How do we know barbershop-dev.mikepattyn.nl is wired correctly?
 >
 > **Expert:** `Mikepattyn.CDK.E2E.Tests` synths the full composition and asserts the hostname on CloudFront and Route53.

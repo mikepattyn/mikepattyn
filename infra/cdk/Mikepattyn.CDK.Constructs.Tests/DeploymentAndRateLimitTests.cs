@@ -8,11 +8,11 @@ public class AppHostnamesTests
     private const string PlatformDomain = "mikepattyn.nl";
 
     [Theory]
-    [InlineData("kapsalon", "Development", "kapsalon-dev.mikepattyn.nl")]
-    [InlineData("kapsalon", "Staging", "kapsalon-acc.mikepattyn.nl")]
-    [InlineData("kapsalon", "Production", "kapsalon.mikepattyn.nl")]
-    [InlineData("fish", "Development", "fish-dev.mikepattyn.nl")]
-    [InlineData("fish", "Production", "fish.mikepattyn.nl")]
+    [InlineData("barbershop", "Development", "barbershop-dev.mikepattyn.nl")]
+    [InlineData("barbershop", "Staging", "barbershop-acc.mikepattyn.nl")]
+    [InlineData("barbershop", "Production", "barbershop.mikepattyn.nl")]
+    [InlineData("gofish", "Development", "gofish-dev.mikepattyn.nl")]
+    [InlineData("gofish", "Production", "gofish.mikepattyn.nl")]
     public void For_ReturnsSingleLevelHostname(
         string appSlug,
         string environmentName,
@@ -31,8 +31,8 @@ public class AppHostnamesTests
     }
 
     [Theory]
-    [InlineData("kapsalon", "Development", "kapsalon-dev")]
-    [InlineData("fish", "Production", "fish")]
+    [InlineData("barbershop", "Development", "barbershop-dev")]
+    [InlineData("gofish", "Production", "gofish")]
     public void GetRecordName_ReturnsRoute53Label(
         string appSlug,
         string environmentName,

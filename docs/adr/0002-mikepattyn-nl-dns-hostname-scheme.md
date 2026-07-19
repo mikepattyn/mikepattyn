@@ -16,9 +16,9 @@ Use single-level host labels:
 
 | Environment | Pattern | Kapsalon example | Fish example |
 |-------------|---------|------------------|--------------|
-| Development | `{app}-dev` | kapsalon-dev.mikepattyn.nl | fish-dev.mikepattyn.nl |
-| Staging | `{app}-acc` | kapsalon-acc.mikepattyn.nl | fish-acc.mikepattyn.nl |
-| Production | `{app}` | kapsalon.mikepattyn.nl | fish.mikepattyn.nl |
+| Development | `{app}-dev` | barbershop-dev.mikepattyn.nl | gofish-dev.mikepattyn.nl |
+| Staging | `{app}-acc` | barbershop-acc.mikepattyn.nl | gofish-acc.mikepattyn.nl |
+| Production | `{app}` | barbershop.mikepattyn.nl | gofish.mikepattyn.nl |
 
 Implemented in `AppHostnames.For(appSlug, environment, platformDomain)`.
 

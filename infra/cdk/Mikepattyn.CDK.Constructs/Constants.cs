@@ -18,8 +18,8 @@ public static partial class Constants
         public const string Mikepattyn = "Mikepattyn";
         public const string AlienButNice = "AlienButNice";
 
-        public const string KapsalonSlug = "kapsalon";
-        public const string FishSlug = "fish";
+        public const string KapsalonSlug = "barbershop";
+        public const string FishSlug = "gofish";
         public const string MikepattynSlug = "mikepattyn";
         public const string AlienButNiceSlug = "alienbutnice";
     }

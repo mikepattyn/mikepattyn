@@ -16,6 +16,33 @@ Sources: [`infra/cdk/Mikepattyn.CDK/StackComposition.cs`](../../infra/cdk/Mikepa
 
 Environments (`Development`, `Staging`, `Production`) map to hostnames via [`AppHostnames`](../../infra/cdk/Mikepattyn.CDK.Constructs/AppHostnames.cs). Brand frontends are Production-only.
 
+Current **AppHostname** labels (see [CONTEXT.md](../../CONTEXT.md)):
+
+| App | Development | Staging | Production |
+|-----|-------------|---------|------------|
+| Kapsalon | barbershop-dev.mikepattyn.nl | barbershop-acc.mikepattyn.nl | barbershop.mikepattyn.nl |
+| Fish | gofish-dev.mikepattyn.nl | gofish-acc.mikepattyn.nl | gofish.mikepattyn.nl |
+
+## AppHostname cutover (manual, after CDK slug change merges)
+
+Redeploy frontend/edge stacks to publish new Route53 CNAMEs and CloudFront aliases (hard cut — old `fish*` / `kapsalon*` names stop resolving):
+
+```bash
+cdk deploy Kapsalon-Frontend-Stack-Development
+cdk deploy Kapsalon-Frontend-Stack-Staging
+cdk deploy Kapsalon-Frontend-Stack-Production
+cdk deploy Fish-Frontend-Stack-Development
+cdk deploy Fish-Frontend-Stack-Staging
+cdk deploy Fish-Frontend-Stack-Production
+```
+
+Or via Make: `make cdk-deploy-kapsalon-dev` (etc.) for each environment.
+
+Post-deploy checklist:
+
+1. **Authress console:** allow new origins/redirects for `https://barbershop*.mikepattyn.nl` and `https://gofish*.mikepattyn.nl` (login URLs stay in app config, not CDK).
+2. **Smoke:** HTTPS on new hostnames; same-origin `/api` responds; confirm old hostnames no longer resolve.
+
 ## SSM parameters for content deploy
 
 CDK publishes deployment targets to SSM. Content sync scripts read these, then `aws s3 sync` and CloudFront invalidation.

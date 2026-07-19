@@ -17,12 +17,12 @@ public static class ExpectedDomains
 
     internal static readonly AppHostnameExpectation[] AppHostnames =
     [
-        new("kapsalon-dev.mikepattyn.nl", "kapsalon"),
-        new("kapsalon-acc.mikepattyn.nl", "kapsalon"),
-        new("kapsalon.mikepattyn.nl", "kapsalon"),
-        new("fish-dev.mikepattyn.nl", "fish"),
-        new("fish-acc.mikepattyn.nl", "fish"),
-        new("fish.mikepattyn.nl", "fish"),
+        new("barbershop-dev.mikepattyn.nl", "barbershop"),
+        new("barbershop-acc.mikepattyn.nl", "barbershop"),
+        new("barbershop.mikepattyn.nl", "barbershop"),
+        new("gofish-dev.mikepattyn.nl", "gofish"),
+        new("gofish-acc.mikepattyn.nl", "gofish"),
+        new("gofish.mikepattyn.nl", "gofish"),
     ];
 
     public sealed record BrandHostnameExpectation(string PlatformDomain, string StackId);

@@ -18,7 +18,7 @@ _Avoid_: service (too generic)
 
 **AlienButNice**:
 Separate brand platform domain (`alienbutnice.nl`) for creative/personal brand hosting, not product hostnames under mikepattyn.nl.
-_Avoid_: treating AlienButNice as an Application slug like kapsalon/fish
+_Avoid_: treating AlienButNice as an Application slug like barbershop/gofish
 
 **InfrastructureConstruct**:
 Reusable CDK building block (web hosting, API gateway, ECS service, etc.).
@@ -32,6 +32,10 @@ _Avoid_: root stack; creating the account-global GitHub OIDC provider (import by
 Per-app CDK stack (Frontend, Backend, Api, Data).
 _Avoid_: service stack
 
+**AppSlug**:
+The DNS label for an **Application** under `mikepattyn.nl` (e.g. Kapsalon → `barbershop`, Fish → `gofish`).
+_Avoid_: treating AppSlug as the product name; conflating with Application stack/resource naming
+
 ## Boundaries
 
 - Owns shared IaC under `infra/cdk/`, platform docs, and submodule pointers.
@@ -42,8 +46,8 @@ _Avoid_: service stack
 
 | App | Development | Staging | Production |
 |-----|-------------|---------|------------|
-| Kapsalon | kapsalon-dev.mikepattyn.nl | kapsalon-acc.mikepattyn.nl | kapsalon.mikepattyn.nl |
-| Fish | fish-dev.mikepattyn.nl | fish-acc.mikepattyn.nl | fish.mikepattyn.nl |
+| Kapsalon | barbershop-dev.mikepattyn.nl | barbershop-acc.mikepattyn.nl | barbershop.mikepattyn.nl |
+| Fish | gofish-dev.mikepattyn.nl | gofish-acc.mikepattyn.nl | gofish.mikepattyn.nl |
 | Portfolio | — | — | mikepattyn.nl (+ www) |
 | AlienButNice | — | — | alienbutnice.nl (+ www) |
 

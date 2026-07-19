@@ -21,8 +21,12 @@ _Avoid_: application-specific backend logic in platform stacks; creating the acc
 Per-app deployable stack (Kapsalon Frontend/Backend, Fish Data/Api/Edge).
 _Avoid_: mixing two apps in one stack class.
 
+**AppSlug**:
+DNS label passed to `AppHostnames` for an **Application** (may differ from Application name — e.g. Kapsalon → `barbershop`, Fish → `gofish`).
+_Avoid_: treating AppSlug as the product name
+
 **AppHostname**:
-FQDN from `AppHostnames.For(slug, environment, mikepattyn.nl)`.
+FQDN from `AppHostnames.For(AppSlug, environment, mikepattyn.nl)`.
 _Avoid_: hardcoding `dev.` prefix on platform domain.
 
 **AppApiPath**:

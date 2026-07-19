@@ -8,8 +8,8 @@ Platform umbrella repository for personal applications and shared AWS CDK infras
 |-----|------|-----------|
 | Portfolio | `apps/mikepattyn` | mikepattyn.nl |
 | AlienButNice | `apps/alienbutnice` | alienbutnice.nl |
-| Kapsalon | `apps/kapsalon` | kapsalon-dev / kapsalon-acc / kapsalon.mikepattyn.nl |
-| Fish tracking | `apps/fishi-tracking-app` | fish-dev / fish-acc / fish.mikepattyn.nl |
+| Kapsalon | `apps/kapsalon` | barbershop-dev / barbershop-acc / barbershop.mikepattyn.nl |
+| Fish tracking | `apps/fishi-tracking-app` | gofish-dev / gofish-acc / gofish.mikepattyn.nl |
 
 ## Quick start
 

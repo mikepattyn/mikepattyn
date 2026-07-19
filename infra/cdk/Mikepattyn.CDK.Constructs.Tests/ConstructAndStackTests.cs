@@ -189,7 +189,7 @@ public class WebApplicationHostingConstructTests
                 ["DistributionConfig"] = Match.ObjectLike(
                     new Dictionary<string, object>
                     {
-                        ["Aliases"] = Match.ArrayWith(new object[] { "kapsalon-dev.mikepattyn.nl" }),
+                        ["Aliases"] = Match.ArrayWith(new object[] { "barbershop-dev.mikepattyn.nl" }),
                     }
                 ),
             }
