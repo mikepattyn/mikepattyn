@@ -14,8 +14,8 @@ Implementations: `MikepattynPlatformDomainConstruct` (`mikepattyn.nl`), `AlienBu
 _Avoid_: creating hosted zones or certificates in CDK; hardcoding a single platform domain.
 
 **PlatformStack**:
-Shared stack for Domain imports or GitHub OIDC.
-_Avoid_: application-specific backend logic in platform stacks.
+Shared stack for Domain imports or GitHub Actions deploy role (Auth).
+_Avoid_: application-specific backend logic in platform stacks; creating the account-global GitHub OIDC provider (import by ARN only — IAM allows one issuer URL per account).
 
 **ApplicationStack**:
 Per-app deployable stack (Kapsalon Frontend/Backend, Fish Data/Api/Edge).

@@ -25,8 +25,8 @@ Reusable CDK building block (web hosting, API gateway, ECS service, etc.).
 _Avoid_: module, component
 
 **PlatformStack**:
-Shared stack for domain imports or GitHub Actions OIDC.
-_Avoid_: root stack
+Shared stack for domain imports or the GitHub Actions deploy role (Auth).
+_Avoid_: root stack; creating the account-global GitHub OIDC provider (import by ARN)
 
 **ApplicationStack**:
 Per-app CDK stack (Frontend, Backend, Api, Data).

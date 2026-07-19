@@ -205,6 +205,7 @@ public sealed class StackComposition
                 DeploymentEnvironment = DeploymentEnvironment.None,
                 StackEnvironment = stackEnvironment,
                 Repository = Constants.Deployment.GithubRepository,
+                GithubOidcProviderArn = Constants.Deployment.GithubOidcProviderArn,
                 S3BucketArns = kapsalonFrontendStacks
                     .Select(stack => stack.BucketArn)
                     .Concat(fishEdgeStacks.Select(stack => stack.WebBucket.BucketArn))

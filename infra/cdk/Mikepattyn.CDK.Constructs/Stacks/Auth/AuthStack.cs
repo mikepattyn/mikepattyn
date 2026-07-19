@@ -15,6 +15,7 @@ public class AuthStack : Stack
             {
                 AppName = Constants.PlatformName,
                 Repository = props.Repository,
+                GithubOidcProviderArn = props.GithubOidcProviderArn,
                 S3BucketArns = props.S3BucketArns,
                 CloudFrontDistributionArns = props.CloudFrontDistributionArns,
                 SsmParameterArns = props.SsmParameterArns,

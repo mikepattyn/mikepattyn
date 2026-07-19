@@ -16,15 +16,23 @@ public class GithubActionsOIDCConstruct : Construct
         const string githubDomain = "token.actions.githubusercontent.com";
         var stack = Stack.Of(this);
 
-        var oidcProvider = new OpenIdConnectProvider(
+        // Account-global: IAM allows one provider per issuer URL; import rather than create.
+        var oidcProvider = OpenIdConnectProvider.FromOpenIdConnectProviderArn(
             this,
             props.GetResourceIdentifier(nameof(OpenIdConnectProvider)),
-            new OpenIdConnectProviderProps
-            {
-                Url = $"https://{githubDomain}",
-                ClientIds = ["sts.amazonaws.com"],
-            }
+            props.GithubOidcProviderArn
         );
+
+        // Legacy: repo:owner/repo:* — Immutable (new repos / renames after 2026-07-15):
+        // repo:owner@ownerId/repo@repoId:*
+        var repositoryParts = props.Repository.Split('/');
+        var owner = repositoryParts[0];
+        var repoName = repositoryParts[^1];
+        var subjectPatterns = new[]
+        {
+            $"repo:{props.Repository}:*",
+            $"repo:{owner}@*/{repoName}@*:*",
+        };
 
         var s3ObjectArns = props.S3BucketArns.Select(arn => $"{arn}/*").ToArray();
 
@@ -46,12 +54,9 @@ public class GithubActionsOIDCConstruct : Construct
                         },
                         {
                             "StringLike",
-                            new Dictionary<string, string>
+                            new Dictionary<string, object>
                             {
-                                {
-                                    $"{githubDomain}:sub",
-                                    $"repo:{props.Repository}:*"
-                                },
+                                { $"{githubDomain}:sub", subjectPatterns },
                             }
                         },
                     }

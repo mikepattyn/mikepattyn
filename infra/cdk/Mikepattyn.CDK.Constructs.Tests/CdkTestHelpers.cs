@@ -24,6 +24,8 @@ internal static class CdkTestHelpers
             DeploymentEnvironment = DeploymentEnvironment.None,
             StackEnvironment = TestEnv,
             Repository = "mikepattyn/mikepattyn",
+            GithubOidcProviderArn =
+                "arn:aws:iam::123456789012:oidc-provider/token.actions.githubusercontent.com",
             S3BucketArns = ["arn:aws:s3:::kapsalon-frontend-dev"],
             CloudFrontDistributionArns = ["arn:aws:cloudfront::123456789012:distribution/ABC123"],
             SsmParameterArns =

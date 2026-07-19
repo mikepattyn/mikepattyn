@@ -8,6 +8,8 @@ public static partial class Constants
         public const string Region = "eu-west-1";
         public const string DomainName = Domains.Mikepattyn;
         public const string GithubRepository = "mikepattyn/mikepattyn";
+        public const string GithubOidcProviderArn =
+            "arn:aws:iam::123456789012:oidc-provider/token.actions.githubusercontent.com";
         public const string Route53HostedZoneId = "Z1234567890EXAMPLE";
         public const string CertificateArn =
             "arn:aws:acm:us-east-1:123456789012:certificate/00000000-0000-0000-0000-000000000000";

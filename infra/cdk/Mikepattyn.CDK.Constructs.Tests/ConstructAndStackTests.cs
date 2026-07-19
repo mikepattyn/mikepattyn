@@ -222,6 +222,10 @@ public class StackTests
             "AWS::IAM::Role",
             new Dictionary<string, object> { ["Path"] = "/github-actions/mikepattyn/" }
         );
+        var templateJson = System.Text.Json.JsonSerializer.Serialize(template.ToJSON());
+        Assert.DoesNotContain("Custom::AWSCDKOpenIdConnectProvider", templateJson);
+        Assert.DoesNotContain("AWS::IAM::OIDCProvider", templateJson);
+        Assert.Contains("repo:mikepattyn@*/mikepattyn@*:*", templateJson);
     }
 
     [Fact]
