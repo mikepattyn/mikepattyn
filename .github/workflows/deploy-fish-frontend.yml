@@ -75,7 +75,21 @@ jobs:
 
       - name: Build Flutter web
         working-directory: apps/fishi-tracking-app/mobile
-        run: flutter build web --release
+        env:
+          AUTHRESS_APPLICATION_ID: ${{ secrets.AUTHRESS_APPLICATION_ID }}
+          DEPLOY_ENV: ${{ matrix.environment }}
+        run: |
+          case "$DEPLOY_ENV" in
+            Development) APP_HOST="gofish-dev.mikepattyn.nl" ;;
+            Staging)     APP_HOST="gofish-acc.mikepattyn.nl" ;;
+            Production)  APP_HOST="gofish.mikepattyn.nl" ;;
+            *) echo "Unknown environment: $DEPLOY_ENV" >&2; exit 1 ;;
+          esac
+          flutter build web --release \
+            --dart-define=AUTHRESS_APPLICATION_ID="${AUTHRESS_APPLICATION_ID}" \
+            --dart-define=AUTHRESS_API_URL=https://authress.mikepattyn.nl \
+            --dart-define=AUTHRESS_REDIRECT_URL="https://${APP_HOST}/auth/callback" \
+            --dart-define=API_BASE_URL="https://${APP_HOST}/api"
 
       - name: Publish to S3 and invalidate CloudFront
         env:
