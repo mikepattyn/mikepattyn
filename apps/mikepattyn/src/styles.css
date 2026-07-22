@@ -337,11 +337,29 @@ a {
   letter-spacing: -0.03em;
 }
 
+.app-item__meta h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-item__meta h3 a:hover,
+.app-item__meta h3 a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
 .app-item__host {
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--moss-bright);
+  text-decoration: none;
+}
+
+.app-item__host:hover,
+.app-item__host:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 .app-item p {
