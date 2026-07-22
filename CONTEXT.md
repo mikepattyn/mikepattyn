@@ -1,6 +1,6 @@
 # Mikepattyn platform
 
-Umbrella repository for personal applications and shared AWS CDK infrastructure.
+Umbrella repository for personal applications, shared packages, and AWS CDK infrastructure.
 
 ## Language
 
@@ -15,6 +15,10 @@ _Avoid_: treating app hostnames as platform domains
 **Application**:
 A deployable product under `apps/` — product submodules (Kapsalon, Fish) or the owned portfolio (`apps/mikepattyn`).
 _Avoid_: service (too generic)
+
+**Package**:
+A shared library submodule under `packages/` (e.g. Authress Flutter/Angular clients), consumed by applications.
+_Avoid_: treating packages as deployable Applications
 
 **AlienButNice**:
 Separate brand platform domain (`alienbutnice.nl`) for creative/personal brand hosting, not product hostnames under mikepattyn.nl.
@@ -39,7 +43,7 @@ _Avoid_: treating AppSlug as the product name; conflating with Application stack
 ## Boundaries
 
 - Owns shared IaC under `infra/cdk/`, platform docs, and submodule pointers.
-- Does not own application business logic; submodules under `apps/` do.
+- Does not own application or package business logic; submodules under `apps/` and `packages/` do.
 - Imports platform-domain DNS/TLS; does not create hosted zones or certificates.
 
 ## Hostnames

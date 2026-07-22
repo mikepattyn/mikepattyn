@@ -1,6 +1,6 @@
 # mikepattyn
 
-Platform umbrella repository for personal applications and shared AWS CDK infrastructure.
+Platform umbrella repository for personal applications, shared packages, and AWS CDK infrastructure.
 
 ## Applications
 
@@ -10,6 +10,13 @@ Platform umbrella repository for personal applications and shared AWS CDK infras
 | AlienButNice | `apps/alienbutnice` | alienbutnice.nl |
 | Kapsalon | `apps/kapsalon` | barbershop-dev / barbershop-acc / barbershop.mikepattyn.nl |
 | Fish tracking | `apps/fishi-tracking-app` | gofish-dev / gofish-acc / gofish.mikepattyn.nl |
+
+## Packages
+
+| Package | Path | Repo |
+|---------|------|------|
+| mikepattyn_authress_login | `packages/authress-flutter` | [mikepattyn/authress-flutter](https://github.com/mikepattyn/authress-flutter) |
+| @mikepattyn/authress-angular | `packages/authress-angular` | [mikepattyn/authress-angular](https://github.com/mikepattyn/authress-angular) |
 
 ## Quick start
 

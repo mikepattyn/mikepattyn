@@ -295,10 +295,14 @@ a {
   font-weight: 500;
 }
 
-/* ——— Apps ——— */
+/* ——— Apps & packages ——— */
 
 .section--apps {
   background: var(--paper);
+}
+
+.section--packages {
+  background: var(--paper-deep);
 }
 
 .app-list {
@@ -378,7 +382,7 @@ a {
 /* ——— About ——— */
 
 .section--about {
-  background: var(--paper-deep);
+  background: var(--paper);
 }
 
 .section--about .section__header {

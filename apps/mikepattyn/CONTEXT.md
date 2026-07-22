@@ -1,6 +1,6 @@
 # Mikepattyn portfolio
 
-Personal static site for Mike Pattyn: who I am and the applications under the mikepattyn platform.
+Personal static site for Mike Pattyn: who I am, the applications under the mikepattyn platform, and shared open-source packages.
 
 ## Language
 

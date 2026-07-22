@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Mike Pattyn — personal platform for shipping small products. Home of Barbershop, gofish, and Flyingdarts."
+      content="Mike Pattyn — personal platform for shipping small products and shared packages. Home of Barbershop, gofish, Flyingdarts, and Authress SDKs."
     />
     <title>Mike Pattyn</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,6 +23,7 @@
       <a class="site-nav__brand" href="#top" aria-label="Mike Pattyn home">Mike Pattyn</a>
       <nav class="site-nav__links" aria-label="Primary">
         <a href="#apps">Apps</a>
+        <a href="#packages">Packages</a>
       </nav>
     </header>
 
@@ -101,6 +102,67 @@
                 Water map — starting in the Schiedam region.
               </p>
               <p class="app-item__stack">Flutter · ASP.NET · PostGIS · Mapbox</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section--packages" id="packages" aria-labelledby="packages-title">
+        <div class="section__inner">
+          <header class="section__header">
+            <p class="section__eyebrow">Open source</p>
+            <h2 id="packages-title">Packages</h2>
+            <p class="section__lede">
+              Shared libraries pulled into the apps — Authress clients for Flutter
+              and Angular.
+            </p>
+          </header>
+
+          <ul class="app-list">
+            <li class="app-item reveal">
+              <div class="app-item__meta">
+                <a
+                  class="app-item__host"
+                  href="https://github.com/mikepattyn/authress-flutter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >github.com/mikepattyn/authress-flutter</a>
+                <h3>
+                  <a
+                    href="https://github.com/mikepattyn/authress-flutter"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >mikepattyn_authress_login</a>
+                </h3>
+              </div>
+              <p>
+                Flutter Authress client with provider-based auth state, Go Router
+                guards, and secure token management across iOS, Android, and Web.
+              </p>
+              <p class="app-item__stack">Flutter · Dart · Authress · Go Router</p>
+            </li>
+
+            <li class="app-item reveal">
+              <div class="app-item__meta">
+                <a
+                  class="app-item__host"
+                  href="https://github.com/mikepattyn/authress-angular"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >github.com/mikepattyn/authress-angular</a>
+                <h3>
+                  <a
+                    href="https://github.com/mikepattyn/authress-angular"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >@mikepattyn/authress-angular</a>
+                </h3>
+              </div>
+              <p>
+                Angular module that registers the Authress LoginClient in the
+                dependency container for a one-line app setup.
+              </p>
+              <p class="app-item__stack">Angular · TypeScript · Authress · npm</p>
             </li>
           </ul>
         </div>

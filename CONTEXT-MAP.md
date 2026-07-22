@@ -27,6 +27,14 @@ Navigation index for the mikepattyn platform repository.
 | [apps/mikepattyn/](apps/mikepattyn/) | Personal portfolio (owned by this repo) — [CONTEXT.md](apps/mikepattyn/CONTEXT.md) |
 | [apps/kapsalon/](apps/kapsalon/) | Submodule — github.com/mikepattyn/kapsalon |
 | [apps/fishi-tracking-app/](apps/fishi-tracking-app/) | Submodule — github.com/mikepattyn/fish-tracking-app |
+| [apps/alienbutnice/](apps/alienbutnice/) | Submodule — github.com/mikepattyn/alienbutnice |
+
+## Packages
+
+| Path | Role |
+|------|------|
+| [packages/authress-flutter/](packages/authress-flutter/) | Submodule — github.com/mikepattyn/authress-flutter |
+| [packages/authress-angular/](packages/authress-angular/) | Submodule — github.com/mikepattyn/authress-angular |
 
 ## Research
 

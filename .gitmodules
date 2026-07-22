@@ -7,3 +7,9 @@
 [submodule "apps/alienbutnice"]
 	path = apps/alienbutnice
 	url = https://github.com/mikepattyn/alienbutnice.git
+[submodule "packages/authress-flutter"]
+	path = packages/authress-flutter
+	url = https://github.com/mikepattyn/authress-flutter.git
+[submodule "packages/authress-angular"]
+	path = packages/authress-angular
+	url = https://github.com/mikepattyn/authress-angular.git
