@@ -3,9 +3,10 @@ name: Deploy Kapsalon frontend
 on:
   push:
     branches:
-      - main
+      - master
     paths:
-      - 'apps/kapsalon/apps/web/**'
+      # Submodule gitlink (parent repo only sees apps/kapsalon, not nested web paths)
+      - 'apps/kapsalon'
       - '.github/workflows/deploy-kapsalon-frontend.yml'
   workflow_dispatch:
     inputs:
