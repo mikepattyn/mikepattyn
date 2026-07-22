@@ -15,8 +15,8 @@ Platform umbrella repository for personal applications, shared packages, and AWS
 
 | Package | Path | Repo |
 |---------|------|------|
-| mikepattyn_authress_login | `packages/authress-flutter` | [mikepattyn/authress-flutter](https://github.com/mikepattyn/authress-flutter) |
-| @mikepattyn/authress-angular | `packages/authress-angular` | [mikepattyn/authress-angular](https://github.com/mikepattyn/authress-angular) |
+| mikepattyn_authress_login | `packages/authress-flutter` | [mikepattyn/mikepattyn-authress-flutter](https://github.com/mikepattyn/mikepattyn-authress-flutter) |
+| @mikepattyn/authress-angular | `packages/authress-angular` | [mikepattyn/mikepattyn-authress-angular](https://github.com/mikepattyn/mikepattyn-authress-angular) |
 
 ## Quick start
 

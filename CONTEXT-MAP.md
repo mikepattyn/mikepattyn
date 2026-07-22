@@ -33,8 +33,8 @@ Navigation index for the mikepattyn platform repository.
 
 | Path | Role |
 |------|------|
-| [packages/authress-flutter/](packages/authress-flutter/) | Submodule — github.com/mikepattyn/authress-flutter |
-| [packages/authress-angular/](packages/authress-angular/) | Submodule — github.com/mikepattyn/authress-angular |
+| [packages/authress-flutter/](packages/authress-flutter/) | Submodule — github.com/mikepattyn/mikepattyn-authress-flutter |
+| [packages/authress-angular/](packages/authress-angular/) | Submodule — github.com/mikepattyn/mikepattyn-authress-angular |
 
 ## Research
 
