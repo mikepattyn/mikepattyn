@@ -77,6 +77,7 @@ jobs:
         working-directory: apps/fishi-tracking-app/mobile
         env:
           AUTHRESS_APPLICATION_ID: ${{ secrets.AUTHRESS_APPLICATION_ID }}
+          MAPBOX_TOKEN: ${{ secrets.MAPBOX_TOKEN }}
           DEPLOY_ENV: ${{ matrix.environment }}
         run: |
           case "$DEPLOY_ENV" in
@@ -85,7 +86,12 @@ jobs:
             Production)  APP_HOST="gofish.mikepattyn.nl" ;;
             *) echo "Unknown environment: $DEPLOY_ENV" >&2; exit 1 ;;
           esac
+          if [ -z "$MAPBOX_TOKEN" ]; then
+            echo "MAPBOX_TOKEN secret is not set for this environment" >&2
+            exit 1
+          fi
           flutter build web --release \
+            --dart-define=MAPBOX_TOKEN="${MAPBOX_TOKEN}" \
             --dart-define=AUTHRESS_APPLICATION_ID="${AUTHRESS_APPLICATION_ID}" \
             --dart-define=AUTHRESS_API_URL=https://authress.mikepattyn.nl \
             --dart-define=AUTHRESS_REDIRECT_URL="https://${APP_HOST}/auth/callback" \
