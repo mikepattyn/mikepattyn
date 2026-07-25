@@ -36,6 +36,12 @@ Navigation index for the mikepattyn platform repository.
 | [packages/authress-flutter/](packages/authress-flutter/) | Submodule — github.com/mikepattyn/mikepattyn-authress-flutter |
 | [packages/authress-angular/](packages/authress-angular/) | Submodule — github.com/mikepattyn/mikepattyn-authress-angular |
 
+## Tools
+
+| Path | Role |
+|------|------|
+| [tools/db-explorer/barbershop/](tools/db-explorer/barbershop/) | Local Vue + .NET 10 ops UI for Kapsalon DynamoDB (dev/acc/prod) |
+
 ## Research
 
 | Path | Topic |

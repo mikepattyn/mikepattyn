@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BarbershopDbExplorer.Api.Tests/BarbershopDbExplorer.Api.Tests.csproj" />
+  <Project Path="BarbershopDbExplorer.Api/BarbershopDbExplorer.Api.csproj" />
+</Solution>
