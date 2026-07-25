@@ -75,7 +75,7 @@ public class FishEdgeStack : BaseStack<FishEdgeStackProps>
                         ViewerProtocolPolicy = ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
                         AllowedMethods = AllowedMethods.ALLOW_ALL,
                         CachePolicy = CachePolicy.CACHING_DISABLED,
-                        OriginRequestPolicy = OriginRequestPolicy.ALL_VIEWER,
+                        OriginRequestPolicy = OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
                     },
                 },
                 DefaultRootObject = "index.html",

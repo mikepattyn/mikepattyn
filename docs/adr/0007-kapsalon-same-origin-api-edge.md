@@ -33,3 +33,4 @@ Hostname scheme remains ADR 0002 (`kapsalon-dev`, `kapsalon-acc`, `kapsalon`).
 
 - [docs/adr/0002-mikepattyn-nl-dns-hostname-scheme.md](./0002-mikepattyn-nl-dns-hostname-scheme.md)
 - [docs/adr/0005-fish-serverless-hosting.md](./0005-fish-serverless-hosting.md)
+- [docs/adr/0008-same-origin-api-cloudfront-origin-policy.md](./0008-same-origin-api-cloudfront-origin-policy.md)

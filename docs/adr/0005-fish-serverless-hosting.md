@@ -32,3 +32,4 @@ No ECS, ALB, RDS, VPC, or SignalR for MVP.
 - [docs/adr/0004-fish-mvp-hosting.md](./0004-fish-mvp-hosting.md) (superseded)
 - [apps/fishi-tracking-app/docs/adr/005-authress-authentication.md](../apps/fishi-tracking-app/docs/adr/005-authress-authentication.md)
 - [apps/fishi-tracking-app/docs/adr/006-dynamo-single-table.md](../apps/fishi-tracking-app/docs/adr/006-dynamo-single-table.md)
+- [docs/adr/0008-same-origin-api-cloudfront-origin-policy.md](./0008-same-origin-api-cloudfront-origin-policy.md)

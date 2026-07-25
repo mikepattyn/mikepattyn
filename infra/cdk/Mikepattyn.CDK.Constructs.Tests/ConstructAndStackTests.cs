@@ -8,6 +8,12 @@ using Xunit;
 
 namespace Mikepattyn.CDK.Constructs.Tests;
 
+public static class CloudFrontTestConstants
+{
+    /// <summary>AWS managed policy AllViewerExceptHostHeader — required for API Gateway origins.</summary>
+    public const string AllViewerExceptHostHeaderPolicyId = "b689b0a8-53d0-40ab-baf2-68738e2966ac";
+}
+
 public class LambdaConstructTests
 {
     [Fact]
@@ -233,7 +239,14 @@ public class WebApplicationHostingConstructTests
                         ["CacheBehaviors"] = Match.ArrayWith(
                             new object[]
                             {
-                                Match.ObjectLike(new Dictionary<string, object> { ["PathPattern"] = "/api/*" }),
+                                Match.ObjectLike(
+                                    new Dictionary<string, object>
+                                    {
+                                        ["PathPattern"] = "/api/*",
+                                        ["OriginRequestPolicyId"] =
+                                            CloudFrontTestConstants.AllViewerExceptHostHeaderPolicyId,
+                                    }
+                                ),
                             }
                         ),
                     }
@@ -322,7 +335,14 @@ public class StackTests
                         ["CacheBehaviors"] = Match.ArrayWith(
                             new object[]
                             {
-                                Match.ObjectLike(new Dictionary<string, object> { ["PathPattern"] = "/api/*" }),
+                                Match.ObjectLike(
+                                    new Dictionary<string, object>
+                                    {
+                                        ["PathPattern"] = "/api/*",
+                                        ["OriginRequestPolicyId"] =
+                                            CloudFrontTestConstants.AllViewerExceptHostHeaderPolicyId,
+                                    }
+                                ),
                             }
                         ),
                     }
@@ -368,7 +388,14 @@ public class StackTests
                         ["CacheBehaviors"] = Match.ArrayWith(
                             new object[]
                             {
-                                Match.ObjectLike(new Dictionary<string, object> { ["PathPattern"] = "/api/*" }),
+                                Match.ObjectLike(
+                                    new Dictionary<string, object>
+                                    {
+                                        ["PathPattern"] = "/api/*",
+                                        ["OriginRequestPolicyId"] =
+                                            CloudFrontTestConstants.AllViewerExceptHostHeaderPolicyId,
+                                    }
+                                ),
                             }
                         ),
                     }
