@@ -15,6 +15,7 @@ on:
           - cdk-deploy-brand
           - cdk-deploy-mikepattyn
           - cdk-deploy-alienbutnice
+          - cdk-deploy-prompt-engineering
           - cdk-deploy-kapsalon-dev
           - cdk-deploy-kapsalon-staging
           - cdk-deploy-kapsalon-prod
@@ -156,6 +157,9 @@ jobs:
               ;;
             cdk-deploy-alienbutnice)
               deploy AlienButNice-BrandFrontend-Stack-Production
+              ;;
+            cdk-deploy-prompt-engineering)
+              deploy PromptEngineering-Frontend-Stack-Production
               ;;
             cdk-deploy-kapsalon-dev)
               deploy Kapsalon-Frontend-Stack-Development

@@ -147,6 +147,15 @@ public class StackCompositionDomainTests
             return composition.FishEdgeStacks.Single(stack => stack.DomainName == expected.Fqdn);
         }
 
+        if (expected.AppSlug == Constants.Apps.PromptEngineeringSlug)
+        {
+            return composition.PromptEngineeringFrontendStack.DomainName == expected.Fqdn
+                ? composition.PromptEngineeringFrontendStack
+                : throw new InvalidOperationException(
+                    $"Expected PromptEngineering frontend at {expected.Fqdn}, got {composition.PromptEngineeringFrontendStack.DomainName}."
+                );
+        }
+
         throw new ArgumentOutOfRangeException(
             nameof(expected),
             expected.AppSlug,

@@ -13,7 +13,7 @@ One apex brand domain whose Route53 zone and ACM certificate are imported into C
 _Avoid_: treating app hostnames as platform domains
 
 **Application**:
-A deployable product under `apps/` — product submodules (Kapsalon, Fish) or the owned portfolio (`apps/mikepattyn`).
+A deployable product under `apps/` — product submodules (Kapsalon, Fish) or owned apps (`apps/mikepattyn`, `apps/prompt-engineering`).
 _Avoid_: service (too generic)
 
 **Package**:
@@ -53,6 +53,7 @@ _Avoid_: treating AppSlug as the product name; conflating with Application stack
 | Kapsalon | barbershop-dev.mikepattyn.nl | barbershop-acc.mikepattyn.nl | barbershop.mikepattyn.nl |
 | Fish | gofish-dev.mikepattyn.nl | gofish-acc.mikepattyn.nl | gofish.mikepattyn.nl |
 | Portfolio | — | — | mikepattyn.nl (+ www) |
+| Prompt Engineering (Lumen) | — | — | prompt-engineering.mikepattyn.nl |
 | AlienButNice | — | — | alienbutnice.nl (+ www) |
 
 Product applications expose their API as same-origin `/api/*` on the **AppHostname** (CloudFront → API Gateway). There are no dedicated `*-api` hostnames.

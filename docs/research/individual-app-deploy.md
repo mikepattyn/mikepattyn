@@ -1,6 +1,6 @@
 # Individual app deploy from the monorepo
 
-Research summary for deploying kapsalon, fish, mikepattyn portfolio, and alienbutnice from this repository without deploying the full platform.
+Research summary for deploying kapsalon, fish, mikepattyn portfolio, prompt-engineering, and alienbutnice from this repository without deploying the full platform.
 
 Sources: [`infra/cdk/Mikepattyn.CDK/StackComposition.cs`](../../infra/cdk/Mikepattyn.CDK/StackComposition.cs), [`Makefile`](../../Makefile), [`Constants.cs`](../../infra/cdk/Mikepattyn.CDK.Constructs/Constants.cs), kapsalon submodule deploy workflows.
 
@@ -11,6 +11,7 @@ Sources: [`infra/cdk/Mikepattyn.CDK/StackComposition.cs`](../../infra/cdk/Mikepa
 | Kapsalon | `apps/kapsalon` | `Kapsalon-Backend-Stack-{Env}`, `Kapsalon-Frontend-Stack-{Env}` | `Mikepattyn-Domain-Stack`; frontend stack needs backend API hostname |
 | Fish | `apps/fishi-tracking-app` | `Fish-Backend-Stack-{Env}`, `Fish-Frontend-Stack-{Env}` | `Mikepattyn-Domain-Stack`; edge stack needs backend API hostname |
 | Mikepattyn portfolio | `apps/mikepattyn` | `Mikepattyn-BrandFrontend-Stack-Production` | `Mikepattyn-Domain-Stack` |
+| Prompt Engineering (Lumen) | `apps/prompt-engineering` | `PromptEngineering-Frontend-Stack-Production` | `Mikepattyn-Domain-Stack` |
 | AlienButNice | `apps/alienbutnice` | `AlienButNice-BrandFrontend-Stack-Production` | `AlienButNice-Domain-Stack` |
 | Shared | — | `Mikepattyn-Auth-Stack` | OIDC for GitHub Actions; not required for runtime |
 
@@ -22,6 +23,7 @@ Current **AppHostname** labels (see [CONTEXT.md](../../CONTEXT.md)):
 |-----|-------------|---------|------------|
 | Kapsalon | barbershop-dev.mikepattyn.nl | barbershop-acc.mikepattyn.nl | barbershop.mikepattyn.nl |
 | Fish | gofish-dev.mikepattyn.nl | gofish-acc.mikepattyn.nl | gofish.mikepattyn.nl |
+| Prompt Engineering | — | — | prompt-engineering.mikepattyn.nl |
 
 ## AppHostname cutover (manual, after CDK slug change merges)
 
@@ -53,6 +55,7 @@ CDK publishes deployment targets to SSM. Content sync scripts read these, then `
 | Fish edge | `/Fish/{Env}/Frontend/WebBucket` | `/Fish/{Env}/Frontend/DistributionId` |
 | Mikepattyn brand | `/Mikepattyn/Production/Frontend/BucketName` | `/Mikepattyn/Production/Frontend/DistributionId` |
 | AlienButNice brand | `/AlienButNice/Production/Frontend/BucketName` | `/AlienButNice/Production/Frontend/DistributionId` |
+| Prompt Engineering | `/PromptEngineering/Production/Frontend/BucketName` | `/PromptEngineering/Production/Frontend/DistributionId` |
 
 Kapsalon SPA uses relative `apiBaseUrl: '/api'` on the app hostname. SSM `/Kapsalon/{Env}/Backend/ApiUrl` is ops-only (execute-api base including `/api`).
 
@@ -77,11 +80,12 @@ Examples:
 make cdk-deploy-kapsalon-dev          # CDK frontend + backend stacks
 make sync-kapsalon-frontend-dev       # Angular build → S3
 make deploy-mikepattyn                # brand stack + Vite build → S3
+make deploy-prompt-engineering        # frontend stack + static files → S3
 ```
 
 ## CI (root `.github/workflows`)
 
-- **Content:** path-filtered workflows on `main`; kapsalon/fish default to Development; brands to Production.
+- **Content:** path-filtered workflows on `main`; kapsalon/fish default to Development; brands and prompt-engineering to Production.
 - **Infra:** `deploy-cdk.yml` is `workflow_dispatch` only — no auto CDK on merge.
 - **Source of truth:** root workflows call Make/scripts. Workflows under `apps/kapsalon/.github` are legacy (they do not run from this monorepo).
 
@@ -99,16 +103,19 @@ flowchart TB
   FE[Fish-Frontend-Stack-Env]
   MB[Mikepattyn-BrandFrontend-Stack-Production]
   AB[AlienButNice-BrandFrontend-Stack-Production]
+  PE[PromptEngineering-Frontend-Stack-Production]
 
   MD --> KF
   MD --> FE
   MD --> MB
+  MD --> PE
   AD --> AB
   FB --> FE
   KF --> Auth
   FE --> Auth
   MB --> Auth
   AB --> Auth
+  PE --> Auth
 ```
 
 ## Gaps addressed in this work

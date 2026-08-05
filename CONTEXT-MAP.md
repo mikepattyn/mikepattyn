@@ -25,6 +25,7 @@ Navigation index for the mikepattyn platform repository.
 | Path | Role |
 |------|------|
 | [apps/mikepattyn/](apps/mikepattyn/) | Personal portfolio (owned by this repo) — [CONTEXT.md](apps/mikepattyn/CONTEXT.md) |
+| [apps/prompt-engineering/](apps/prompt-engineering/) | Lumen — INFP prompt-engineering lesson (owned by this repo) — [CONTEXT.md](apps/prompt-engineering/CONTEXT.md) |
 | [apps/kapsalon/](apps/kapsalon/) | Submodule — github.com/mikepattyn/kapsalon |
 | [apps/fishi-tracking-app/](apps/fishi-tracking-app/) | Submodule — github.com/mikepattyn/fish-tracking-app |
 | [apps/alienbutnice/](apps/alienbutnice/) | Submodule — github.com/mikepattyn/alienbutnice |
