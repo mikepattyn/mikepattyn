@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumen — Prompt Engineering for INFPs</title>
+  <meta name="description" content="A gentle, imaginative course that teaches INFPs the craft of prompt engineering." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Nunito+Sans:ital,opsz,wght@0,6..12,300..800;1,6..12,300..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯️</text></svg>" />
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#/">
+      <span class="brand-mark">🕯️</span>
+      <span class="brand-name">Lumen</span>
+      <span class="brand-tag">prompt craft for dreamers</span>
+    </a>
+    <nav class="site-nav">
+      <a href="#/" data-nav="home">Home</a>
+      <a href="#/path" data-nav="path">The Path</a>
+      <a href="#/garden" data-nav="garden">Practice Garden</a>
+      <a href="#/journal" data-nav="journal">Journal</a>
+    </nav>
+    <div class="progress-pill" id="progress-pill" title="Your journey so far">
+      <svg viewBox="0 0 36 36" class="progress-ring" aria-hidden="true">
+        <path class="ring-bg" d="M18 2.5 a 15.5 15.5 0 0 1 0 31 a 15.5 15.5 0 0 1 0 -31" />
+        <path class="ring-fill" id="ring-fill" d="M18 2.5 a 15.5 15.5 0 0 1 0 31 a 15.5 15.5 0 0 1 0 -31" />
+      </svg>
+      <span id="progress-label">0/0</span>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1"></main>
+
+  <footer class="site-footer">
+    <p>Made softly, for the ones who feel first and speak second. Your progress lives only in this browser.</p>
+  </footer>
+
+  <script src="js/lessons.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
