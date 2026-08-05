@@ -26,6 +26,10 @@
       <a href="#/garden" data-nav="garden">Practice Garden</a>
       <a href="#/journal" data-nav="journal">Journal</a>
     </nav>
+    <div class="locale-toggle" role="group" aria-label="Language">
+      <button type="button" class="locale-toggle__btn" data-locale="en" aria-pressed="false">EN</button>
+      <button type="button" class="locale-toggle__btn" data-locale="nl" aria-pressed="false">NL</button>
+    </div>
     <div class="progress-pill" id="progress-pill" title="Your journey so far">
       <svg viewBox="0 0 36 36" class="progress-ring" aria-hidden="true">
         <path class="ring-bg" d="M18 2.5 a 15.5 15.5 0 0 1 0 31 a 15.5 15.5 0 0 1 0 -31" />
@@ -41,6 +45,9 @@
     <p>Made softly, for the ones who feel first and speak second. Your progress lives only in this browser.</p>
   </footer>
 
+  <script src="js/i18n/en.js"></script>
+  <script src="js/i18n/nl.js"></script>
+  <script src="js/locale.js"></script>
   <script src="js/lessons.js"></script>
   <script src="js/app.js"></script>
 </body>

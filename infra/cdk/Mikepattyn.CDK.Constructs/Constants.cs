@@ -17,13 +17,13 @@ public static partial class Constants
         public const string Fish = "Fish";
         public const string Mikepattyn = "Mikepattyn";
         public const string AlienButNice = "AlienButNice";
-        public const string PromptEngineering = "PromptEngineering";
+        public const string Lumen = "Lumen";
 
         public const string KapsalonSlug = "barbershop";
         public const string FishSlug = "gofish";
         public const string MikepattynSlug = "mikepattyn";
         public const string AlienButNiceSlug = "alienbutnice";
-        public const string PromptEngineeringSlug = "prompt-engineering";
+        public const string LumenSlug = "lumen";
     }
 
     public static class Stacks
@@ -48,6 +48,6 @@ public static partial class Constants
         public static readonly string FishFrontend = GetAppStack(Apps.Fish, "Frontend");
         public static readonly string MikepattynBrandFrontend = GetAppStack(Apps.Mikepattyn, "BrandFrontend");
         public static readonly string AlienButNiceBrandFrontend = GetAppStack(Apps.AlienButNice, "BrandFrontend");
-        public static readonly string PromptEngineeringFrontend = GetAppStack(Apps.PromptEngineering, "Frontend");
+        public static readonly string LumenFrontend = GetAppStack(Apps.Lumen, "Frontend");
     }
 }

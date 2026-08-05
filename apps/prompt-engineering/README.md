@@ -4,6 +4,10 @@ A gentle, self-contained web course that teaches INFPs the craft of prompt
 engineering through the way they already think: imagined listeners, inner
 characters, named feelings, and big luminous dreams broken into askable pieces.
 
+Available in **English** and **Dutch** (EN/NL). On first visit the UI follows
+`navigator.language`; after that the choice is stored in `localStorage`
+(`lumen.locale`) and can be switched with the header toggle.
+
 ## What's inside
 
 - **The Path** — six short lessons covering the core techniques:
@@ -15,7 +19,7 @@ characters, named feelings, and big luminous dreams broken into askable pieces.
   6. *Keeping Your Voice* — authenticity, values, and knowing when not to prompt
 - **The Practice Garden** — a live prompt-writing playground. Lanterns light up
   as your prompt gains craft elements (context, role, tone, shape, boundaries,
-  a clear ask). Encouraging, never grading.
+  a clear ask). Encouraging, never grading. Heuristics recognize EN and NL cues.
 - **Journal** — reflections from lessons are saved locally, plus a delete
   ("let it go") option.
 - **Progress** — lessons can be marked "walked"; a progress ring lives in the
@@ -35,7 +39,10 @@ python -m http.server 8000
 
 | File | Purpose |
 | --- | --- |
-| `index.html` | App shell (header, nav, progress ring) |
+| `index.html` | App shell (header, nav, locale toggle, progress ring) |
 | `css/styles.css` | Twilight/lantern visual theme |
-| `js/lessons.js` | All lesson content, garden heuristics, seed scenarios |
-| `js/app.js` | Hash router, rendering, quizzes, journal, garden logic |
+| `js/i18n/en.js` | English chrome + lesson + garden copy |
+| `js/i18n/nl.js` | Dutch chrome + lesson + garden copy |
+| `js/locale.js` | Resolve / persist / toggle EN\|NL (`lumen.locale`) |
+| `js/lessons.js` | Practice Garden heuristic tests (EN/NL-aware) |
+| `js/app.js` | Hash router, rendering via `t('…')`, quizzes, journal, garden |

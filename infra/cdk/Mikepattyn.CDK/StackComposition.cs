@@ -24,7 +24,7 @@ public sealed class StackComposition
     public IReadOnlyList<FishEdgeStack> FishEdgeStacks { get; }
     public BrandFrontendStack MikepattynBrandFrontendStack { get; }
     public BrandFrontendStack AlienButNiceBrandFrontendStack { get; }
-    public FrontendStack PromptEngineeringFrontendStack { get; }
+    public FrontendStack LumenFrontendStack { get; }
 
     private StackComposition(
         DomainStack mikepattynDomainStack,
@@ -33,7 +33,7 @@ public sealed class StackComposition
         IReadOnlyList<FishEdgeStack> fishEdgeStacks,
         BrandFrontendStack mikepattynBrandFrontendStack,
         BrandFrontendStack alienButNiceBrandFrontendStack,
-        FrontendStack promptEngineeringFrontendStack
+        FrontendStack lumenFrontendStack
     )
     {
         MikepattynDomainStack = mikepattynDomainStack;
@@ -42,7 +42,7 @@ public sealed class StackComposition
         FishEdgeStacks = fishEdgeStacks;
         MikepattynBrandFrontendStack = mikepattynBrandFrontendStack;
         AlienButNiceBrandFrontendStack = alienButNiceBrandFrontendStack;
-        PromptEngineeringFrontendStack = promptEngineeringFrontendStack;
+        LumenFrontendStack = lumenFrontendStack;
     }
 
     public static StackComposition Build(App app)
@@ -180,12 +180,12 @@ public sealed class StackComposition
             }
         );
 
-        var promptEngineeringFrontendStack = new FrontendStack(
+        var lumenFrontendStack = new FrontendStack(
             app,
             new FrontendStackProps
             {
-                AppName = Constants.Apps.PromptEngineering,
-                AppSlug = Constants.Apps.PromptEngineeringSlug,
+                AppName = Constants.Apps.Lumen,
+                AppSlug = Constants.Apps.LumenSlug,
                 DeploymentEnvironment = DeploymentEnvironment.Production,
                 PlatformDomainName = platformDomain,
                 StackEnvironment = stackEnvironment,
@@ -219,7 +219,7 @@ public sealed class StackComposition
             .Concat(
                 FrontendSsmParameterNames.Select(
                     parameterName =>
-                        $"arn:aws:ssm:{Constants.Deployment.Region}:{Constants.Deployment.AccountId}:parameter/{Constants.Apps.PromptEngineering}/{DeploymentEnvironment.Production.Name}/Frontend/{parameterName}"
+                        $"arn:aws:ssm:{Constants.Deployment.Region}:{Constants.Deployment.AccountId}:parameter/{Constants.Apps.Lumen}/{DeploymentEnvironment.Production.Name}/Frontend/{parameterName}"
                 )
             )
             .Concat(
@@ -249,7 +249,7 @@ public sealed class StackComposition
                         [
                             mikepattynBrandFrontendStack.BucketArn,
                             alienButNiceBrandFrontendStack.BucketArn,
-                            promptEngineeringFrontendStack.BucketArn,
+                            lumenFrontendStack.BucketArn,
                         ]
                     )
                     .ToArray(),
@@ -260,7 +260,7 @@ public sealed class StackComposition
                         [
                             mikepattynBrandFrontendStack.DistributionArn,
                             alienButNiceBrandFrontendStack.DistributionArn,
-                            promptEngineeringFrontendStack.DistributionArn,
+                            lumenFrontendStack.DistributionArn,
                         ]
                     )
                     .ToArray(),
@@ -275,7 +275,7 @@ public sealed class StackComposition
             fishEdgeStacks,
             mikepattynBrandFrontendStack,
             alienButNiceBrandFrontendStack,
-            promptEngineeringFrontendStack
+            lumenFrontendStack
         );
     }
 }

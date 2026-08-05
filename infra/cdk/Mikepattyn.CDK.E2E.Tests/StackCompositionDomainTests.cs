@@ -147,12 +147,12 @@ public class StackCompositionDomainTests
             return composition.FishEdgeStacks.Single(stack => stack.DomainName == expected.Fqdn);
         }
 
-        if (expected.AppSlug == Constants.Apps.PromptEngineeringSlug)
+        if (expected.AppSlug == Constants.Apps.LumenSlug)
         {
-            return composition.PromptEngineeringFrontendStack.DomainName == expected.Fqdn
-                ? composition.PromptEngineeringFrontendStack
+            return composition.LumenFrontendStack.DomainName == expected.Fqdn
+                ? composition.LumenFrontendStack
                 : throw new InvalidOperationException(
-                    $"Expected PromptEngineering frontend at {expected.Fqdn}, got {composition.PromptEngineeringFrontendStack.DomainName}."
+                    $"Expected Lumen frontend at {expected.Fqdn}, got {composition.LumenFrontendStack.DomainName}."
                 );
         }
 

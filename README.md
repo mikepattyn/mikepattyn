@@ -7,7 +7,7 @@ Platform umbrella repository for personal applications, shared packages, and AWS
 | App | Path | Hostnames |
 |-----|------|-----------|
 | Portfolio | `apps/mikepattyn` | mikepattyn.nl |
-| Prompt Engineering (Lumen) | `apps/prompt-engineering` | prompt-engineering.mikepattyn.nl |
+| Lumen | `apps/prompt-engineering` | lumen.mikepattyn.nl |
 | AlienButNice | `apps/alienbutnice` | alienbutnice.nl |
 | Kapsalon | `apps/kapsalon` | barbershop-dev / barbershop-acc / barbershop.mikepattyn.nl |
 | Fish tracking | `apps/fishi-tracking-app` | gofish-dev / gofish-acc / gofish.mikepattyn.nl |
@@ -62,15 +62,15 @@ make sync-fish-backend-dev
 # AlienButNice brand site
 make deploy-alienbutnice
 
-# Lumen prompt-engineering lesson (Production static site)
-make deploy-prompt-engineering
+# Lumen lesson site (Production static site)
+make deploy-lumen
 ```
 
 ### CI
 
 Root workflows under [`.github/workflows/`](.github/workflows/) run build and deploy commands inline (no Make or shell scripts). They deploy content on path-filtered pushes to `main`:
 
-- **Brands** (`apps/mikepattyn`, `apps/alienbutnice`) and **Prompt Engineering** (`apps/prompt-engineering`) → Production
+- **Brands** (`apps/mikepattyn`, `apps/alienbutnice`) and **Lumen** (`apps/prompt-engineering`) → Production
 - **Kapsalon / Fish** → Development (staging/prod via workflow dispatch)
 
 CDK deploys are **manual only** via the `Deploy CDK` workflow (`workflow_dispatch`).

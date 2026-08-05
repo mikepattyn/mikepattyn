@@ -3,7 +3,7 @@ KAPSALON_DIR := apps/kapsalon
 FISH_DIR := apps/fishi-tracking-app
 MIKEPATTYN_DIR := apps/mikepattyn
 ALIENBUTNICE_DIR := apps/alienbutnice
-PROMPT_ENGINEERING_DIR := apps/prompt-engineering
+LUMEN_DIR := apps/prompt-engineering
 DEPLOYMENT_CONFIG := infra/cdk/Mikepattyn.CDK.Constructs/Constants.Deployment.cs
 CDK ?= cdk
 CDK_APPROVAL ?= broadening
@@ -51,11 +51,11 @@ STACK_FISH_FRONTEND_PROD := Fish-Frontend-Stack-Production
 
 STACK_MIKEPATTYN_BRAND_FRONTEND_PROD := Mikepattyn-BrandFrontend-Stack-Production
 STACK_ALIENBUTNICE_BRAND_FRONTEND_PROD := AlienButNice-BrandFrontend-Stack-Production
-STACK_PROMPT_ENGINEERING_FRONTEND_PROD := PromptEngineering-Frontend-Stack-Production
+STACK_LUMEN_FRONTEND_PROD := Lumen-Frontend-Stack-Production
 
 .PHONY: help bootstrap cdk-check-config cdk-build cdk-synth cdk-diff cdk-deploy \
 	cdk-deploy-all cdk-deploy-shared cdk-deploy-domain cdk-deploy-auth cdk-deploy-brand \
-	cdk-deploy-mikepattyn cdk-deploy-alienbutnice cdk-deploy-prompt-engineering \
+	cdk-deploy-mikepattyn cdk-deploy-alienbutnice cdk-deploy-lumen \
 	cdk-deploy-kapsalon-dev cdk-deploy-kapsalon-staging cdk-deploy-kapsalon-prod \
 	cdk-deploy-kapsalon-dev-frontend cdk-deploy-kapsalon-dev-backend \
 	cdk-deploy-kapsalon-staging-frontend cdk-deploy-kapsalon-staging-backend \
@@ -68,10 +68,10 @@ STACK_PROMPT_ENGINEERING_FRONTEND_PROD := PromptEngineering-Frontend-Stack-Produ
 	sync-kapsalon-backend-dev sync-kapsalon-backend-staging sync-kapsalon-backend-prod \
 	sync-fish-frontend-dev sync-fish-frontend-staging sync-fish-frontend-prod \
 	sync-fish-backend-dev sync-fish-backend-staging sync-fish-backend-prod \
-	sync-mikepattyn sync-alienbutnice sync-prompt-engineering \
+	sync-mikepattyn sync-alienbutnice sync-lumen \
 	deploy-kapsalon-dev deploy-kapsalon-staging deploy-kapsalon-prod \
 	deploy-fish-dev deploy-fish-staging deploy-fish-prod \
-	deploy-mikepattyn deploy-alienbutnice deploy-prompt-engineering \
+	deploy-mikepattyn deploy-alienbutnice deploy-lumen \
 	lambda-build fish-lambda-build fish-web-build test-cdk
 
 .DEFAULT_GOAL := help
@@ -93,7 +93,7 @@ help:
 	@echo "  make cdk-deploy-brand       Deploy both brand frontend stacks"
 	@echo "  make cdk-deploy-mikepattyn  Deploy Mikepattyn brand frontend stack"
 	@echo "  make cdk-deploy-alienbutnice Deploy AlienButNice brand frontend stack"
-	@echo "  make cdk-deploy-prompt-engineering Deploy Prompt Engineering frontend stack"
+	@echo "  make cdk-deploy-lumen       Deploy Lumen frontend stack"
 	@echo ""
 	@echo "Deploy kapsalon (infra, per environment):"
 	@echo "  make cdk-deploy-kapsalon-dev|staging|prod"
@@ -110,14 +110,14 @@ help:
 	@echo "  make sync-fish-backend-{dev|staging|prod}"
 	@echo "  make sync-mikepattyn          Vite build + S3 (Production)"
 	@echo "  make sync-alienbutnice        Vite build + S3 (Production)"
-	@echo "  make sync-prompt-engineering  Static files → S3 (Production)"
+	@echo "  make sync-lumen               Static files → S3 (Production)"
 	@echo ""
 	@echo "Full deploy (infra + content):"
 	@echo "  make deploy-kapsalon-{dev|staging|prod}"
 	@echo "  make deploy-fish-{dev|staging|prod}"
 	@echo "  make deploy-mikepattyn"
 	@echo "  make deploy-alienbutnice"
-	@echo "  make deploy-prompt-engineering"
+	@echo "  make deploy-lumen"
 	@echo ""
 	@echo "App artifacts:"
 	@echo "  make lambda-build           Build kapsalon lambda zip"
@@ -126,7 +126,7 @@ help:
 	@echo ""
 	@echo "Script shell (auto: powershell on Windows, unix elsewhere):"
 	@echo "  SCRIPT_SHELL=unix|powershell  Override detected shell"
-	@echo "  Example: make sync-prompt-engineering"
+	@echo "  Example: make sync-lumen"
 	@echo ""
 	@echo "Requires $(DEPLOYMENT_CONFIG) (copy from Constants.Deployment.cs.example)."
 	@echo "See docs/research/individual-app-deploy.md for stack and SSM details."
@@ -173,8 +173,8 @@ cdk-deploy-mikepattyn: cdk-check-config cdk-build
 cdk-deploy-alienbutnice: cdk-check-config cdk-build
 	cd $(CDK_DIR) && $(CDK) deploy $(STACK_ALIENBUTNICE_BRAND_FRONTEND_PROD) --require-approval $(CDK_APPROVAL)
 
-cdk-deploy-prompt-engineering: cdk-check-config cdk-build
-	cd $(CDK_DIR) && $(CDK) deploy $(STACK_PROMPT_ENGINEERING_FRONTEND_PROD) --require-approval $(CDK_APPROVAL)
+cdk-deploy-lumen: cdk-check-config cdk-build
+	cd $(CDK_DIR) && $(CDK) deploy $(STACK_LUMEN_FRONTEND_PROD) --require-approval $(CDK_APPROVAL)
 
 cdk-deploy-kapsalon-dev-frontend: cdk-check-config cdk-build
 	cd $(CDK_DIR) && $(CDK) deploy $(STACK_KAPSALON_FRONTEND_DEV) --require-approval $(CDK_APPROVAL)
@@ -266,8 +266,8 @@ sync-mikepattyn:
 sync-alienbutnice:
 	$(SCRIPT_RUN) ./scripts/sync-brand-frontend.$(SCRIPT_EXT) AlienButNice $(ALIENBUTNICE_DIR)
 
-sync-prompt-engineering:
-	$(SCRIPT_RUN) ./scripts/sync-static-site.$(SCRIPT_EXT) PromptEngineering Production $(PROMPT_ENGINEERING_DIR)
+sync-lumen:
+	$(SCRIPT_RUN) ./scripts/sync-static-site.$(SCRIPT_EXT) Lumen Production $(LUMEN_DIR)
 
 deploy-kapsalon-dev: cdk-deploy-kapsalon-dev sync-kapsalon-frontend-dev sync-kapsalon-backend-dev
 
@@ -285,7 +285,7 @@ deploy-mikepattyn: cdk-deploy-mikepattyn sync-mikepattyn
 
 deploy-alienbutnice: cdk-deploy-alienbutnice sync-alienbutnice
 
-deploy-prompt-engineering: cdk-deploy-prompt-engineering sync-prompt-engineering
+deploy-lumen: cdk-deploy-lumen sync-lumen
 
 lambda-build:
 	$(SCRIPT_RUN) ./scripts/build-lambda.$(SCRIPT_EXT)

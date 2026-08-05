@@ -23,7 +23,7 @@ public static class ExpectedDomains
         new("gofish-dev.mikepattyn.nl", "gofish"),
         new("gofish-acc.mikepattyn.nl", "gofish"),
         new("gofish.mikepattyn.nl", "gofish"),
-        new("prompt-engineering.mikepattyn.nl", "prompt-engineering"),
+        new("lumen.mikepattyn.nl", "lumen"),
     ];
 
     public sealed record BrandHostnameExpectation(string PlatformDomain, string StackId);

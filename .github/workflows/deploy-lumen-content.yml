@@ -1,4 +1,4 @@
-name: Deploy Prompt Engineering content
+name: Deploy Lumen content
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'apps/prompt-engineering/**'
-      - '.github/workflows/deploy-prompt-engineering-content.yml'
+      - '.github/workflows/deploy-lumen-content.yml'
   workflow_dispatch:
 
 permissions:
@@ -33,7 +33,7 @@ jobs:
       - name: Publish to S3 and invalidate CloudFront
         run: |
           SOURCE="$GITHUB_WORKSPACE/apps/prompt-engineering"
-          PREFIX="/PromptEngineering/Production/Frontend"
+          PREFIX="/Lumen/Production/Frontend"
           BUCKET=$(aws ssm get-parameter --name "${PREFIX}/BucketName" --query 'Parameter.Value' --output text)
           DISTRIBUTION_ID=$(aws ssm get-parameter --name "${PREFIX}/DistributionId" --query 'Parameter.Value' --output text)
           echo "Syncing ${SOURCE} → s3://${BUCKET}/"
@@ -44,4 +44,4 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id "$DISTRIBUTION_ID" \
             --paths "/*"
-          echo "Done: PromptEngineering Production"
+          echo "Done: Lumen Production"
