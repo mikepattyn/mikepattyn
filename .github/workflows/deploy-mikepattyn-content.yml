@@ -3,7 +3,7 @@ name: Deploy Mikepattyn content
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'apps/mikepattyn/**'
       - '.github/workflows/deploy-mikepattyn-content.yml'

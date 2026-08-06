@@ -64,6 +64,8 @@ export const en = {
       'At <a href="https://givtapp.net" target="_blank" rel="noopener noreferrer">Givt</a> I learned how much personalities shape a team: how people with kindred temperaments click, where they clash, and why understanding each other matters as much as the code. Thank you Maarten and Sjoerd, Givt\'s founders, for the room to learn that. Those lessons echo through everything here — Lumen most of all.',
     authress:
       'The <a href="https://authress.io" target="_blank" rel="noopener noreferrer">Authress</a> team taught me authentication and authorization properly — but what stayed with me is how they taught it. They thought along with me, took the time to understand how I learn best, and gave me exactly that before I knew I needed it. A special thank-you to Warren.',
+    coda:
+      "And to round it all off: kudos to the makers of Cursor and the devs at Anthropic, whose tools helped build everything on this page. And finally — thank you Methylium, for the last three years. ❤️",
   },
   contact: {
     eyebrow: "Contact",

@@ -538,6 +538,13 @@ a {
   text-underline-offset: 0.15em;
 }
 
+.mentors__coda {
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  max-width: 36rem;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
 /* ——— Contact ——— */
 
 .section--contact {
