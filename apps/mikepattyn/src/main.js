@@ -1,3 +1,7 @@
+import { initLocale } from "./locale.js";
+
+initLocale();
+
 const nav = document.querySelector(".site-nav");
 
 const onScroll = () => {

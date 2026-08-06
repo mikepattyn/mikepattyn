@@ -17,3 +17,11 @@ _Avoid_: treating it as a product submodule like Kapsalon or Fish
 ## Stack
 
 Vite · plain HTML/CSS/JS · Google Fonts (Bricolage Grotesque, Newsreader)
+
+## Locale
+
+EN/NL, same policy as Kapsalon `LocaleService` and the Lumen retrofit: stored
+`localStorage.locale` wins, else `navigator.language` starting with `nl` → NL,
+else EN. Header toggle persists the choice. Copy lives in `src/i18n/en.js` /
+`src/i18n/nl.js`; static markup is keyed with `data-i18n` / `data-i18n-aria`
+and translated by `src/locale.js`.

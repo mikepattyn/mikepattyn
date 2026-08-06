@@ -110,6 +110,59 @@ a {
   opacity: 1;
 }
 
+.site-nav__right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.locale-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.15rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  flex-shrink: 0;
+}
+
+.locale-toggle__btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  opacity: 0.6;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.locale-toggle__btn:hover {
+  opacity: 1;
+}
+
+.locale-toggle__btn.is-active {
+  opacity: 1;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+@media (max-width: 560px) {
+  .site-nav__right {
+    gap: 0.85rem;
+  }
+
+  .site-nav__links {
+    gap: 0.85rem;
+  }
+}
+
 /* ——— Hero ——— */
 
 .hero {

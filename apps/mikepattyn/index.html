@@ -17,15 +17,21 @@
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#work">Skip to work</a>
+    <a class="skip-link" href="#work" data-i18n="skip.toWork">Skip to work</a>
 
     <header class="site-nav">
-      <a class="site-nav__brand" href="#top" aria-label="Mike Pattyn home">Mike Pattyn</a>
-      <nav class="site-nav__links" aria-label="Primary">
-        <a href="#approach">How I work</a>
-        <a href="#work">Work</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <a class="site-nav__brand" href="#top" aria-label="Mike Pattyn home" data-i18n-aria="nav.brandAria">Mike Pattyn</a>
+      <div class="site-nav__right">
+        <nav class="site-nav__links" aria-label="Primary" data-i18n-aria="nav.ariaPrimary">
+          <a href="#approach" data-i18n="nav.approach">How I work</a>
+          <a href="#work" data-i18n="nav.work">Work</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+        <div class="locale-toggle" role="group" aria-label="Language" data-i18n-aria="locale.ariaLabel">
+          <button type="button" class="locale-toggle__btn" data-locale="en" aria-pressed="false">EN</button>
+          <button type="button" class="locale-toggle__btn" data-locale="nl" aria-pressed="false">NL</button>
+        </div>
+      </div>
     </header>
 
     <main id="top">
@@ -39,18 +45,18 @@
 
         <div class="hero__content">
           <p class="hero__brand" id="hero-brand">Mike Pattyn</p>
-          <h1 class="hero__headline">
+          <h1 class="hero__headline" data-i18n="hero.headline">
             From idea to running product.<br />
             One engineer, the whole chain.
           </h1>
-          <p class="hero__lede">
+          <p class="hero__lede" data-i18n="hero.lede">
             I build and ship complete products — interface, backend, cloud
             infrastructure, and the AI pieces in between. No hand-offs, no
             waiting on another team.
           </p>
           <div class="hero__actions">
-            <a class="btn btn--primary" href="#work">See the work</a>
-            <a class="btn btn--ghost" href="#contact">Get in touch</a>
+            <a class="btn btn--primary" href="#work" data-i18n="hero.ctaWork">See the work</a>
+            <a class="btn btn--ghost" href="#contact" data-i18n="hero.ctaContact">Get in touch</a>
           </div>
         </div>
       </section>
@@ -58,9 +64,9 @@
       <section class="section section--approach" id="approach" aria-labelledby="approach-title">
         <div class="section__inner">
           <header class="section__header">
-            <p class="section__eyebrow">How I work</p>
-            <h2 id="approach-title">Ownership over the whole chain</h2>
-            <p class="section__lede">
+            <p class="section__eyebrow" data-i18n="approach.eyebrow">How I work</p>
+            <h2 id="approach-title" data-i18n="approach.title">Ownership over the whole chain</h2>
+            <p class="section__lede" data-i18n="approach.lede">
               Every product below was carried from first sketch to production by
               one person. That changes how fast decisions get made — and how
               little gets lost in translation.
@@ -69,24 +75,24 @@
 
           <ul class="pillar-list">
             <li class="pillar reveal">
-              <h3>End-to-end delivery</h3>
-              <p>
+              <h3 data-i18n="approach.p1.title">End-to-end delivery</h3>
+              <p data-i18n="approach.p1.body">
                 Interface, API, database, cloud infrastructure — designed,
                 built, and deployed as one coherent system. You talk to one
                 person who understands every layer.
               </p>
             </li>
             <li class="pillar reveal">
-              <h3>Small slices, fast learning</h3>
-              <p>
+              <h3 data-i18n="approach.p2.title">Small slices, fast learning</h3>
+              <p data-i18n="approach.p2.body">
                 I cut scope to the thinnest version that teaches us something
                 real, ship it, and let evidence steer the roadmap — instead of
                 betting months on a guess.
               </p>
             </li>
             <li class="pillar reveal">
-              <h3>Quality and cost, automated</h3>
-              <p>
+              <h3 data-i18n="approach.p3.title">Quality and cost, automated</h3>
+              <p data-i18n="approach.p3.body">
                 Tests, deployment pipelines, and cost controls are set up from
                 day one — including evals for AI features — so the pace stays
                 honest as the product grows.
@@ -99,9 +105,9 @@
       <section class="section section--apps" id="work" aria-labelledby="work-title">
         <div class="section__inner">
           <header class="section__header">
-            <p class="section__eyebrow">Selected work</p>
-            <h2 id="work-title">Products, shipped and live</h2>
-            <p class="section__lede">
+            <p class="section__eyebrow" data-i18n="work.eyebrow">Selected work</p>
+            <h2 id="work-title" data-i18n="work.title">Products, shipped and live</h2>
+            <p class="section__lede" data-i18n="work.lede">
               Not prototypes — running products with real users, each built and
               operated end to end.
             </p>
@@ -114,7 +120,7 @@
                 <h3><a href="https://barbershop.mikepattyn.nl" target="_blank" rel="noopener noreferrer">Barbershop</a></h3>
               </div>
               <div class="app-item__body">
-                <p>
+                <p data-i18n="work.barbershop">
                   Dutch barbershops were juggling bookings by phone and paper.
                   I built a multi-tenant booking platform — a customer-facing
                   portal plus a staff dashboard — that a shop can adopt without
@@ -130,7 +136,7 @@
                 <h3><a href="https://flyingdarts.net" target="_blank" rel="noopener noreferrer">Flyingdarts</a></h3>
               </div>
               <div class="app-item__body">
-                <p>
+                <p data-i18n="work.flyingdarts">
                   Real-time multiplayer darts with live video and a mobile
                   companion that scores by voice. The hard part isn't the game —
                   it's keeping many players in sync, live, on infrastructure
@@ -146,7 +152,7 @@
                 <h3><a href="https://gofish.mikepattyn.nl" target="_blank" rel="noopener noreferrer">gofish</a></h3>
               </div>
               <div class="app-item__body">
-                <p>
+                <p data-i18n="work.gofish">
                   A location-based fishing exploration app: walk to real spots,
                   check in, log catches, and reveal a personal map as you go.
                   Built from scratch — geospatial backend, mobile app, and game
@@ -162,7 +168,7 @@
                 <h3><a href="https://lumen.mikepattyn.nl" target="_blank" rel="noopener noreferrer">Lumen</a></h3>
               </div>
               <div class="app-item__body">
-                <p>
+                <p data-i18n="work.lumen">
                   A gentle prompt-engineering course that teaches non-technical
                   people to work well with AI — short lessons and a practice
                   garden that grows with your craft. Proof that AI adoption is
@@ -173,7 +179,7 @@
             </li>
           </ul>
 
-          <p class="open-source-note reveal">
+          <p class="open-source-note reveal" data-i18n="work.openSource">
             I also maintain open-source authentication libraries used across
             these products —
             <a href="https://github.com/mikepattyn/mikepattyn-authress-flutter" target="_blank" rel="noopener noreferrer">for Flutter</a>
@@ -190,9 +196,9 @@
       <section class="section section--contact" id="contact" aria-labelledby="contact-title">
         <div class="section__inner">
           <header class="section__header">
-            <p class="section__eyebrow section__eyebrow--onDark">Contact</p>
-            <h2 id="contact-title">Have a product that needs shipping?</h2>
-            <p class="section__lede section__lede--onDark">
+            <p class="section__eyebrow section__eyebrow--onDark" data-i18n="contact.eyebrow">Contact</p>
+            <h2 id="contact-title" data-i18n="contact.title">Have a product that needs shipping?</h2>
+            <p class="section__lede section__lede--onDark" data-i18n="contact.lede">
               If you want something built properly by someone who owns the
               result end to end, let's talk.
             </p>
@@ -211,7 +217,7 @@
         <span class="site-footer__sep" aria-hidden="true">·</span>
         <a href="mailto:mike.pattyn1@gmail.com">mike.pattyn1@gmail.com</a>
         <span class="site-footer__sep" aria-hidden="true">·</span>
-        Platform umbrella at
+        <span data-i18n="footer.platform">Platform umbrella at</span>
         <a href="https://github.com/mikepattyn/mikepattyn">github.com/mikepattyn/mikepattyn</a>
       </p>
     </footer>
