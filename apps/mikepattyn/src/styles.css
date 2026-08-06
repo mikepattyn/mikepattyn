@@ -476,6 +476,68 @@ a {
   text-underline-offset: 0.15em;
 }
 
+/* ——— Mentors ——— */
+
+.section--mentors {
+  background: var(--paper-deep);
+}
+
+.mentor-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2rem);
+}
+
+@media (min-width: 800px) {
+  .mentor-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.mentor {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  box-shadow: var(--shadow-soft);
+}
+
+.mentor__host {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--moss-bright);
+  text-decoration: none;
+}
+
+.mentor__host:hover,
+.mentor__host:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.mentor h3 {
+  margin: 0.35rem 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.mentor p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.mentor p a {
+  color: var(--moss-bright);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 /* ——— Contact ——— */
 
 .section--contact {

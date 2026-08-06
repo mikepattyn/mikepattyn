@@ -12,6 +12,7 @@ export const nl = {
     brandAria: "Mike Pattyn startpagina",
     approach: "Hoe ik werk",
     work: "Werk",
+    mentors: "Mentoren",
     contact: "Contact",
   },
   locale: {
@@ -54,6 +55,15 @@ export const nl = {
       "Een zachte prompt-engineeringcursus die niet-technische mensen leert goed met AI te werken — korte lessen en een oefentuin die meegroeit met je vaardigheid. Bewijs dat AI-adoptie evenzeer een onderwijsvraagstuk is als een technisch vraagstuk.",
     openSource:
       'Ik onderhoud ook open-source authenticatiebibliotheken die in deze producten worden gebruikt — <a href="https://github.com/mikepattyn/mikepattyn-authress-flutter" target="_blank" rel="noopener noreferrer">voor Flutter</a> en <a href="https://github.com/mikepattyn/mikepattyn-authress-angular" target="_blank" rel="noopener noreferrer">voor Angular</a>. Ze gezond houden naast al het bovenstaande is echt jongleren, dus als je ze gebruikt — of wilt gebruiken — zijn issues en pull requests van harte welkom. Zelfs een kleine fix of een verbetering aan de documentatie helpt meer dan je denkt.',
+  },
+  mentors: {
+    eyebrow: "Dank aan mentoren",
+    title: "De mensen die vormden hoe ik werk",
+    lede: "Niets op deze pagina heb ik alleen geleerd. Twee teams namen in het bijzonder de tijd om te begrijpen hoe ik denk — en leerden me dingen waarvan ik nog niet wist dat ik ze nodig had.",
+    givt:
+      'Bij <a href="https://givtapp.net" target="_blank" rel="noopener noreferrer">Givt</a> leerde ik hoezeer persoonlijkheden een team vormen: hoe mensen met verwante temperamenten klikken, waar het schuurt, en waarom elkaar begrijpen net zo belangrijk is als de code. Dank aan Maarten en Sjoerd, de oprichters van Givt, voor de ruimte om dat te leren. Die lessen klinken door in alles hier — in Lumen het meest.',
+    authress:
+      'Het team van <a href="https://authress.io" target="_blank" rel="noopener noreferrer">Authress</a> leerde me authenticatie en autorisatie zoals het hoort — maar wat bijbleef is hóé ze het leerden. Ze dachten met me mee, namen de tijd om te begrijpen hoe ik het beste leer, en gaven me precies dat voordat ik wist dat ik het nodig had. Een speciaal dankjewel aan Warren.',
   },
   contact: {
     eyebrow: "Contact",

@@ -12,6 +12,7 @@ export const en = {
     brandAria: "Mike Pattyn home",
     approach: "How I work",
     work: "Work",
+    mentors: "Mentors",
     contact: "Contact",
   },
   locale: {
@@ -54,6 +55,15 @@ export const en = {
       "A gentle prompt-engineering course that teaches non-technical people to work well with AI — short lessons and a practice garden that grows with your craft. Proof that AI adoption is a teaching problem as much as a technical one.",
     openSource:
       'I also maintain open-source authentication libraries used across these products — <a href="https://github.com/mikepattyn/mikepattyn-authress-flutter" target="_blank" rel="noopener noreferrer">for Flutter</a> and <a href="https://github.com/mikepattyn/mikepattyn-authress-angular" target="_blank" rel="noopener noreferrer">for Angular</a>. Keeping them healthy alongside everything above is a real juggling act, so if you use them — or want to — issues and pull requests are genuinely welcome. Even a small fix or a docs improvement helps more than you\'d think.',
+  },
+  mentors: {
+    eyebrow: "Kudos to mentors",
+    title: "The people who shaped how I work",
+    lede: "Nothing on this page was learned alone. Two teams in particular took the time to understand how I think — and taught me things I didn't yet know I needed.",
+    givt:
+      'At <a href="https://givtapp.net" target="_blank" rel="noopener noreferrer">Givt</a> I learned how much personalities shape a team: how people with kindred temperaments click, where they clash, and why understanding each other matters as much as the code. Thank you Maarten and Sjoerd, Givt\'s founders, for the room to learn that. Those lessons echo through everything here — Lumen most of all.',
+    authress:
+      'The <a href="https://authress.io" target="_blank" rel="noopener noreferrer">Authress</a> team taught me authentication and authorization properly — but what stayed with me is how they taught it. They thought along with me, took the time to understand how I learn best, and gave me exactly that before I knew I needed it. A special thank-you to Warren.',
   },
   contact: {
     eyebrow: "Contact",
