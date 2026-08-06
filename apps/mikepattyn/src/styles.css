@@ -516,6 +516,10 @@ a {
   .mentor-list {
     grid-template-columns: 1fr 1fr;
   }
+
+  .mentor--wide {
+    grid-column: 1 / -1;
+  }
 }
 
 .mentor {

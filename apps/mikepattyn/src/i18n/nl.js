@@ -59,13 +59,15 @@ export const nl = {
   mentors: {
     eyebrow: "Dank aan mentoren",
     title: "De mensen die vormden hoe ik werk",
-    lede: "Niets op deze pagina heb ik alleen geleerd. Twee teams namen in het bijzonder de tijd om te begrijpen hoe ik denk — en leerden me dingen waarvan ik nog niet wist dat ik ze nodig had.",
+    lede: "Niets op deze pagina heb ik alleen geleerd. Drie teams namen in het bijzonder de tijd om te begrijpen hoe ik denk — en leerden me dingen waarvan ik nog niet wist dat ik ze nodig had.",
+    methylium:
+      '<a href="https://methylium.com" target="_blank" rel="noopener noreferrer">Methylium</a> is al drie jaar mijn thuisbasis — en de mensen daar hebben meer dan wie ook gevormd hoe ik werk. Tom, Thallein, Steef en Rudie: dank voor het vertrouwen, de eerlijke feedback en de ruimte om te groeien, dag in dag uit. Op bijna alles op deze pagina zitten jullie vingerafdrukken.',
     givt:
       'Bij <a href="https://givtapp.net" target="_blank" rel="noopener noreferrer">Givt</a> leerde ik hoezeer persoonlijkheden een team vormen: hoe mensen met verwante temperamenten klikken, waar het schuurt, en waarom elkaar begrijpen net zo belangrijk is als de code. Dank aan Maarten en Sjoerd, de oprichters van Givt, voor de ruimte om dat te leren. Die lessen klinken door in alles hier — in Lumen het meest.',
     authress:
       'Het team van <a href="https://authress.io" target="_blank" rel="noopener noreferrer">Authress</a> leerde me authenticatie en autorisatie zoals het hoort — maar wat bijbleef is hóé ze het leerden. Ze dachten met me mee, namen de tijd om te begrijpen hoe ik het beste leer, en gaven me precies dat voordat ik wist dat ik het nodig had. Een speciaal dankjewel aan Warren.',
     coda:
-      "En om het helemaal af te maken: kudos aan de makers van Cursor en de devs bij Anthropic, met wier gereedschap alles op deze pagina gebouwd is. En tot slot — dank je, Methylium, voor de afgelopen drie jaar. ❤️",
+      "En om het helemaal af te maken: kudos aan de makers van Cursor en de devs bij Anthropic, met wier gereedschap alles op deze pagina gebouwd is. ❤️",
   },
   contact: {
     eyebrow: "Contact",

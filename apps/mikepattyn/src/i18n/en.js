@@ -59,13 +59,15 @@ export const en = {
   mentors: {
     eyebrow: "Kudos to mentors",
     title: "The people who shaped how I work",
-    lede: "Nothing on this page was learned alone. Two teams in particular took the time to understand how I think — and taught me things I didn't yet know I needed.",
+    lede: "Nothing on this page was learned alone. Three teams in particular took the time to understand how I think — and taught me things I didn't yet know I needed.",
+    methylium:
+      '<a href="https://methylium.com" target="_blank" rel="noopener noreferrer">Methylium</a> has been my home base for the last three years — and the people there shaped how I work more than anyone. Tom, Thallein, Steef and Rudie: thank you for the trust, the honest feedback, and the room to grow, day in and day out. Most of what\'s on this page carries your fingerprints.',
     givt:
       'At <a href="https://givtapp.net" target="_blank" rel="noopener noreferrer">Givt</a> I learned how much personalities shape a team: how people with kindred temperaments click, where they clash, and why understanding each other matters as much as the code. Thank you Maarten and Sjoerd, Givt\'s founders, for the room to learn that. Those lessons echo through everything here — Lumen most of all.',
     authress:
       'The <a href="https://authress.io" target="_blank" rel="noopener noreferrer">Authress</a> team taught me authentication and authorization properly — but what stayed with me is how they taught it. They thought along with me, took the time to understand how I learn best, and gave me exactly that before I knew I needed it. A special thank-you to Warren.',
     coda:
-      "And to round it all off: kudos to the makers of Cursor and the devs at Anthropic, whose tools helped build everything on this page. And finally — thank you Methylium, for the last three years. ❤️",
+      "And to round it all off: kudos to the makers of Cursor and the devs at Anthropic, whose tools helped build everything on this page. ❤️",
   },
   contact: {
     eyebrow: "Contact",
