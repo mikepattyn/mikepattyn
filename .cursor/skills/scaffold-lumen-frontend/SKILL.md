@@ -32,6 +32,7 @@ Progress:
 - [ ] 4. Add portfolio entry in apps/mikepattyn/index.html
 - [ ] 5. Optional: platform hosting + deploy workflow
 - [ ] 6. Sanity-check
+- [ ] 7. Ship via submodule-first direct pushes — never a PR
 ```
 
 ## 1. Gather inputs
@@ -145,6 +146,26 @@ If hosting already exists, still do steps 2–4; skip CDK.
 - [ ] All chrome strings use `t('…')` (no stray English in header/nav/footer)
 - [ ] Portfolio `#apps` list includes the new item with correct Production URL
 - [ ] `CONTEXT.md` exists for the app
+
+## 7. Ship it — submodules, never PRs
+
+This Platform is a monorepo whose apps/packages live as **git submodules**
+(see `.gitmodules`: kapsalon, fishi-tracking-app, alienbutnice, authress-*).
+Do **not** open pull requests — not against the Platform repo, not against an
+app repo. History here goes straight to the default branch (`master`).
+
+1. **Submodule first.** If the change touches a submodule, commit inside the
+   submodule's own repo and push to *its* default branch.
+2. **Then the gitlink.** In the Platform repo, stage the updated submodule
+   pointer (`git add apps/<name>`), commit, and push to `master`.
+3. **Plain-tree apps** (e.g. `apps/mikepattyn`, `apps/prompt-engineering`)
+   are committed directly in the Platform repo and pushed to `master`.
+4. **Never** create feature branches or PRs for scaffold work unless the user
+   explicitly asks for one.
+
+The agent owns the submodule mechanics end to end — `git submodule update
+--init --recursive` on checkout, committing gitlink bumps in the right order,
+pushing both repos. Do not hand submodule bookkeeping back to the user.
 
 ## References
 
