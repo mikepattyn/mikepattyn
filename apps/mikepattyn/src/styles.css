@@ -295,14 +295,44 @@ a {
   font-weight: 500;
 }
 
-/* ——— Apps & packages ——— */
+/* ——— Approach ——— */
+
+.section--approach {
+  background: var(--paper-deep);
+}
+
+.pillar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 800px) {
+  .pillar-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.pillar h3 {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.pillar p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+/* ——— Work ——— */
 
 .section--apps {
   background: var(--paper);
-}
-
-.section--packages {
-  background: var(--paper-deep);
 }
 
 .app-list {
@@ -327,10 +357,11 @@ a {
     column-gap: 3rem;
     align-items: start;
   }
+}
 
-  .app-item__stack {
-    grid-column: 2;
-  }
+.app-item__body {
+  display: grid;
+  gap: 1rem;
 }
 
 .app-item__meta h3 {
@@ -379,15 +410,46 @@ a {
   opacity: 0.55;
 }
 
-/* ——— About ——— */
-
-.section--about {
-  background: var(--paper);
+.open-source-note {
+  margin: clamp(2rem, 4vw, 3rem) 0 0;
+  max-width: 36rem;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
 }
 
-.section--about .section__header {
-  margin-bottom: 0;
-  max-width: 40rem;
+.open-source-note a {
+  color: var(--moss-bright);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* ——— Contact ——— */
+
+.section--contact {
+  background: var(--moss);
+  color: var(--paper);
+}
+
+.section--contact .section__header {
+  margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.section__eyebrow--onDark {
+  color: var(--signal);
+}
+
+.section__lede--onDark {
+  color: color-mix(in srgb, var(--paper) 85%, transparent);
+}
+
+.section__lede--onDark strong {
+  color: var(--paper);
+}
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 /* ——— Footer ——— */
