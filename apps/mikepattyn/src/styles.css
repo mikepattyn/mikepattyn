@@ -102,6 +102,7 @@ a {
 .site-nav__links a {
   text-decoration: none;
   opacity: 0.72;
+  white-space: nowrap;
   transition: opacity 0.2s ease;
 }
 
@@ -153,13 +154,34 @@ a {
   color: var(--paper);
 }
 
-@media (max-width: 560px) {
+@media (max-width: 680px) {
+  /* Two-row nav: brand on top, links + language toggle underneath.
+     --nav-h keeps the hero offset in sync with the taller nav. */
+  :root {
+    --nav-h: 5.9rem;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    height: auto;
+    row-gap: 0.35rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+
+  .site-nav__brand {
+    white-space: nowrap;
+  }
+
   .site-nav__right {
+    flex-basis: 100%;
+    justify-content: space-between;
     gap: 0.85rem;
   }
 
   .site-nav__links {
     gap: 0.85rem;
+    font-size: 0.88rem;
   }
 }
 
