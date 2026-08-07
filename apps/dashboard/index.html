@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumen Stats — dashboard.mikepattyn.nl</title>
+  <meta name="description" content="Usage and completion statistics for the Lumen prompt-engineering game." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+</head>
+<body>
+  <header class="header">
+    <h1>Lumen Stats</h1>
+    <p class="subtitle">dashboard.mikepattyn.nl · anonymous usage from lumen.mikepattyn.nl</p>
+    <div class="header-actions">
+      <button type="button" id="refresh-btn" class="btn">Refresh</button>
+      <span id="updated-at" class="muted">Loading…</span>
+    </div>
+  </header>
+
+  <main id="app">
+    <p class="loading">Loading stats…</p>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

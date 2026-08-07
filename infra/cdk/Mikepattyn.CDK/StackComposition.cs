@@ -25,6 +25,8 @@ public sealed class StackComposition
     public BrandFrontendStack MikepattynBrandFrontendStack { get; }
     public BrandFrontendStack AlienButNiceBrandFrontendStack { get; }
     public FrontendStack LumenFrontendStack { get; }
+    public DashboardBackendStack DashboardBackendStack { get; }
+    public FrontendStack DashboardFrontendStack { get; }
 
     private StackComposition(
         DomainStack mikepattynDomainStack,
@@ -33,7 +35,9 @@ public sealed class StackComposition
         IReadOnlyList<FishEdgeStack> fishEdgeStacks,
         BrandFrontendStack mikepattynBrandFrontendStack,
         BrandFrontendStack alienButNiceBrandFrontendStack,
-        FrontendStack lumenFrontendStack
+        FrontendStack lumenFrontendStack,
+        DashboardBackendStack dashboardBackendStack,
+        FrontendStack dashboardFrontendStack
     )
     {
         MikepattynDomainStack = mikepattynDomainStack;
@@ -43,6 +47,8 @@ public sealed class StackComposition
         MikepattynBrandFrontendStack = mikepattynBrandFrontendStack;
         AlienButNiceBrandFrontendStack = alienButNiceBrandFrontendStack;
         LumenFrontendStack = lumenFrontendStack;
+        DashboardBackendStack = dashboardBackendStack;
+        DashboardFrontendStack = dashboardFrontendStack;
     }
 
     public static StackComposition Build(App app)
@@ -180,6 +186,30 @@ public sealed class StackComposition
             }
         );
 
+        var dashboardBackendStack = new DashboardBackendStack(
+            app,
+            new DashboardBackendStackProps
+            {
+                DeploymentEnvironment = DeploymentEnvironment.Production,
+                StackEnvironment = stackEnvironment,
+            }
+        );
+
+        var dashboardFrontendStack = new FrontendStack(
+            app,
+            new FrontendStackProps
+            {
+                AppName = Constants.Apps.Dashboard,
+                AppSlug = Constants.Apps.DashboardSlug,
+                DeploymentEnvironment = DeploymentEnvironment.Production,
+                PlatformDomainName = platformDomain,
+                StackEnvironment = stackEnvironment,
+                HostedZone = mikepattynDomainStack.HostedZone,
+                Certificate = mikepattynDomainStack.Certificate,
+                ApiGatewayDomainName = dashboardBackendStack.ApiGatewayHostName,
+            }
+        );
+
         var lumenFrontendStack = new FrontendStack(
             app,
             new FrontendStackProps
@@ -191,6 +221,7 @@ public sealed class StackComposition
                 StackEnvironment = stackEnvironment,
                 HostedZone = mikepattynDomainStack.HostedZone,
                 Certificate = mikepattynDomainStack.Certificate,
+                ApiGatewayDomainName = dashboardBackendStack.ApiGatewayHostName,
             }
         );
 
@@ -223,6 +254,18 @@ public sealed class StackComposition
                 )
             )
             .Concat(
+                FrontendSsmParameterNames.Select(
+                    parameterName =>
+                        $"arn:aws:ssm:{Constants.Deployment.Region}:{Constants.Deployment.AccountId}:parameter/{Constants.Apps.Dashboard}/{DeploymentEnvironment.Production.Name}/Frontend/{parameterName}"
+                )
+            )
+            .Concat(
+                new[]
+                {
+                    $"arn:aws:ssm:{Constants.Deployment.Region}:{Constants.Deployment.AccountId}:parameter/{Constants.Apps.Dashboard}/{DeploymentEnvironment.Production.Name}/Backend/ApiUrl",
+                }
+            )
+            .Concat(
                 deploymentEnvironments.SelectMany(
                     deploymentEnvironment =>
                         new[]
@@ -250,6 +293,7 @@ public sealed class StackComposition
                             mikepattynBrandFrontendStack.BucketArn,
                             alienButNiceBrandFrontendStack.BucketArn,
                             lumenFrontendStack.BucketArn,
+                            dashboardFrontendStack.BucketArn,
                         ]
                     )
                     .ToArray(),
@@ -261,6 +305,7 @@ public sealed class StackComposition
                             mikepattynBrandFrontendStack.DistributionArn,
                             alienButNiceBrandFrontendStack.DistributionArn,
                             lumenFrontendStack.DistributionArn,
+                            dashboardFrontendStack.DistributionArn,
                         ]
                     )
                     .ToArray(),
@@ -275,7 +320,9 @@ public sealed class StackComposition
             fishEdgeStacks,
             mikepattynBrandFrontendStack,
             alienButNiceBrandFrontendStack,
-            lumenFrontendStack
+            lumenFrontendStack,
+            dashboardBackendStack,
+            dashboardFrontendStack
         );
     }
 }

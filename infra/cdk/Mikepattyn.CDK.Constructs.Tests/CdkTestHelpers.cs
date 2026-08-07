@@ -34,6 +34,13 @@ internal static class CdkTestHelpers
             ],
         };
 
+    internal static DashboardBackendStackProps CreateDashboardBackendStackProps() =>
+        new()
+        {
+            DeploymentEnvironment = DeploymentEnvironment.Production,
+            StackEnvironment = TestEnv,
+        };
+
     internal static DomainStackProps CreateDomainStackProps() =>
         new()
         {

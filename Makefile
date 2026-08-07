@@ -4,6 +4,7 @@ FISH_DIR := apps/fishi-tracking-app
 MIKEPATTYN_DIR := apps/mikepattyn
 ALIENBUTNICE_DIR := apps/alienbutnice
 LUMEN_DIR := apps/prompt-engineering
+DASHBOARD_DIR := apps/dashboard
 DEPLOYMENT_CONFIG := infra/cdk/Mikepattyn.CDK.Constructs/Constants.Deployment.cs
 CDK ?= cdk
 CDK_APPROVAL ?= broadening
@@ -52,10 +53,12 @@ STACK_FISH_FRONTEND_PROD := Fish-Frontend-Stack-Production
 STACK_MIKEPATTYN_BRAND_FRONTEND_PROD := Mikepattyn-BrandFrontend-Stack-Production
 STACK_ALIENBUTNICE_BRAND_FRONTEND_PROD := AlienButNice-BrandFrontend-Stack-Production
 STACK_LUMEN_FRONTEND_PROD := Lumen-Frontend-Stack-Production
+STACK_DASHBOARD_BACKEND_PROD := Dashboard-Backend-Stack-Production
+STACK_DASHBOARD_FRONTEND_PROD := Dashboard-Frontend-Stack-Production
 
 .PHONY: help bootstrap cdk-check-config cdk-build cdk-synth cdk-diff cdk-deploy \
 	cdk-deploy-all cdk-deploy-shared cdk-deploy-domain cdk-deploy-auth cdk-deploy-brand \
-	cdk-deploy-mikepattyn cdk-deploy-alienbutnice cdk-deploy-lumen \
+	cdk-deploy-mikepattyn cdk-deploy-alienbutnice cdk-deploy-lumen cdk-deploy-dashboard \
 	cdk-deploy-kapsalon-dev cdk-deploy-kapsalon-staging cdk-deploy-kapsalon-prod \
 	cdk-deploy-kapsalon-dev-frontend cdk-deploy-kapsalon-dev-backend \
 	cdk-deploy-kapsalon-staging-frontend cdk-deploy-kapsalon-staging-backend \
@@ -68,10 +71,10 @@ STACK_LUMEN_FRONTEND_PROD := Lumen-Frontend-Stack-Production
 	sync-kapsalon-backend-dev sync-kapsalon-backend-staging sync-kapsalon-backend-prod \
 	sync-fish-frontend-dev sync-fish-frontend-staging sync-fish-frontend-prod \
 	sync-fish-backend-dev sync-fish-backend-staging sync-fish-backend-prod \
-	sync-mikepattyn sync-alienbutnice sync-lumen \
+	sync-mikepattyn sync-alienbutnice sync-lumen sync-dashboard \
 	deploy-kapsalon-dev deploy-kapsalon-staging deploy-kapsalon-prod \
 	deploy-fish-dev deploy-fish-staging deploy-fish-prod \
-	deploy-mikepattyn deploy-alienbutnice deploy-lumen \
+	deploy-mikepattyn deploy-alienbutnice deploy-lumen deploy-dashboard \
 	lambda-build fish-lambda-build fish-web-build test-cdk
 
 .DEFAULT_GOAL := help
@@ -94,6 +97,7 @@ help:
 	@echo "  make cdk-deploy-mikepattyn  Deploy Mikepattyn brand frontend stack"
 	@echo "  make cdk-deploy-alienbutnice Deploy AlienButNice brand frontend stack"
 	@echo "  make cdk-deploy-lumen       Deploy Lumen frontend stack"
+	@echo "  make cdk-deploy-dashboard   Deploy Dashboard backend + frontend stacks"
 	@echo ""
 	@echo "Deploy kapsalon (infra, per environment):"
 	@echo "  make cdk-deploy-kapsalon-dev|staging|prod"
@@ -111,6 +115,7 @@ help:
 	@echo "  make sync-mikepattyn          Vite build + S3 (Production)"
 	@echo "  make sync-alienbutnice        Vite build + S3 (Production)"
 	@echo "  make sync-lumen               Static files → S3 (Production)"
+	@echo "  make sync-dashboard           Static files → S3 (Production)"
 	@echo ""
 	@echo "Full deploy (infra + content):"
 	@echo "  make deploy-kapsalon-{dev|staging|prod}"
@@ -118,6 +123,7 @@ help:
 	@echo "  make deploy-mikepattyn"
 	@echo "  make deploy-alienbutnice"
 	@echo "  make deploy-lumen"
+	@echo "  make deploy-dashboard"
 	@echo ""
 	@echo "App artifacts:"
 	@echo "  make lambda-build           Build kapsalon lambda zip"
@@ -175,6 +181,14 @@ cdk-deploy-alienbutnice: cdk-check-config cdk-build
 
 cdk-deploy-lumen: cdk-check-config cdk-build
 	cd $(CDK_DIR) && $(CDK) deploy $(STACK_LUMEN_FRONTEND_PROD) --require-approval $(CDK_APPROVAL)
+
+cdk-deploy-dashboard-backend: cdk-check-config cdk-build
+	cd $(CDK_DIR) && $(CDK) deploy $(STACK_DASHBOARD_BACKEND_PROD) --require-approval $(CDK_APPROVAL)
+
+cdk-deploy-dashboard-frontend: cdk-check-config cdk-build
+	cd $(CDK_DIR) && $(CDK) deploy $(STACK_DASHBOARD_FRONTEND_PROD) --require-approval $(CDK_APPROVAL)
+
+cdk-deploy-dashboard: cdk-deploy-dashboard-backend cdk-deploy-dashboard-frontend cdk-deploy-lumen cdk-deploy-auth
 
 cdk-deploy-kapsalon-dev-frontend: cdk-check-config cdk-build
 	cd $(CDK_DIR) && $(CDK) deploy $(STACK_KAPSALON_FRONTEND_DEV) --require-approval $(CDK_APPROVAL)
@@ -269,6 +283,9 @@ sync-alienbutnice:
 sync-lumen:
 	$(SCRIPT_RUN) ./scripts/sync-static-site.$(SCRIPT_EXT) Lumen Production $(LUMEN_DIR)
 
+sync-dashboard:
+	$(SCRIPT_RUN) ./scripts/sync-static-site.$(SCRIPT_EXT) Dashboard Production $(DASHBOARD_DIR)
+
 deploy-kapsalon-dev: cdk-deploy-kapsalon-dev sync-kapsalon-frontend-dev sync-kapsalon-backend-dev
 
 deploy-kapsalon-staging: cdk-deploy-kapsalon-staging sync-kapsalon-frontend-staging sync-kapsalon-backend-staging
@@ -286,6 +303,8 @@ deploy-mikepattyn: cdk-deploy-mikepattyn sync-mikepattyn
 deploy-alienbutnice: cdk-deploy-alienbutnice sync-alienbutnice
 
 deploy-lumen: cdk-deploy-lumen sync-lumen
+
+deploy-dashboard: cdk-deploy-dashboard sync-dashboard
 
 lambda-build:
 	$(SCRIPT_RUN) ./scripts/build-lambda.$(SCRIPT_EXT)

@@ -26,6 +26,7 @@ Navigation index for the mikepattyn platform repository. Apps and packages may b
 |-----|------|--------|
 | Mikepattyn | [apps/mikepattyn/](apps/mikepattyn/) | Owned — [CONTEXT.md](apps/mikepattyn/CONTEXT.md) |
 | Lumen | [apps/prompt-engineering/](apps/prompt-engineering/) | Owned — [CONTEXT.md](apps/prompt-engineering/CONTEXT.md) |
+| Dashboard | [apps/dashboard/](apps/dashboard/) | Owned — [CONTEXT.md](apps/dashboard/CONTEXT.md) |
 | Kapsalon (barbershop) | [apps/kapsalon/](apps/kapsalon/) | Submodule — github.com/mikepattyn/kapsalon |
 | Fish | [apps/fishi-tracking-app/](apps/fishi-tracking-app/) | Submodule — github.com/mikepattyn/fish-tracking-app |
 | AlienButNice | [apps/alienbutnice/](apps/alienbutnice/) | Submodule — github.com/mikepattyn/alienbutnice |
