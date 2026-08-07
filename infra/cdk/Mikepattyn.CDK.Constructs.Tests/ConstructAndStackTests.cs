@@ -2,6 +2,7 @@ using Amazon.CDK;
 using Amazon.CDK.Assertions;
 using Amazon.CDK.AWS.CertificateManager;
 using Amazon.CDK.AWS.Lambda;
+using Amazon.CDK.AWS.Route53;
 using Constructs;
 using Mikepattyn.CDK.Constructs;
 using Xunit;
@@ -365,6 +366,89 @@ public class StackTests
         template.HasResourceProperties(
             "AWS::SSM::Parameter",
             new Dictionary<string, object> { ["Name"] = "/Kapsalon/Development/Backend/ApiUrl" }
+        );
+    }
+
+    [Fact]
+    public void DashboardBackendStack_SynthesizesCoreResources()
+    {
+        using var cwd = CdkTestHelpers.UseCdkWorkingDirectory();
+        var app = new App();
+        var stack = new DashboardBackendStack(
+            app,
+            CdkTestHelpers.CreateDashboardBackendStackProps()
+        );
+
+        Assert.EndsWith("/api", stack.ApiUrl);
+        Assert.Contains("execute-api", stack.ApiGatewayHostName);
+
+        var template = Template.FromStack(stack);
+        template.ResourceCountIs("AWS::DynamoDB::Table", 1);
+        template.ResourceCountIs("AWS::ApiGateway::RestApi", 1);
+        template.HasResourceProperties(
+            "AWS::Lambda::Function",
+            new Dictionary<string, object> { ["Runtime"] = "nodejs22.x" }
+        );
+        template.HasResourceProperties(
+            "AWS::SSM::Parameter",
+            new Dictionary<string, object> { ["Name"] = "/Dashboard/Production/Backend/ApiUrl" }
+        );
+    }
+
+    [Fact]
+    public void DashboardFrontendStack_SynthesizesHostingWithApiBehavior()
+    {
+        var app = new App();
+        var importHost = new Stack(app, "DashboardImportHost", new StackProps { Env = CdkTestHelpers.TestEnv });
+        var stack = new FrontendStack(
+            app,
+            new FrontendStackProps
+            {
+                AppName = Constants.Apps.Dashboard,
+                AppSlug = Constants.Apps.DashboardSlug,
+                DeploymentEnvironment = DeploymentEnvironment.Production,
+                StackEnvironment = CdkTestHelpers.TestEnv,
+                PlatformDomainName = "mikepattyn.nl",
+                HostedZone = HostedZone.FromHostedZoneAttributes(
+                    importHost,
+                    "DashboardImportedHostedZone",
+                    new HostedZoneAttributes
+                    {
+                        HostedZoneId = "Z1234567890ABC",
+                        ZoneName = "mikepattyn.nl",
+                    }
+                ),
+                Certificate = Certificate.FromCertificateArn(
+                    importHost,
+                    "DashboardImportedCertificate",
+                    "arn:aws:acm:us-east-1:123456789012:certificate/00000000-0000-0000-0000-000000000000"
+                ),
+                ApiGatewayDomainName = "abc123.execute-api.eu-central-1.amazonaws.com",
+            }
+        );
+
+        var template = Template.FromStack(stack);
+        template.ResourceCountIs("AWS::S3::Bucket", 1);
+        template.ResourceCountIs("AWS::CloudFront::Distribution", 1);
+        template.HasResourceProperties(
+            "AWS::CloudFront::Distribution",
+            new Dictionary<string, object>
+            {
+                ["DistributionConfig"] = Match.ObjectLike(
+                    new Dictionary<string, object>
+                    {
+                        ["Aliases"] = Match.ArrayWith(new object[] { "dashboard.mikepattyn.nl" }),
+                        ["CacheBehaviors"] = Match.ArrayWith(
+                            new object[]
+                            {
+                                Match.ObjectLike(
+                                    new Dictionary<string, object> { ["PathPattern"] = "/api/*" }
+                                ),
+                            }
+                        ),
+                    }
+                ),
+            }
         );
     }
 

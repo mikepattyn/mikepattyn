@@ -352,8 +352,15 @@ function wireLessonComplete(root) {
   btn.addEventListener("click", () => {
     const id = btn.dataset.toggleComplete;
     const progress = getProgress();
-    progress[id] = !progress[id];
+    const walked = !progress[id];
+    progress[id] = walked;
     store.write(STORE_KEYS.progress, progress);
+    if (walked) {
+      analytics.trackLessonWalked(id);
+    } else {
+      analytics.trackLessonUnwalked(id);
+    }
+    analytics.maybeTrackCompleted(getProgress, getLessons);
     updateProgressPill();
     render();
   });
@@ -461,6 +468,10 @@ function render() {
   wireGarden(app);
   wireJournal(app);
 
+  if (route.name === "lesson" && route.id) {
+    analytics.trackLessonView(route.id);
+  }
+
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
@@ -468,4 +479,5 @@ window.render = render;
 
 window.addEventListener("hashchange", render);
 initLocale();
+analytics.trackVisit();
 render();

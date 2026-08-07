@@ -58,6 +58,7 @@ _Avoid_: assuming all Echo source is at the mikepattyn repo root
 | Fish | gofish-dev.mikepattyn.nl | gofish-acc.mikepattyn.nl | gofish.mikepattyn.nl |
 | Portfolio | — | — | mikepattyn.nl (+ www) |
 | Lumen | — | — | lumen.mikepattyn.nl |
+| Dashboard | — | — | dashboard.mikepattyn.nl |
 | AlienButNice | — | — | alienbutnice.nl (+ www) |
 
 Product applications expose their API as same-origin `/api/*` on the **AppHostname** (CloudFront → API Gateway). There are no dedicated `*-api` hostnames.

@@ -16,6 +16,7 @@ on:
           - cdk-deploy-mikepattyn
           - cdk-deploy-alienbutnice
           - cdk-deploy-lumen
+          - cdk-deploy-dashboard
           - cdk-deploy-kapsalon-dev
           - cdk-deploy-kapsalon-staging
           - cdk-deploy-kapsalon-prod
@@ -160,6 +161,12 @@ jobs:
               ;;
             cdk-deploy-lumen)
               deploy Lumen-Frontend-Stack-Production
+              ;;
+            cdk-deploy-dashboard)
+              deploy Dashboard-Backend-Stack-Production
+              deploy Dashboard-Frontend-Stack-Production
+              deploy Lumen-Frontend-Stack-Production
+              deploy Mikepattyn-Auth-Stack
               ;;
             cdk-deploy-kapsalon-dev)
               deploy Kapsalon-Frontend-Stack-Development

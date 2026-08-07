@@ -156,6 +156,15 @@ public class StackCompositionDomainTests
                 );
         }
 
+        if (expected.AppSlug == Constants.Apps.DashboardSlug)
+        {
+            return composition.DashboardFrontendStack.DomainName == expected.Fqdn
+                ? composition.DashboardFrontendStack
+                : throw new InvalidOperationException(
+                    $"Expected Dashboard frontend at {expected.Fqdn}, got {composition.DashboardFrontendStack.DomainName}."
+                );
+        }
+
         throw new ArgumentOutOfRangeException(
             nameof(expected),
             expected.AppSlug,

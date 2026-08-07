@@ -1,0 +1,47 @@
+name: Deploy Dashboard content
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'apps/dashboard/**'
+      - '.github/workflows/deploy-dashboard-content.yml'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'eu-central-1' }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Publish to S3 and invalidate CloudFront
+        run: |
+          SOURCE="$GITHUB_WORKSPACE/apps/dashboard"
+          PREFIX="/Dashboard/Production/Frontend"
+          BUCKET=$(aws ssm get-parameter --name "${PREFIX}/BucketName" --query 'Parameter.Value' --output text)
+          DISTRIBUTION_ID=$(aws ssm get-parameter --name "${PREFIX}/DistributionId" --query 'Parameter.Value' --output text)
+          echo "Syncing ${SOURCE} → s3://${BUCKET}/"
+          aws s3 sync "$SOURCE" "s3://${BUCKET}/" --delete \
+            --exclude ".git/*" \
+            --exclude ".cursor/*"
+          echo "Invalidating CloudFront distribution ${DISTRIBUTION_ID}"
+          aws cloudfront create-invalidation \
+            --distribution-id "$DISTRIBUTION_ID" \
+            --paths "/*"
+          echo "Done: Dashboard Production"
