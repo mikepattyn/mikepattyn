@@ -1,6 +1,8 @@
 import { initLocale } from "./locale.js";
+import { initContactForm } from "./contact.js";
 
 initLocale();
+initContactForm();
 
 const nav = document.querySelector(".site-nav");
 

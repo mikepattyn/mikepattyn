@@ -72,7 +72,20 @@ export const nl = {
   contact: {
     eyebrow: "Contact",
     title: "Een product dat gelanceerd moet worden?",
-    lede: "Wil je iets goed laten bouwen door iemand die het resultaat end-to-end draagt? Laten we praten.",
+    lede: "Of je nu een product wilt laten bouwen of gewoon benieuwd bent hoe ik met AI werk — laat hieronder een bericht achter en ik antwoord persoonlijk. Geen formulieren-naar-nergens, beloofd.",
+    form: {
+      name: "Naam <em>(optioneel)</em>",
+      email: "E-mail",
+      message: "Je bericht",
+      send: "Verstuur bericht",
+      sending: "Versturen…",
+      success:
+        "Dank je wel voor je bericht — het is onderweg. Ik antwoord zo snel als ik kan.",
+      error:
+        'Hmm, dat ging niet door. Probeer het zo nog eens, of mail me rechtstreeks op <a href="mailto:contact@mikepattyn.nl">contact@mikepattyn.nl</a>.',
+    },
+    alt:
+      'Liever je eigen mailprogramma? Bereik me op <a href="mailto:info@mikepattyn.nl">info@mikepattyn.nl</a> — of vind me op <a href="https://github.com/mikepattyn" target="_blank" rel="noopener noreferrer">GitHub</a>.',
   },
   footer: {
     platform: "Platform-umbrella op",

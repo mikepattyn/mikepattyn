@@ -18,6 +18,15 @@ _Avoid_: treating it as a product submodule like Kapsalon or Fish
 
 Vite · plain HTML/CSS/JS · Google Fonts (Bricolage Grotesque, Newsreader)
 
+## Contact
+
+General contact copy points to `info@mikepattyn.nl` (footer + contact
+section). The contact form posts to FormSubmit
+(`https://formsubmit.co/ajax/contact@mikepattyn.nl`) which delivers to
+`contact@mikepattyn.nl` — no backend of our own. Spam protection is
+FormSubmit's `_honey` honeypot field. First submission triggers a one-time
+activation email from FormSubmit to `contact@mikepattyn.nl`.
+
 ## Locale
 
 EN/NL, same policy as Kapsalon `LocaleService` and the Lumen retrofit: stored

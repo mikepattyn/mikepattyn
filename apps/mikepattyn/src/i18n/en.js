@@ -72,7 +72,20 @@ export const en = {
   contact: {
     eyebrow: "Contact",
     title: "Have a product that needs shipping?",
-    lede: "If you want something built properly by someone who owns the result end to end, let's talk.",
+    lede: "Whether you have a product that needs building, or you're simply curious about how I work with AI — leave a message below and I'll reply personally. No forms-that-go-nowhere, promise.",
+    form: {
+      name: "Name <em>(optional)</em>",
+      email: "Email",
+      message: "Your message",
+      send: "Send message",
+      sending: "Sending…",
+      success:
+        "Thank you for reaching out — your message is on its way. I'll reply as soon as I can.",
+      error:
+        'Hmm, that didn\'t go through. Please try again in a moment, or email me directly at <a href="mailto:contact@mikepattyn.nl">contact@mikepattyn.nl</a>.',
+    },
+    alt:
+      'Prefer your own mail client? Reach me at <a href="mailto:info@mikepattyn.nl">info@mikepattyn.nl</a> — or find me on <a href="https://github.com/mikepattyn" target="_blank" rel="noopener noreferrer">GitHub</a>.',
   },
   footer: {
     platform: "Platform umbrella at",

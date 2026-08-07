@@ -594,10 +594,128 @@ a {
   color: var(--paper);
 }
 
-.contact__actions {
+.contact-form {
+  display: grid;
+  gap: 1.1rem;
+  max-width: 40rem;
+}
+
+.contact-form__row {
+  display: grid;
+  gap: 1.1rem;
+}
+
+@media (min-width: 640px) {
+  .contact-form__row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact-form__field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.contact-form__label {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--paper) 92%, transparent);
+}
+
+.contact-form__label em {
+  font-style: normal;
+  font-weight: 500;
+  opacity: 0.65;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  appearance: none;
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border-radius: 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--paper) 28%, transparent);
+  background: color-mix(in srgb, var(--paper) 8%, transparent);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.45;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+
+/* Honeypot: visually gone, still in the DOM for bots to trip over. */
+.contact-form__honey {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-form__footer {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contact-form button[type="submit"] {
+  border: none;
+  cursor: pointer;
+}
+
+.contact-form button[type="submit"]:disabled {
+  opacity: 0.65;
+  cursor: wait;
+  transform: none;
+}
+
+.contact-form__status {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.contact-form__status.is-success {
+  color: var(--signal);
+}
+
+.contact-form__status.is-error {
+  color: #ffb3a1;
+}
+
+.contact-form__status a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.contact__alt {
+  margin: clamp(1.75rem, 3vw, 2.5rem) 0 0;
+  max-width: 40rem;
+  font-size: 1rem;
+  color: color-mix(in srgb, var(--paper) 78%, transparent);
+}
+
+.contact__alt a {
+  color: var(--paper);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 /* ——— Footer ——— */
