@@ -39,7 +39,7 @@ Resolve from the user and the repo (ask only for what you cannot infer):
 | Display name | Human title in `name:` (e.g. `Deploy Lumen content`) |
 | CDK / SSM app segment | PascalCase under `Constants.Apps` (e.g. `Lumen`, `Kapsalon`) — used in `/{App}/{Env}/Frontend/...` |
 | Workflow filename slug | kebab-case: `deploy-<slug>-frontend.yml` or `deploy-<slug>-content.yml` |
-| Default branch | `main` unless the repo/default push branch is `master` |
+| Default branch | This platform repo uses `master` (not `main`) |
 | Submodule? | `.gitmodules` entry for the app path → need recursive checkout + `SUBMODULE_TOKEN` |
 
 Prefer **content** in the filename/title for brand/static sites with little or no CI build ceremony; prefer **frontend** for product SPAs (Kapsalon/Fish-style). Match sibling naming when unsure.

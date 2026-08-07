@@ -3,7 +3,7 @@ name: Deploy Lumen content
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'apps/prompt-engineering/**'
       - '.github/workflows/deploy-lumen-content.yml'

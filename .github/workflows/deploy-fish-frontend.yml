@@ -3,9 +3,10 @@ name: Deploy Fish frontend
 on:
   push:
     branches:
-      - main
+      - master
     paths:
-      - 'apps/fishi-tracking-app/mobile/**'
+      # Submodule gitlink (parent repo only sees apps/fishi-tracking-app, not nested paths)
+      - 'apps/fishi-tracking-app'
       - '.github/workflows/deploy-fish-frontend.yml'
   workflow_dispatch:
     inputs:
@@ -40,7 +41,7 @@ jobs:
           elif [ "${{ vars.DEPLOY_FISH_FRONTEND_ALL_ENVS }}" = "true" ]; then
             ENVIRONMENTS='["Development","Staging","Production"]'
           else
-            ENVIRONMENTS='["Development"]'
+            ENVIRONMENTS='["Development","Production"]'
           fi
           echo "environments=${ENVIRONMENTS}" >> "$GITHUB_OUTPUT"
 

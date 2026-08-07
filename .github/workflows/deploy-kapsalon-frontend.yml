@@ -41,7 +41,7 @@ jobs:
           elif [ "${{ vars.DEPLOY_KAPSALON_FRONTEND_ALL_ENVS }}" = "true" ]; then
             ENVIRONMENTS='["Development","Staging","Production"]'
           else
-            ENVIRONMENTS='["Development"]'
+            ENVIRONMENTS='["Development","Production"]'
           fi
           echo "environments=${ENVIRONMENTS}" >> "$GITHUB_OUTPUT"
 
