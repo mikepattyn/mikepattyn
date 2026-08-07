@@ -40,6 +40,10 @@ _Avoid_: service stack
 The DNS label for an **Application** under `mikepattyn.nl` (e.g. Kapsalon → `barbershop`, Fish → `gofish`).
 _Avoid_: treating AppSlug as the product name; conflating with Application stack/resource naming
 
+**Echo**:
+The Staying Grounded Discord assistant (harm-reduction stack: API greeter + Echo + Postgres). Its LiveKit voice agent lives at `apps/alienbutnice/livekit` (nested submodule under AlienButNice); the bot, greeter API, and domain context live in `apps/alienbutnice/apps/Staying-Grounded`.
+_Avoid_: assuming all Echo source is at the mikepattyn repo root
+
 ## Boundaries
 
 - Owns shared IaC under `infra/cdk/`, platform docs, and submodule pointers.
